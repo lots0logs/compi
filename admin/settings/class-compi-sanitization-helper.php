@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Plugin_Name Sanitization Helper Class
+ * Compi Sanitization Helper Class
  *
  * The callback functions of the settings page
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin/settings
+ * @package    Compi
+ * @subpackage Compi/admin/settings
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Sanitization_Helper {
+class Compi_Sanitization_Helper {
 
 	/**
 	 * The ID of this plugin.
@@ -40,7 +40,7 @@ class Plugin_Name_Sanitization_Helper {
 
 		$this->plugin_name = $plugin_name;
 
-		$this->registered_settings = Plugin_Name_Settings_Definition::get_settings();
+		$this->registered_settings = Compi_Settings_Definition::get_settings();
 
 		add_filter( 'plugin_name_settings_sanitize_text', array( $this, 'sanitize_text_field' ) );
 		add_filter( 'plugin_name_settings_sanitize_email', array( $this, 'sanitize_email_field' ) );
@@ -75,7 +75,7 @@ class Plugin_Name_Sanitization_Helper {
 		}
 
 		parse_str( $_POST['_wp_http_referer'], $referrer );
-		$tab = isset( $referrer['tab'] ) ? $referrer['tab'] : Plugin_Name_Settings_Definition::get_default_tab_slug();
+		$tab = isset( $referrer['tab'] ) ? $referrer['tab'] : Compi_Settings_Definition::get_default_tab_slug();
 
 		// Tab filter
 		$input = apply_filters( 'plugin_name_settings_sanitize_' . $tab, $input );

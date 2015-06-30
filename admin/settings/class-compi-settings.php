@@ -6,11 +6,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the dashboard-specific stylesheet and JavaScript.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin/settings
+ * @package    Compi
+ * @subpackage Compi/admin/settings
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Settings {
+class Compi_Settings {
 
 	/**
 	 * The ID of this plugin.
@@ -44,7 +44,7 @@ class Plugin_Name_Settings {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Plugin_Name_Callback_Helper    $callback    Render HTML elements.
+	 * @var      Compi_Callback_Helper    $callback    Render HTML elements.
 	 */
 	protected $callback;
 
@@ -53,7 +53,7 @@ class Plugin_Name_Settings {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Plugin_Name_Sanitization_Helper    $sanitization    Sanitize and validate settings.
+	 * @var      Compi_Sanitization_Helper    $sanitization    Sanitize and validate settings.
 	 */
 	protected $sanitization;
 
@@ -62,8 +62,8 @@ class Plugin_Name_Settings {
 	 *
 	 * @since 	1.0.0
 	 * @param 	string    							$plugin_name 			The name of this plugin.
-	 * @param 	Plugin_Name_Callback_Helper 		$settings_callback 		The callback helper for rendering HTML markups
-	 * @param 	Plugin_Name_Sanitization_Helper 	$settings_sanitization 	The sanitization helper for sanitizing settings
+	 * @param 	Compi_Callback_Helper 		$settings_callback 		The callback helper for rendering HTML markups
+	 * @param 	Compi_Sanitization_Helper 	$settings_sanitization 	The sanitization helper for sanitizing settings
 	 */
 	public function __construct( $plugin_name, $settings_callback, $settings_sanitization ) {
 
@@ -73,7 +73,7 @@ class Plugin_Name_Settings {
 
 		$this->sanitization = $settings_sanitization;
 
-		$this->registered_settings = Plugin_Name_Settings_Definition::get_settings();
+		$this->registered_settings = Compi_Settings_Definition::get_settings();
 	}
 
 	/**

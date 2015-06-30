@@ -5,19 +5,19 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Compi
+ * @subpackage Compi/includes
  */
 
 /**
  * The Settings definition of the plugin.
  *
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Compi
+ * @subpackage Compi/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Settings_Definition {
+class Compi_Settings_Definition {
 
 	// @TODO: change plugin-name
 	public static $plugin_name = 'plugin-name';
@@ -69,7 +69,7 @@ class Plugin_Name_Settings_Definition {
 	}
 
 	/**
-	 * 'Whitelisted' Plugin_Name settings, filters are provided for each settings
+	 * 'Whitelisted' Compi settings, filters are provided for each settings
 	 * section to allow extensions and other plugins to add their own settings
 	 *
 	 *

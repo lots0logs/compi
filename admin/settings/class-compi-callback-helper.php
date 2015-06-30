@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Plugin_Name Callback Helper Class
+ * Compi Callback Helper Class
  *
  * The callback functions of the settings page
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin/settings
+ * @package    Compi
+ * @subpackage Compi/admin/settings
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Callback_Helper {
+class Compi_Callback_Helper {
 
 	/**
 	 * The ID of this plugin.
@@ -85,7 +85,7 @@ class Plugin_Name_Callback_Helper {
 	 */
 	public function checkbox_callback( $args ) {
 
-		$value = Plugin_Name_Option::get_option( $args['id'] );
+		$value = Compi_Option::get_option( $args['id'] );
 		$checked = isset( $value ) ? checked( 1, $value, false ) : '';
 
 		$html = '<input type="checkbox" ';
@@ -114,7 +114,7 @@ class Plugin_Name_Callback_Helper {
 			return;
 		}
 
-		$old_values = Plugin_Name_Option::get_option( $args['id'], array() );
+		$old_values = Compi_Option::get_option( $args['id'], array() );
 
 		$html ='';
 
@@ -157,7 +157,7 @@ class Plugin_Name_Callback_Helper {
 			return;
 		}
 
-		$old_value = Plugin_Name_Option::get_option( $args['id'] );
+		$old_value = Compi_Option::get_option( $args['id'] );
 
 		$html = '';
 
@@ -255,7 +255,7 @@ class Plugin_Name_Callback_Helper {
 	 */
 	private function input_type_callback( $type, $args ) {
 
-		$value = Plugin_Name_Option::get_option( $args['id'], $args['std']  );
+		$value = Compi_Option::get_option( $args['id'], $args['std']  );
 
 		$html = '<input type="' . $type . '" ';
 		$html .= $this->get_id_and_name_attrubutes( $args['id'] );
@@ -279,7 +279,7 @@ class Plugin_Name_Callback_Helper {
 	 */
 	public function number_callback( $args ) {
 
-		$value = Plugin_Name_Option::get_option( $args['id'] );
+		$value = Compi_Option::get_option( $args['id'] );
 
 
 		$html = '<input type="number" ';
@@ -307,7 +307,7 @@ class Plugin_Name_Callback_Helper {
 	 */
 	public function textarea_callback( $args ) {
 
-		$value = Plugin_Name_Option::get_option( $args['id'], $args['std']  );
+		$value = Compi_Option::get_option( $args['id'], $args['std']  );
 
 
 		$html = '<textarea ';
@@ -334,7 +334,7 @@ class Plugin_Name_Callback_Helper {
 	 */
 	public function select_callback( $args ) {
 
-		$value = Plugin_Name_Option::get_option( $args['id'] );
+		$value = Compi_Option::get_option( $args['id'] );
 
 		$html = '<select ' . $this->get_id_and_name_attrubutes( $args['id'] ) . '/>';
 
@@ -362,7 +362,7 @@ class Plugin_Name_Callback_Helper {
 	public function rich_editor_callback( $args ) {
 		global $wp_version;
 
-		$value = Plugin_Name_Option::get_option( $args['id'] );
+		$value = Compi_Option::get_option( $args['id'] );
 
 		if ( $wp_version >= 3.3 && function_exists( 'wp_editor' ) ) {
 			ob_start();

@@ -7,7 +7,7 @@
  * @author     wpdots <dev@wpdots.com>
  */
 
-class Plugin_Name_Meta_Box {
+class Compi_Meta_Box {
 
 	/**
 	 * The ID of this plugin.
