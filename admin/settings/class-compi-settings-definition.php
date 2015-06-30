@@ -20,7 +20,7 @@
 class Compi_Settings_Definition {
 
 	// @TODO: change plugin-name
-	public static $plugin_name = 'plugin-name';
+	public static $plugin_name = 'compi';
 
 	/**
 	 * [apply_tab_slug_filters description]
@@ -38,7 +38,7 @@ class Compi_Settings_Definition {
 
 			$options = isset( $default_settings[$tab_slug] ) ? $default_settings[$tab_slug] : array();
 
-			$extended_settings[$tab_slug] = apply_filters( 'plugin_name_settings_' . $tab_slug, $options );
+			$extended_settings[$tab_slug] = apply_filters( 'compi_settings_' . $tab_slug, $options );
 		}
 
 		return $extended_settings;
@@ -65,7 +65,7 @@ class Compi_Settings_Definition {
 		$tabs['default_tab'] = __( 'Default Tab', self::$plugin_name );
 		$tabs['second_tab'] = __( 'Second Tab', self::$plugin_name );
 
-		return apply_filters( 'plugin_name_settings_tabs', $tabs );
+		return apply_filters( 'compi_settings_tabs', $tabs );
 	}
 
 	/**

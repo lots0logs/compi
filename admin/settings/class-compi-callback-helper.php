@@ -33,11 +33,11 @@ class Compi_Callback_Helper {
 	}
 
 	private function get_id_attribute( $id ) {
-		return ' id="plugin_name_settings[' . $id . ']" ';
+		return ' id="compi_settings[' . $id . ']" ';
 	}
 
 	private function get_name_attribute( $name ) {
-		return ' name="plugin_name_settings[' . $name . ']" ';
+		return ' name="compi_settings[' . $name . ']" ';
 	}
 
 	private function get_id_and_name_attrubutes( $field_key ) {
@@ -45,7 +45,7 @@ class Compi_Callback_Helper {
 	}
 
 	private function get_label_for( $id, $desc ) {
-		return '<label for="plugin_name_settings[' . $id . ']"> '  . $desc . '</label>';
+		return '<label for="compi_settings[' . $id . ']"> '  . $desc . '</label>';
 	}
 
 	/**
@@ -366,7 +366,7 @@ class Compi_Callback_Helper {
 
 		if ( $wp_version >= 3.3 && function_exists( 'wp_editor' ) ) {
 			ob_start();
-			wp_editor( stripslashes( $value ), 'plugin_name_settings_' . $args['id'], array( 'textarea_name' => 'plugin_name_settings[' . $args['id'] . ']' ) );
+			wp_editor( stripslashes( $value ), 'compi_settings_' . $args['id'], array( 'textarea_name' => 'compi_settings[' . $args['id'] . ']' ) );
 			$html = ob_get_clean();
 		} else {
 			$html = '<textarea' . $this->get_id_and_name_attrubutes( $args['id'] ) . 'class="' . $args['size'] . '-text" rows="10" >' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
@@ -396,7 +396,7 @@ class Compi_Callback_Helper {
 		$html .= 'class="' . $args['size'] . '-text ' . 'plugin_name_upload_field" ';
 		$html .= ' value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 
-		$html .= '<span>&nbsp;<input type="button" class="' .  'plugin_name_settings_upload_button button-secondary" value="' . __( 'Upload File', $this->plugin_name ) . '"/></span>';
+		$html .= '<span>&nbsp;<input type="button" class="' .  'compi_settings_upload_button button-secondary" value="' . __( 'Upload File', $this->plugin_name ) . '"/></span>';
 
 		$html .= $this->get_label_for( $args['id'], $args['desc'] );
 

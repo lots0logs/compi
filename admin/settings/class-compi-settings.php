@@ -84,18 +84,18 @@ class Compi_Settings {
 	*/
 	public function register_settings() {
 
-		if ( false == get_option( 'plugin_name_settings' ) ) {
-			add_option( 'plugin_name_settings', array(), '', 'yes' );
+		if ( false == get_option( 'compi_settings' ) ) {
+			add_option( 'compi_settings', array(), '', 'yes' );
 		}
 
 		foreach( $this->registered_settings as $tab => $settings ) {
 
 			// add_settings_section( $id, $title, $callback, $page )
 			add_settings_section(
-				'plugin_name_settings_' . $tab,
+				'compi_settings_' . $tab,
 				__return_null(),
 				'__return_false',
-				'plugin_name_settings_' . $tab
+				'compi_settings_' . $tab
 				);
 
 			foreach ( $settings as $key => $option ) {
@@ -104,11 +104,11 @@ class Compi_Settings {
 
 				// add_settings_field( $id, $title, $callback, $page, $section, $args )
 				add_settings_field(
-					'plugin_name_settings[' . $key . ']',
+					'compi_settings[' . $key . ']',
 					$_name,
 					method_exists( $this->callback, $option['type'] . '_callback' ) ? array( $this->callback, $option['type'] . '_callback' ) : array( $this->callback, 'missing_callback' ),
-					'plugin_name_settings_' . $tab,
-					'plugin_name_settings_' . $tab,
+					'compi_settings_' . $tab,
+					'compi_settings_' . $tab,
 					array(
 						'id'      => $key,
 						'desc'    => !empty( $option['desc'] ) ? $option['desc'] : '',
@@ -127,7 +127,7 @@ class Compi_Settings {
 		} // end foreach
 
 		// Creates our settings in the options table
-		register_setting( 'plugin_name_settings', 'plugin_name_settings', array( $this->sanitization, 'settings_sanitize' ) );
+		register_setting( 'compi_settings', 'compi_settings', array( $this->sanitization, 'settings_sanitize' ) );
 
 	}
 }

@@ -42,10 +42,10 @@ class Compi_Sanitization_Helper {
 
 		$this->registered_settings = Compi_Settings_Definition::get_settings();
 
-		add_filter( 'plugin_name_settings_sanitize_text', array( $this, 'sanitize_text_field' ) );
-		add_filter( 'plugin_name_settings_sanitize_email', array( $this, 'sanitize_email_field' ) );
-		add_filter( 'plugin_name_settings_sanitize_checkbox', array( $this, 'sanitize_checkbox_field' ) );
-		add_filter( 'plugin_name_settings_sanitize_url', array( $this, 'sanitize_url_field' ) );
+		add_filter( 'compi_settings_sanitize_text', array( $this, 'sanitize_text_field' ) );
+		add_filter( 'compi_settings_sanitize_email', array( $this, 'sanitize_email_field' ) );
+		add_filter( 'compi_settings_sanitize_checkbox', array( $this, 'sanitize_checkbox_field' ) );
+		add_filter( 'compi_settings_sanitize_url', array( $this, 'sanitize_url_field' ) );
 	}
 
 	/**
@@ -58,11 +58,11 @@ class Compi_Sanitization_Helper {
 	 * Thus, no error messages will be produced.
 	 *
 	 * Filters in order:
-	 * - plugin_name_settings_sanitize_<tab_slug>
-	 * - plugin_name_settings_sanitize_<type>
-	 * - plugin_name_settings_sanitize
-	 * - plugin_name_settings_on_change_<tab_slug>
-	 * - plugin_name_settings_on_change_<field_key>
+	 * - compi_settings_sanitize_<tab_slug>
+	 * - compi_settings_sanitize_<type>
+	 * - compi_settings_sanitize
+	 * - compi_settings_on_change_<tab_slug>
+	 * - compi_settings_on_change_<field_key>
 	 *
 	 * @since 	1.0.0
 	 * @param 	array 		$input 		The value inputted in the field
@@ -78,7 +78,7 @@ class Compi_Sanitization_Helper {
 		$tab = isset( $referrer['tab'] ) ? $referrer['tab'] : Compi_Settings_Definition::get_default_tab_slug();
 
 		// Tab filter
-		$input = apply_filters( 'plugin_name_settings_sanitize_' . $tab, $input );
+		$input = apply_filters( 'compi_settings_sanitize_' . $tab, $input );
 
 		// Trigger action hook for general settings update for $tab
 		$this->do_settings_on_change_hook( $input, $tab );
@@ -106,22 +106,22 @@ class Compi_Sanitization_Helper {
 			return $input[$key];
 		}
 
-		return apply_filters( 'plugin_name_settings_sanitize_' . $type, $input[$key], $key );
+		return apply_filters( 'compi_settings_sanitize_' . $type, $input[$key], $key );
 	}
 
 	private function apply_general_filter( $input, $key ) {
 
-		return apply_filters( 'plugin_name_settings_sanitize', $input[$key], $key );
+		return apply_filters( 'compi_settings_sanitize', $input[$key], $key );
 	}
 
 	// Key specific on change hook
 	private function do_settings_on_key_change_hook( $key, $new_value ) {
 
-		$old_plugin_settings = get_option( 'plugin_name_settings' );
+		$old_plugin_settings = get_option( 'compi_settings' );
 		//checks if value is saved already in $old_plugin_settings
 		if ( isset($old_plugin_settings[$key]) && $old_plugin_settings[$key] !== $new_value ) {
 
-			do_action( 'plugin_name_settings_on_change_' . $key, $new_value, $old_plugin_settings[$key] );
+			do_action( 'compi_settings_on_change_' . $key, $new_value, $old_plugin_settings[$key] );
 
 		}
 	}
@@ -129,7 +129,7 @@ class Compi_Sanitization_Helper {
 	// Tab specific on change hook (only if a value has changed)
 	private function do_settings_on_change_hook( $new_values, $tab ) {
 
-		$old_plugin_settings = get_option( 'plugin_name_settings' );
+		$old_plugin_settings = get_option( 'compi_settings' );
 		$changed = false;
 
 		foreach( $new_values as $key => $new_value ) {
@@ -141,7 +141,7 @@ class Compi_Sanitization_Helper {
 
 		if ( $changed ) {
 
-			do_action( 'plugin_name_settings_on_change_' . $tab, $new_values, $old_plugin_settings );
+			do_action( 'compi_settings_on_change_' . $tab, $new_values, $old_plugin_settings );
 
 		}
 	}
@@ -153,7 +153,7 @@ class Compi_Sanitization_Helper {
 	// Loop through the whitelist and unset any that are empty for the tab being saved
 	private function get_output( $tab, $input ) {
 
-		$old_plugin_settings = get_option( 'plugin_name_settings' );
+		$old_plugin_settings = get_option( 'compi_settings' );
 
 		if(!is_array($old_plugin_settings))
 			$old_plugin_settings = array();
