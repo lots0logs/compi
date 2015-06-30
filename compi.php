@@ -3,20 +3,20 @@
 /**
  * The plugin bootstrap file
  *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
+ * This file is read by WordPress to generate Compi's information in the plugin
+ * admin area. This file also includes all of the dependencies used by Compi,
  * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
+ * that starts Compi.
  *
  * @link              http://wpdots.com
- * @since             1.0.0
+ * @since             0.1.0
  * @package           Compi
  *
  * @wordpress-plugin
  * Plugin Name:       Compi
  * Plugin URI:        http://wpdots.com/plugins/compi
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       The perfect Divi companion.
+ * Version:           0.1.0
  * Author:            wpdots
  * Author URI:        http://wpdots.com
  * License:           GPL-2.0+
@@ -38,6 +38,7 @@ function activate_compi() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-compi-activator.php';
 	Compi_Activator::activate();
 }
+register_activation_hook( __FILE__, 'activate_compi' );
 
 /**
  * The code that runs during plugin deactivation.
@@ -47,8 +48,6 @@ function deactivate_compi() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-compi-deactivator.php';
 	Compi_Deactivator::deactivate();
 }
-
-register_activation_hook( __FILE__, 'activate_compi' );
 register_deactivation_hook( __FILE__, 'deactivate_compi' );
 
 /**
@@ -58,13 +57,13 @@ register_deactivation_hook( __FILE__, 'deactivate_compi' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-compi.php';
 
 /**
- * Begins execution of the plugin.
+ * Begins execution of Compi.
  *
  * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
+ * kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function run_compi() {
 

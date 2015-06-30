@@ -4,7 +4,7 @@
  * Fired during plugin deactivation
  *
  * @link       http://wpdots.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Compi
  * @subpackage Compi/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Compi
  * @subpackage Compi/includes
  * @author     wpdots <dev@wpdots.com>
@@ -27,7 +27,7 @@ class Compi_Deactivator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public static function deactivate() {
 

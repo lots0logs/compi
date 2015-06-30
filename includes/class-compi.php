@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       http://wpdots.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Compi
  * @subpackage Compi/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Compi
  * @subpackage Compi/includes
  * @author     wpdots <dev@wpdots.com>
@@ -31,40 +31,40 @@ class Compi {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
+	 * Compi.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
-	 * @var      Compi_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Compi_Loader    $loader    Maintains and registers all hooks for Compi.
 	 */
 	protected $loader;
 
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
 	/**
-	 * The current version of the plugin.
+	 * The current version of Compi.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string    $version    The current version of Compi.
 	 */
 	protected $version;
 
 	/**
-	 * Define the core functionality of the plugin.
+	 * Define the core functionality of Compi.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function __construct() {
 
@@ -91,7 +91,7 @@ class Compi {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -119,7 +119,14 @@ class Compi {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-compi-public.php';
 
-		$this->loader = new Compi_Loader();
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-name-option.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-compi-callback-helper.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-compi-meta-box.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-compi-sanitization-helper.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-compi-settings-definition.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-compi-settings.php';
+
+		$this->loader = new Compi();
 
 	}
 
@@ -129,7 +136,7 @@ class Compi {
 	 * Uses the Compi_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -145,7 +152,7 @@ class Compi {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -155,13 +162,29 @@ class Compi {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		// Add the options page and menu item.
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
+		// Add an action link pointing to the options page.
+		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_name . '.php' );
+		$this->loader->add_action( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
+
+		// Build the option page
+		$settings_callback = new Compi_Callback_Helper( $this->plugin_name );
+		$settings_sanitization = new Compi_Sanitization_Helper( $this->plugin_name );
+		$plugin_settings = new Compi_Settings( $this->get_plugin_name(), $settings_callback, $settings_sanitization);
+		$this->loader->add_action( 'admin_init' , $plugin_settings, 'register_settings' );
+
+		$plugin_meta_box = new Compi_Meta_Box( $this->get_plugin_name() );
+		$this->loader->add_action( 'load-toplevel_page_' . $this->get_plugin_name() , $plugin_meta_box, 'add_meta_boxes' );
+
 	}
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -176,7 +199,7 @@ class Compi {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function run() {
 		$this->loader->run();
@@ -186,7 +209,7 @@ class Compi {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -196,7 +219,7 @@ class Compi {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    Compi_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -206,7 +229,7 @@ class Compi {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

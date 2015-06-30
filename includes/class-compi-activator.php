@@ -1,21 +1,11 @@
 <?php
 
 /**
- * Fired during plugin activation
- *
- * @link       http://wpdots.com
- * @since      1.0.0
- *
- * @package    Compi
- * @subpackage Compi/includes
- */
-
-/**
  * Fired during plugin activation.
  *
- * This class defines all code necessary to run during the plugin's activation.
+ * This class defines all code necessary to run during Compi's activation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Compi
  * @subpackage Compi/includes
  * @author     wpdots <dev@wpdots.com>
@@ -27,7 +17,7 @@ class Compi_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public static function activate() {
 
