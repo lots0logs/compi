@@ -2,9 +2,9 @@
 
 /**
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin/settings
- * @author     Your Name <email@example.com>
+ * @package    Compi
+ * @subpackage compi/admin/settings
+ * @author     wpdots <dev@wpdots.com>
  */
 
 class Plugin_Name_Meta_Box {
@@ -23,7 +23,7 @@ class Plugin_Name_Meta_Box {
 	 *
 	 * @since 	1.0.0
 	 * @access  private
-	 * @var   	array 		$options_tabs 	The araay of settings tabs
+	 * @var   	array 		$options_tabs 	The aray of settings tabs
 	 */
 	private $options_tabs;
 
@@ -36,7 +36,7 @@ class Plugin_Name_Meta_Box {
 	public function __construct( $plugin_name ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->options_tabs = Plugin_Name_Settings_Definition::get_tabs();
+		$this->options_tabs = Compi_Settings_Definition::get_tabs();
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Plugin_Name_Meta_Box {
 					$tab_id,							// Meta box ID
 					$tab_name,							// Meta box Title
 					array( $this, 'render_meta_box' ),	// Callback defining the plugin's innards
-					'plugin_name_settings_' . $tab_id, // Screen to which to add the meta box
+					'compi_settings_' . $tab_id, // Screen to which to add the meta box
 					'normal'							// Context
 					);
 
