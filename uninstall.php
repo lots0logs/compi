@@ -1,31 +1,61 @@
 <?php
-
 /**
- * Fired when the plugin is uninstalled.
+ * Runs on Uninstall of [Plugin Name]
  *
- * When populating this file, consider the following flow
- * of control:
+ * This file will remove any options and tables you
+ * have created for this plugin.
  *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
- * @link       http://wpdots.com
- * @since      0.1.0
- *
- * @package    Compi
+ * @since     1.0.0
+ * @author wpdots
+ * @category 	Core
+ * @package 	Plugin Name
+ * @license   GPL-2.0+
  */
+if( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit();
 
-// If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
+global $wpdb, $wp_roles;
+
+// For a single site
+if ( ! is_multisite() ) {
+
+	$status_options = get_option( 'compi_status_options', array() );
+
+	if ( ! empty( $status_options['uninstall_data'] ) ) {
+
+		// Delete options
+		$wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'compi_%';");
+
+		// Roles + caps
+		$installer = include( 'includes/admin/class-compi-install.php' );
+		$installer->remove_roles();
+
+		// Pages
+		$get_pages = $installer->compi_pages();
+		foreach( $get_pages as $key => $page ) {
+			wp_trash_post( get_option( 'compi_' . $key . '_page_id' ) );
+		}
+
+		/*
+
+		 */
+
+	}
+
 }
+// For a multisite network
+else {
+	$blog_ids         = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+	$original_blog_id = get_current_blog_id();
+
+	foreach ( $blog_ids as $blog_id ) {
+		switch_to_blog( $blog_id );
+
+		/*
+
+		 */
+		delete_site_option( 'option_name' );
+	}
+
+	switch_to_blog( $original_blog_id ); // Return to original blog.
+}
+?>

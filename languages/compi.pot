@@ -1,0 +1,1251 @@
+# WordPress Plugin Boilerplate Copyright (c) {2014}
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Plugin Boilerplate 1.0.2\n"
+"Report-Msgid-Bugs-To: https://github.com/seb86/WordPress-Plugin-Boilerplate/"
+"issues\n"
+"POT-Creation-Date: 2015-03-03 13:32+0100\n"
+"PO-Revision-Date: 2015-03-03 13:32+0100\n"
+"Last-Translator: WordPress Plugin Boilerplate <mailme@sebastiendumont.com>\n"
+"Language-Team: WP-Translations <wpt@wp-translations.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: D:\\GitHub\\WordPress-Plugin-Boilerplate"
+"\\wordpress-plugin-boilerplate\\includes\\admin\\class-plugin-name-admin-"
+"pointers.php\n"
+"X-Poedit-SearchPathExcluded-1: D:\\GitHub\\WordPress-Plugin-Boilerplate"
+"\\wordpress-plugin-boilerplate\\includes\\admin\\views\\html-admin-page-"
+"status-import-export.php\n"
+
+#: includes/admin/class-plugin-name-admin-help.php:48
+#: includes/admin/class-plugin-name-admin.php:150
+#: includes/admin/views/html-admin-page.php:11
+#: wordpress-plugin-boilerplate.php:406
+msgid "Documentation"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:50
+#, php-format
+msgid ""
+"Thank you for using <strong>%s</strong> :) Should you need help using or "
+"extending %s please read the documentation."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:52
+#, php-format
+msgid "%s Documentation"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:52
+msgid "Restart Tour"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:57
+#: wordpress-plugin-boilerplate.php:378
+msgid "Support"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:59
+#, php-format
+msgid ""
+"After <a href=\"%s\">reading the documentation</a>, for further assistance "
+"you can use the <a href=\"%s\">community forum</a>."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:59
+msgid "Company Name"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:61
+msgid ""
+"Before asking for help we recommend checking the status page to identify any "
+"problems with your configuration."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:63
+#: includes/admin/class-plugin-name-admin-help.php:72
+#: includes/admin/class-plugin-name-admin-menus.php:109
+#: includes/admin/views/html-admin-page-status.php:17
+#: wordpress-plugin-boilerplate.php:772
+msgid "System Status"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:63
+msgid "Community Support"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:68
+msgid "Found a bug?"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:70
+#, php-format
+msgid ""
+"If you find a bug within <strong>%s</strong> you can create a ticket via <a "
+"href=\"%s\">Github issues</a>. Ensure you read the <a href=\"%s"
+"\">contribution guide</a> prior to submitting your report. Be as descriptive "
+"as possible and please include your <a href=\"%s\">system status report</a>."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:72
+msgid "Report a bug"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:77
+msgid "For more information:"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:78
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:79
+msgid "Project on WordPress.org"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-help.php:80
+msgid "Project on Github"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:85
+#: includes/admin/class-plugin-name-admin-menus.php:89
+#: includes/admin/class-plugin-name-admin-menus.php:105
+#, php-format
+msgid "%s Settings"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:85
+#: includes/admin/class-plugin-name-admin-menus.php:89
+#: includes/admin/class-plugin-name-admin-welcome.php:223
+#: includes/admin/views/html-admin-page-status-report.php:318
+#: wordpress-plugin-boilerplate.php:377
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:94
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:29
+#: wordpress-plugin-boilerplate.php:770
+msgid "First Tab"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:98
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:29
+#: wordpress-plugin-boilerplate.php:771
+msgid "Second Tab"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:109
+#, php-format
+msgid "%s Status"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:111
+#, php-format
+msgid "%s Tools"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-menus.php:111
+#: includes/admin/views/html-admin-page-status-tools.php:10
+#: includes/admin/views/html-admin-page-status.php:18
+#: wordpress-plugin-boilerplate.php:773
+msgid "Tools"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:79
+msgid "Congratulations"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:82
+msgid "Start Tour"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:96
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:97
+msgid ""
+"This is were the boilerplate is located in the admin side-menu. It is here "
+"you will find the backend of the plugins functions, settings and system "
+"status.<br><strong>About This Tour</strong>Clicking Next below takes you to "
+"the next page of the tour. If you want to stop this tour, click \"Close\"."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:109
+msgid "Shortcuts"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:110
+msgid ""
+"Can be useful for creating shortcuts, linking to other areas of the plugin "
+"or to an external site."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:123
+msgid "Sections"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:124
+msgid ""
+"These sub-links allow you to display different content in there own sections."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:126
+#: includes/admin/class-plugin-name-admin-pointers.php:157
+msgid "Next"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-pointers.php:158
+#: includes/admin/class-plugin-name-admin-pointers.php:260
+msgid "Close"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-settings.php:73
+msgid "Action failed. Please refresh the page and retry."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-settings.php:81
+msgid "Your settings have been saved."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-settings.php:189
+#: wordpress-plugin-boilerplate.php:766
+msgid "The changes you made will be lost if you navigate away from this page."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-settings.php:543
+msgid "Hard Crop?"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-settings.php:566
+msgid "Select a page&hellip;"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:74
+#, php-format
+msgid "All missing %s pages was installed successfully."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:82
+msgid "Roles successfully reset"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:96
+msgid "All previous data has been removed and re-installed the defaults."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:107
+#, php-format
+msgid "There was an error calling %s::%s"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:109
+#, php-format
+msgid "There was an error calling %s"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:119
+msgid "Your changes have been saved."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:137
+#: includes/admin/views/html-notice-install.php:6
+#, php-format
+msgid "Install %s Pages"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:138
+msgid "Install pages"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:139
+#, php-format
+msgid ""
+"<strong class=\"red\">Note:</strong> This tool will install all the missing "
+"%s pages. Pages already defined and set up will not be replaced."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:143
+msgid "Capabilities"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:144
+msgid "Reset capabilities"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:145
+#, php-format
+msgid ""
+"This tool will reset the admin roles to default. Use this if your users "
+"cannot access all of the %s admin pages."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:149
+msgid "Start Over"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:150
+msgid "Restart"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-status.php:151
+#, php-format
+msgid ""
+"This tool will erase all settings, database tables (if any) and re-install "
+"\"<em>%s</em>\". Use this if you are really sure. All current data will be "
+"lost and will not be recoverable."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:49
+#, php-format
+msgid "Welcome to %s"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:52
+#: wordpress-plugin-boilerplate.php:404
+msgid "Getting Started"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:56
+#, php-format
+msgid "%s Changelog"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:59
+msgid "Changelog"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:63
+#, php-format
+msgid "%s Credits"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:66
+#: wordpress-plugin-boilerplate.php:405
+msgid "Credits"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:70
+#, php-format
+msgid "%s Translations"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:73
+msgid "Translations"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:77
+#, php-format
+msgid "%s Freedoms"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:80
+msgid "Freedoms"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:190
+msgid "Thanks, all done!"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:193
+msgid "Thank you for updating to the latest version!"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:196
+msgid "Thanks for installing!"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:199
+#, php-format
+msgid ""
+"%s %s %s is a powerful, stable, and secure plugin boilerplate. I hope you "
+"enjoy it."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:205
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:224
+msgid "Docs"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:225
+msgid "Your tweet message would be placed here."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:283
+msgid ""
+"Use this page to show what the plugin does or what features you have added "
+"since your first release. Replace the placeholder images with screenshots of "
+"your plugin. You can even make the screenshots linkable to show a larger "
+"screenshot with or without caption or play an embedded video. It's all up to "
+"you."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:286
+msgid "Three Columns with Screenshots"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:289
+msgid "Screenshot Title"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:290
+#: includes/admin/class-plugin-name-admin-welcome.php:295
+#: includes/admin/class-plugin-name-admin-welcome.php:300
+#: includes/admin/class-plugin-name-admin-welcome.php:310
+#: includes/admin/class-plugin-name-admin-welcome.php:314
+#: includes/admin/class-plugin-name-admin-welcome.php:318
+#: includes/admin/class-plugin-name-admin-welcome.php:329
+#: includes/admin/class-plugin-name-admin-welcome.php:334
+#: includes/admin/class-plugin-name-admin-welcome.php:345
+#: includes/admin/class-plugin-name-admin-welcome.php:349
+#: includes/admin/class-plugin-name-admin-welcome.php:400
+#: includes/admin/class-plugin-name-admin-welcome.php:405
+#: includes/admin/class-plugin-name-admin-welcome.php:410
+#: includes/admin/class-plugin-name-admin-welcome.php:418
+#: includes/admin/class-plugin-name-admin-welcome.php:423
+#: includes/admin/class-plugin-name-admin-welcome.php:428
+#: includes/admin/class-plugin-name-admin-welcome.php:436
+#: includes/admin/class-plugin-name-admin-welcome.php:441
+#: includes/admin/class-plugin-name-admin-welcome.php:446
+msgid "Title of Feature or New Changes"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:294
+msgid "You can add captions to your screenshots."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:299
+msgid "Or add captions on your videos."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:299
+msgid "Video Title"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:307
+msgid "Three Columns with a white background"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:325
+msgid "Two Columns with Screenshots"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:341
+msgid "Two Columns with a Single Screenshot"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:356
+msgid "Callout Headline"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:361
+msgid "One Column centered with a Single Screenshot"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:370
+msgid "Two Columns, Content Left, Screenshot Right"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:372
+#: includes/admin/class-plugin-name-admin-welcome.php:389
+msgid "Sub-Title (H4)"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:387
+msgid "Two Columns, Content Right, Screenshot Left"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:396
+msgid "Three Columns with NO Screenshots"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:475
+msgid "Bulletpoint your changelog like so."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:478
+#: includes/admin/class-plugin-name-admin-welcome.php:495
+#: includes/admin/class-plugin-name-admin-welcome.php:503
+#: includes/admin/views/html-admin-page-status-report.php:437
+msgid "Version"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:478
+msgid "nd March"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:495
+#: includes/admin/class-plugin-name-admin-welcome.php:503
+msgid "th August"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:531
+msgid "Project Leader &amp; Developer"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:532
+msgid ""
+"I am a freelance WordPress Developer and I have been developing for "
+"WordPress since 2009. I provide Code Reviews, e-Commerce installations and "
+"custom WordPress plugin and theme development services. I developed this "
+"boilerplate and many others."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:552
+msgid "Translation Manager, CEO of WP-Translations.org"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:553
+msgid ""
+"Translation is my hobby, make it a living is my plan. I translate but also "
+"check and code the missing i18n() functions in your plugins or themes. I run "
+"a FREE WP Community of translators on Transifex. So if you need someone who "
+"cares about quality work, get in touch. Many developers are already trusting "
+"me, Seb of course but also Yoast, Pippin and the Mailpoet Team."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:575
+msgid "Contributers"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:575
+msgid "These contributers are fetched from the GitHub repository."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:581
+msgid "Translators"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:592
+msgid "External Libraries"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:641
+msgid ""
+"WordPress Plugin Boilerplate is Free and open source software, built to help "
+"speed up plugin development and to be stable and secure for all WordPress "
+"versions. Below is a list explaining what you are allowed to do. Enjoy!"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:644
+msgid "You have the freedom to run the program, for any purpose."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:645
+msgid ""
+"You have access to the source code, the freedom to study how the program "
+"works, and the freedom to change it to make it do what you wish."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:646
+msgid ""
+"You have the freedom to redistribute copies of the original program so you "
+"can help your neighbor."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:647
+msgid ""
+"You have the freedom to distribute copies of your modified versions to "
+"others. By doing this you can give the whole community a chance to benefit "
+"from your changes."
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:681
+#, php-format
+msgid "View %s's GitHub Profile"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:687
+#: includes/admin/views/html-admin-page-status-report.php:433
+msgid "Name"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:690
+msgid "Username"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin-welcome.php:693
+msgid "View Website"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:149
+#: includes/admin/views/html-admin-page.php:10
+msgid "Website"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:167
+#, php-format
+msgid ""
+"If you like <strong>%1$s</strong> please leave a <a href=\"%2$s\" target="
+"\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating on <a href=\"%2$s"
+"\" target=\"_blank\">WordPress.org</a>. A huge thank you in advance!"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:197
+msgid "Contribute"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:198
+msgid "Report Bugs"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:199
+#: includes/admin/class-plugin-name-transifex-stats.php:226
+msgid "Translate"
+msgstr ""
+
+#: includes/admin/class-plugin-name-admin.php:208
+#: includes/admin/views/html-admin-page-status-report.php:37
+#, php-format
+msgid "%s Version"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:168
+msgctxt "page_slug"
+msgid "example"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:169
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:110
+#: includes/admin/views/html-admin-page-status-report.php:344
+msgid "Example Page"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:170
+msgid ""
+"This page was created as an example to show you the ability to creating "
+"pages automatically when the plugin is installed. You may if you wish create "
+"a page just to insert a single shortcode. You should find this page already "
+"set in the plugin settings. This save the user time to setup the pages the "
+"plugin requires."
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:174
+msgctxt "page_slug"
+msgid "shortcode"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:175
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:121
+#: includes/admin/views/html-admin-page-status-report.php:349
+msgid "Shortcode Example Page"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:176
+msgid ""
+"[caption align=\"alignright\" width=\"300\"]<img src=\"http://placekitten."
+"com/300/205\" alt=\"Cat\" title=\"Cute Cat\" width=\"300\" height=\"205\" /> "
+"Cute Cat[/caption] This page was created to show shortcode detection in the "
+"page."
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:244
+#, php-format
+msgid "%s Manager"
+msgstr ""
+
+#: includes/admin/class-plugin-name-install.php:490
+msgid "What's new:"
+msgstr ""
+
+#: includes/admin/class-plugin-name-transifex-api.php:90
+msgid "No responses"
+msgstr ""
+
+#: includes/admin/class-plugin-name-transifex-stats.php:104
+#: wordpress-plugin-boilerplate.php:764
+msgid "No results"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:68
+msgid "Settings Title"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:75
+msgid "Subscriber Access"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:76
+msgid "Prevent users from accessing WordPress admin."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:83
+msgid "Secure Content"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:84
+msgid ""
+"Keep your site secure by forcing SSL (HTTPS) on site (an SSL Certificate is "
+"required)."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:91
+msgid "Select Country"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:92
+msgid "This gives you a list of countries. "
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:101
+msgid "Multi Select Countries"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:111
+msgid ""
+"You can set pages that the plugin requires by having them installed and "
+"selected automatically when the plugin is installed."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:122
+msgid "This page has a shortcode applied when created by the plugin."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:132
+msgid "Single Checkbox"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:133
+msgid "Can come in handy to display more options."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:140
+msgid "Single Input (Text) "
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:143
+msgid "This admin setting can be hidden via the checkbox above."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:150
+msgid "Single Textarea "
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-one.php:153
+msgid ""
+"You can allow the user to use this field to enter their own CSS or HTML code."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:51
+msgid "Section One"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:52
+#: includes/admin/views/html-admin-page.php:28
+msgid "Section Two"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:104
+msgid "Section Two Options"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:111
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:263
+msgid "Select Page"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:112
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:264
+msgid "You can set a description here also."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:118
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:270
+msgid "You can select or search for a page."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:122
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:274
+msgid "Select"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:123
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:275
+msgid "This example shows you options from an array()."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:130
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:145
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:167
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:282
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:297
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:319
+#: includes/admin/views/html-admin-page-status-report.php:61
+#: includes/admin/views/html-admin-page-status-report.php:118
+#: includes/admin/views/html-admin-page-status-report.php:143
+#: includes/admin/views/html-admin-page-status-report.php:325
+msgid "Yes"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:131
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:146
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:168
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:283
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:298
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:320
+#: includes/admin/views/html-admin-page-status-report.php:64
+#: includes/admin/views/html-admin-page-status-report.php:118
+#: includes/admin/views/html-admin-page-status-report.php:143
+#: includes/admin/views/html-admin-page-status-report.php:325
+msgid "No"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:137
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:289
+msgid "MultiSelect"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:138
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:290
+msgid ""
+"This example shows you the ability to select multi options from an array()."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:152
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:304
+msgid "Checkbox"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:153
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:305
+msgid "Checkbox option"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:160
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:312
+msgid "Radio"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:161
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:313
+msgid "Radio option"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:173
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:325
+msgid "Number"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:174
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:326
+msgid "Use this field for numbered options."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:187
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:339
+msgid "Color"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:188
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:340
+msgid "Use this field for color picking."
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:197
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:349
+msgid "Group Checkboxes"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:198
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:350
+msgid "Checkbox One"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:207
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:359
+msgid "Checkbox Two"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:216
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:368
+msgid "Email"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:225
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:377
+msgid "Password"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:234
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:386
+msgid "Image Size"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:235
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:387
+msgid "Use this field option to save multiple settings for an image size"
+msgstr ""
+
+#: includes/admin/settings/class-plugin-name-settings-tab-two.php:256
+msgid "Section One Options"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-import-export.php:6
+msgid "Export Settings"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-import-export.php:8
+#: wordpress-plugin-boilerplate.php:775
+msgid "Export"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-import-export.php:12
+msgid "Import Settings"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-import-export.php:14
+#: wordpress-plugin-boilerplate.php:774
+msgid "Import"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-import-export.php:129
+msgid "Please upload a file to import"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:11
+msgid "Please include this information when requesting support:"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:12
+msgid "Get System Report"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:15
+msgid "Copied!"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:15
+msgid "Copy for Support"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:23
+msgid "Environment"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:29
+msgid "Home URI"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:33
+msgid "Site URI"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:41
+#, php-format
+msgid "%s Database Version"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:45
+msgid "WordPress Version"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:58
+msgid "WordPress Multisite Enabled"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:69
+msgid "Server Info"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:73
+msgid "PHP Version"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:88
+msgid "MySQL Version"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:103
+msgid "WordPress Memory Limit"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:109
+#, php-format
+msgid "%s - We recommend setting memory to at least "
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:117
+msgid "Is WordPress in Debug Mode?"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:121
+msgid "WordPress Language"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:125
+msgid "WordPress Max Upload Size"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:130
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:134
+msgid "PHP Time Limit"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:138
+msgid "PHP Max Input Vars"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:142
+msgid "SUHOSIN Installed"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:147
+#, php-format
+msgid "%s Logging"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:151
+msgid "Log directory is writable."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:153
+msgid "Log directory (<code>"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:157
+msgid "Default Timezone"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:161
+#, php-format
+msgid "Default timezone is %s - it should be UTC"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:163
+#, php-format
+msgid "Default timezone is %s"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:174
+msgid "Your server has fsockopen and cURL enabled."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:176
+msgid "Your server has fsockopen enabled, cURL is disabled."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:178
+msgid "Your server has cURL enabled, fsockopen is disabled."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:182
+msgid ""
+"Your server does not have fsockopen or cURL enabled - Various scripts which "
+"communicate with other servers will not work. Contact your hosting provider."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:189
+msgid "Your server has the SOAP Client class enabled."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:192
+#, php-format
+msgid ""
+"Your server does not have the <a href=\"%s\">SOAP Client</a> class enabled."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:197
+msgid "Remote Post"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:211
+msgid ""
+"wp_remote_post() failed. PayPal IPN won't work with your server. Contact "
+"your hosting provider."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:213
+#: includes/admin/views/html-admin-page-status-report.php:228
+#, php-format
+msgid "Error: %s"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:219
+msgid "Remote Get"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:226
+msgid ""
+"wp_remote_get() failed. The ability to update this plugin won't work with "
+"your server. Contact your hosting provider."
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:253
+msgid "Plugins"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:259
+msgid "Active Plugins"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:279
+msgid "Visit plugin homepage"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:302
+#: includes/admin/views/html-admin-page-status-report.php:441
+msgid "is available"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:306
+msgid "Network enabled"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:311
+#, php-format
+msgctxt "by author"
+msgid "by %s"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:324
+msgid "Force SSL"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:331
+#, php-format
+msgid "%s Pages"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:339
+msgid "Sample Page"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:361
+#, php-format
+msgctxt "%s Pages links in the System Status"
+msgid "Edit %s page"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:370
+msgid "Page not set"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:379
+msgid "Page does not exist"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:383
+#, php-format
+msgid "Page does not contain the shortcode: %s"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:389
+msgid "Page ID"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:389
+msgid "Page Slug"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:399
+msgid "Theme"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-report.php:446
+msgid "Author URL"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-tools.php:26
+msgid "Remove all data on uninstall"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-tools.php:29
+msgid "Enabled"
+msgstr ""
+
+#: includes/admin/views/html-admin-page-status-tools.php:32
+msgid "This tool will delete all data when uninstalling via Plugins > Delete."
+msgstr ""
+
+#: includes/admin/views/html-admin-page.php:27
+msgid "Default"
+msgstr ""
+
+#: includes/admin/views/html-admin-page.php:29
+msgid "Section Three"
+msgstr ""
+
+#: includes/admin/views/html-admin-page.php:54
+msgid ""
+"You can use this page to place the main back feature of your plugin. Place "
+"links at the end of your header and set the page into sections."
+msgstr ""
+
+#: includes/admin/views/html-admin-page.php:55
+msgid ""
+"These sections can then display different content based on the section the "
+"user is viewing."
+msgstr ""
+
+#: includes/admin/views/html-admin-page.php:56
+msgid ""
+"There are many actions and filters in place to allow you to add and display "
+"anything you need."
+msgstr ""
+
+#: includes/admin/views/html-admin-settings.php:30
+msgid "Save changes"
+msgstr ""
+
+#: includes/admin/views/html-notice-install.php:5
+#, php-format
+msgid ""
+"<strong>Welcome to %s</strong> &#8211; You're almost ready to start using "
+"this plugin :)"
+msgstr ""
+
+#: includes/admin/views/html-notice-install.php:6
+msgid "Skip setup"
+msgstr ""
+
+#: includes/admin/views/html-notice-theme-support.php:6
+msgid "Theme Integration Guide"
+msgstr ""
+
+#: includes/admin/views/html-notice-theme-support.php:6
+msgid "Hide this notice"
+msgstr ""
+
+#: includes/admin/views/html-notice-update.php:5
+#, php-format
+msgid ""
+"<strong>%s Data Update Required</strong> &#8211; We just need to update your "
+"install to the latest version"
+msgstr ""
+
+#: includes/admin/views/html-notice-update.php:6
+msgid "Run the updater"
+msgstr ""
+
+#: includes/admin/views/html-notice-update.php:10
+msgid ""
+"It is strongly recommended that you backup your database before proceeding. "
+"Are you sure you wish to run the updater now?"
+msgstr ""
+
+#: wordpress-plugin-boilerplate.php:316 wordpress-plugin-boilerplate.php:328
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: wordpress-plugin-boilerplate.php:512
+#, php-format
+msgid "Sorry, %s requires WordPress "
+msgstr ""
