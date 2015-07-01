@@ -1,18 +1,18 @@
 <?php
 /**
- * Plugin Name Admin Functions
+ * Compi Admin Functions
  *
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Get all Plugin Name screen ids
+ * Get all Compi screen ids
  *
  * @since  1.0.0
  * @access public
@@ -102,7 +102,7 @@ function compi_create_page( $slug, $option = '', $page_title = '', $page_content
 /**
  * Output admin fields.
  *
- * Loops though the plugin name options array and outputs each field.
+ * Loops though Compi name options array and outputs each field.
  *
  * @since  1.0.0
  * @access public
@@ -184,7 +184,7 @@ function transifex_display_translators() {
 } // END transifex_display_translators()
 
 /**
- * Hooks Plugin Name actions, when present in the $_REQUEST superglobal.
+ * Hooks Compi actions, when present in the $_REQUEST superglobal.
  * Every compi_action present in $_REQUEST is called using
  * WordPress's do_action function. These functions are called on admin_init.
  *

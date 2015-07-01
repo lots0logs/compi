@@ -4,7 +4,7 @@
 		<?php
 		/**
 		 * These header links do not have to be external.
-		 * You may change the links to an internal link connected with the plugin.
+		 * You may change the links to an internal link connected with Compi.
 		 */
 		$links = apply_filters( 'compi_admin_header_links', array(
 			Compi()->web_url . '?utm_source=wpadmin&utm_campaign=header' => __( 'Website', COMPI_TEXT_DOMAIN ),

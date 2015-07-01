@@ -1,5 +1,5 @@
 /**
- * Plugin Name Admin Menu JS
+ * Compi Admin Menu JS
  */
 jQuery(function($){
 

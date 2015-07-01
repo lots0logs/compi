@@ -5,7 +5,7 @@
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -33,9 +33,9 @@ class Compi_Install {
 	} // END __construct()
 
 	/**
-	 * When called, the plugin checks the version
-	 * of the plugin and the database version in use.
-	 * This function determins if the plugin requires
+	 * When called, Compi checks the version
+	 * of Compi and the database version in use.
+	 * This function determins if Compi requires
 	 * to process an update.
 	 *
 	 * @since  1.0.0
@@ -95,7 +95,7 @@ class Compi_Install {
 	} // END install_action()
 
 	/**
-	 * Install Plugin Name
+	 * Install Compi
 	 *
 
 	 *         of the main page this plugin needs.
@@ -167,7 +167,7 @@ class Compi_Install {
 			'example'   => array(
 				'name'    => _x( 'example', 'page_slug', COMPI_TEXT_DOMAIN ),
 				'title'   => __( 'Example Page', COMPI_TEXT_DOMAIN ),
-				'content' => __( 'This page was created as an example to show you the ability to creating pages automatically when the plugin is installed. You may if you wish create a page just to insert a single shortcode. You should find this page already set in the plugin settings. This save the user time to setup the pages the plugin requires.', COMPI_TEXT_DOMAIN )
+				'content' => __( 'This page was created as an example to show you the ability to creating pages automatically when Compi is installed. You may if you wish create a page just to insert a single shortcode. You should find this page already set in Compi settings. This save the user time to setup the pages Compi requires.', COMPI_TEXT_DOMAIN )
 			),
 
 			'shortcode' => array(
@@ -179,7 +179,7 @@ class Compi_Install {
 	} // END compi_pages()
 
 	/**
-	 * Create the pages the plugin relies on,
+	 * Create the pages Compi relies on,
 	 * storing page id's in variables.
 	 *
 	 * @since  1.0.0
@@ -295,11 +295,11 @@ class Compi_Install {
 	} // END create_roles()
 
 	/**
-	 * Get capabilities for Plugin Name.
+	 * Get capabilities for Compi.
 	 *
 	 * These are assigned to admin and any other
 	 * user role capabilities during installation
-	 * or resetting the plugin.
+	 * or resetting Compi.
 	 *
 
 	 * @access public
@@ -348,7 +348,7 @@ class Compi_Install {
 	/**
 	 * Remove User Roles.
 	 *
-	 * This removes any custom user roles created by the plugin.
+	 * This removes any custom user roles created by Compi.
 	 *
 	 * @since  1.0.0
 	 * @access public

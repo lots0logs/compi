@@ -1,6 +1,6 @@
 <?php
 /**
- * Runs on Uninstall of [Plugin Name]
+ * Runs on Uninstall of [Compi]
  *
  * This file will remove any options and tables you
  * have created for this plugin.
@@ -8,7 +8,7 @@
  * @since     1.0.0
  * @author wpdots
  * @category 	Core
- * @package 	Plugin Name
+ * @package 	Compi
  * @license   GPL-2.0+
  */
 if( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit();

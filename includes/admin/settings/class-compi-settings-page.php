@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name Settings Page
+ * Compi Settings Page
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 

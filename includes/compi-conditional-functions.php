@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name Conditional Functions
+ * Compi Conditional Functions
  *
  * Functions for determining the current query/page.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 

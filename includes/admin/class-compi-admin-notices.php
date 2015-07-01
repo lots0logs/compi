@@ -5,7 +5,7 @@
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -72,8 +72,8 @@ class Compi_Admin_Notices {
 		}
 
 		/**
-		 * If we have just installed the plugin for the first time,
-		 * include a message with an action button to install the plugins pages.
+		 * If we have just installed Compi for the first time,
+		 * include a message with an action button to install Compis pages.
 		 */
 		else if ( get_option( '_compi_needs_pages' ) == 1 ) {
 			include( 'views/html-notice-install.php' );

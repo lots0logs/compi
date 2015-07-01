@@ -1,11 +1,11 @@
 <?php
 /**
- * This outputs the admin pages for Plugin Name.
+ * This outputs the admin pages for Compi.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -21,7 +21,7 @@ if ( ! class_exists( 'Compi_Admin_Page' ) ) {
 	class Compi_Admin_Page {
 
 		/**
-		 * Handles output of the plugin page in admin.
+		 * Handles output of Compi page in admin.
 		 *
 		 * @since  1.0.0
 		 * @access public

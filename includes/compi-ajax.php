@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name Ajax Functions
+ * Compi Ajax Functions
  *
 
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 

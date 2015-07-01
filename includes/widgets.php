@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name Widgets
+ * Compi Widgets
  *
 
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name/Functions
+ * @package  Compi/Functions
  * @license  GPL-2.0+
  */
 

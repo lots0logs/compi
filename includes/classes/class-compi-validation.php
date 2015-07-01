@@ -5,7 +5,7 @@
  * @since    1.0.0
  * @author wpdots
  * @category Class
- * @package  Plugin Name/Classes
+ * @package  Compi/Classes
  */
 class Compi_Validation {
 

@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name Second Tab Settings
+ * Compi Second Tab Settings
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 

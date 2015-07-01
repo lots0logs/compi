@@ -177,7 +177,7 @@ msgstr ""
 #: includes/admin/class-plugin-name-admin-pointers.php:97
 msgid ""
 "This is were the boilerplate is located in the admin side-menu. It is here "
-"you will find the backend of the plugins functions, settings and system "
+"you will find the backend of Compis functions, settings and system "
 "status.<br><strong>About This Tour</strong>Clicking Next below takes you to "
 "the next page of the tour. If you want to stop this tour, click \"Close\"."
 msgstr ""
@@ -188,7 +188,7 @@ msgstr ""
 
 #: includes/admin/class-plugin-name-admin-pointers.php:110
 msgid ""
-"Can be useful for creating shortcuts, linking to other areas of the plugin "
+"Can be useful for creating shortcuts, linking to other areas of Compi "
 "or to an external site."
 msgstr ""
 
@@ -388,7 +388,7 @@ msgstr ""
 
 #: includes/admin/class-plugin-name-admin-welcome.php:283
 msgid ""
-"Use this page to show what the plugin does or what features you have added "
+"Use this page to show what Compi does or what features you have added "
 "since your first release. Replace the placeholder images with screenshots of "
 "your plugin. You can even make the screenshots linkable to show a larger "
 "screenshot with or without caption or play an embedded video. It's all up to "
@@ -629,9 +629,9 @@ msgstr ""
 #: includes/admin/class-plugin-name-install.php:170
 msgid ""
 "This page was created as an example to show you the ability to creating "
-"pages automatically when the plugin is installed. You may if you wish create "
+"pages automatically when Compi is installed. You may if you wish create "
 "a page just to insert a single shortcode. You should find this page already "
-"set in the plugin settings. This save the user time to setup the pages the "
+"set in Compi settings. This save the user time to setup the pages the "
 "plugin requires."
 msgstr ""
 
@@ -708,12 +708,12 @@ msgstr ""
 
 #: includes/admin/settings/class-plugin-name-settings-tab-one.php:111
 msgid ""
-"You can set pages that the plugin requires by having them installed and "
-"selected automatically when the plugin is installed."
+"You can set pages that Compi requires by having them installed and "
+"selected automatically when Compi is installed."
 msgstr ""
 
 #: includes/admin/settings/class-plugin-name-settings-tab-one.php:122
-msgid "This page has a shortcode applied when created by the plugin."
+msgid "This page has a shortcode applied when created by Compi."
 msgstr ""
 
 #: includes/admin/settings/class-plugin-name-settings-tab-one.php:132

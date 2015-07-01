@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name Admin Settings Class.
+ * Compi Admin Settings Class.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -264,7 +264,7 @@ class Compi_Admin_Settings {
 	/**
 	 * Output admin fields.
 	 *
-	 * Loops though the plugin name options array and outputs each field.
+	 * Loops though Compi name options array and outputs each field.
 	 *
 	 * @since  1.0.0
 	 * @access public static
@@ -636,7 +636,7 @@ class Compi_Admin_Settings {
 	/**
 	 * Save admin fields.
 	 *
-	 * Loops though the plugin name options array and outputs each field.
+	 * Loops though Compi name options array and outputs each field.
 	 *
 	 * @since  1.0.0
 	 * @access public static

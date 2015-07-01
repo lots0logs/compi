@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name Core Functions
+ * Compi Core Functions
  *
  * General core functions available on both the front-end and admin.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -177,7 +177,7 @@ function compi_print_js() {
 
 	if ( ! empty( $compi_queued_js ) ) {
 
-		echo "<!-- Plugin Name JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
+		echo "<!-- Compi JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
 
 		// Sanitize
 		$compi_queued_js = wp_check_invalid_utf8( $compi_queued_js );

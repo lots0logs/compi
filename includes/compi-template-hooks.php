@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name Template Hooks
+ * Compi Template Hooks
  *
- * Action/filter hooks used for Plugin Name functions/templates
+ * Action/filter hooks used for Compi functions/templates
  *
  * @since    1.0.0
  * @author wpdots
  * @category Core
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 

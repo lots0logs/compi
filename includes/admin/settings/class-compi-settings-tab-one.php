@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name First Tab Settings
+ * Compi First Tab Settings
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -108,7 +108,7 @@ class Compi_Settings_First_Tab extends Compi_Settings_Page {
 
 			array(
 				'title' 	=> __( 'Example Page', COMPI_TEXT_DOMAIN ),
-				'desc' 		=> __( 'You can set pages that the plugin requires by having them installed and selected automatically when the plugin is installed.', COMPI_TEXT_DOMAIN ),
+				'desc' 		=> __( 'You can set pages that Compi requires by having them installed and selected automatically when Compi is installed.', COMPI_TEXT_DOMAIN ),
 				'id' 		=> 'compi_example_page_id',
 				'type' 		=> 'single_select_page',
 				'default'	=> '',
@@ -119,7 +119,7 @@ class Compi_Settings_First_Tab extends Compi_Settings_Page {
 
 			array(
 				'title' 	=> __( 'Shortcode Example Page', COMPI_TEXT_DOMAIN ),
-				'desc' 		=> __( 'This page has a shortcode applied when created by the plugin.', COMPI_TEXT_DOMAIN ),
+				'desc' 		=> __( 'This page has a shortcode applied when created by Compi.', COMPI_TEXT_DOMAIN ),
 				'id' 		=> 'compi_shortcode_page_id',
 				'type' 		=> 'single_select_page',
 				'default'	=> '',

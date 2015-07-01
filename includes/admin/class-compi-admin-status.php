@@ -1,11 +1,11 @@
 <?php
 /**
- * Debug Plugin Name / Status page
+ * Debug Compi / Status page
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -69,7 +69,7 @@ class Compi_Admin_Status {
 			switch ( $_GET['action'] ) {
 
 				case "install_pages" :
-					// Install any missing pages the plugin requires.
+					// Install any missing pages Compi requires.
 					$installer->create_pages();
 					echo '<div class="updated compi-message"><p>' . sprintf( __( 'All missing %s pages was installed successfully.', COMPI_TEXT_DOMAIN ), Compi()->name ) . '</p></div>';
 				break;
@@ -123,7 +123,7 @@ class Compi_Admin_Status {
 	} // END status_tools()
 
 	/**
-	 * Get all the tools the plugin supports for administrators.
+	 * Get all the tools Compi supports for administrators.
 	 *
 	 * @since  1.0.0
 	 * @access public

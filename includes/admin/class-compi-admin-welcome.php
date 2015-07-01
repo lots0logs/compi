@@ -7,7 +7,7 @@
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -86,7 +86,7 @@ class Compi_Admin_Welcome {
 	 * Register the Dashboard Pages which are normally hidden.
 	 * These pages are used to render the Welcome and Credits pages.
 	 * Can be accessed again via the version number link at the
-	 * bottom of the plugin pages.
+	 * bottom of Compi pages.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -280,7 +280,7 @@ class Compi_Admin_Welcome {
 
 			<?php $this->intro(); ?>
 
-			<p class="about-description"><?php _e( 'Use this page to show what the plugin does or what features you have added since your first release. Replace the placeholder images with screenshots of your plugin. You can even make the screenshots linkable to show a larger screenshot with or without caption or play an embedded video. It\'s all up to you.', COMPI_TEXT_DOMAIN ); ?></p>
+			<p class="about-description"><?php _e( 'Use this page to show what Compi does or what features you have added since your first release. Replace the placeholder images with screenshots of your plugin. You can even make the screenshots linkable to show a larger screenshot with or without caption or play an embedded video. It\'s all up to you.', COMPI_TEXT_DOMAIN ); ?></p>
 
 			<div>
 				<h3><?php _e( 'Three Columns with Screenshots', COMPI_TEXT_DOMAIN ); ?></h3>
@@ -482,7 +482,7 @@ class Compi_Admin_Welcome {
 					<li>Improved the use of PHPDoc conventions to document the code.</li>
 
 					<li>Improved the System Report page and added a new filter for the status tabs.</li>
-					<li>Removed 'Author Email', 'Requires at least' and 'Tested up to' from the plugin header as they are not read by WordPress. These are mainly for the Readme.txt file.</li>
+					<li>Removed 'Author Email', 'Requires at least' and 'Tested up to' from Compi header as they are not read by WordPress. These are mainly for the Readme.txt file.</li>
 					<li>Moved the global $wpdb to the top of the uninstall.php file so both single and multisites can query the database.</li>
 					<li>Removed the `countries` class and variables. - Can be added by following the documentation.</li>
 					<li>Removed variable $theme_author_url. - Can be added by following the documentation.</li>
@@ -765,7 +765,7 @@ class Compi_Admin_Welcome {
 
 	/**
 	 * Sends user to the Welcome page on first activation of
-	 * Plugin Name as well as each time Plugin Name is
+	 * Compi as well as each time Compi is
 	 * upgraded to a new version.
 	 *
 	 * @since  1.0.0

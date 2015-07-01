@@ -5,7 +5,7 @@
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -100,7 +100,7 @@ class Compi_Admin_Menus {
 				)
 			) );
 
-			// Each settings tab will create a submenu under the plugin menu.
+			// Each settings tab will create a submenu under Compi menu.
 			foreach ( $settings_submenus as $tab ) {
 				$settings_page .= add_submenu_page( COMPI_PAGE, sprintf( __( '%s Settings', COMPI_TEXT_DOMAIN ), Compi()->title_name ), $tab['menu_name'], Compi()->manage_plugin, COMPI_PAGE . '-settings&tab=' . $tab['menu_slug'], array( $this, 'settings_page' ) );
 			}
@@ -147,7 +147,7 @@ class Compi_Admin_Menus {
 	} // END menu_highlight()
 
 	/**
-	 * Reorder the plugin menu items in admin.
+	 * Reorder Compi menu items in admin.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -224,7 +224,7 @@ class Compi_Admin_Menus {
 	} // END custom_menu_order()
 
 	/**
-	 * Initialize the Plugin Name main page.
+	 * Initialize the Compi main page.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -235,7 +235,7 @@ class Compi_Admin_Menus {
 	} // END compi_page()
 
 	/**
-	 * Initialize the Plugin Name settings page.
+	 * Initialize the Compi settings page.
 	 * @since  1.0.0
 	 * @access public
 	 */
@@ -245,7 +245,7 @@ class Compi_Admin_Menus {
 	}
 
 	/**
-	 * Initialize the Plugin Name status page.
+	 * Initialize the Compi status page.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -256,7 +256,7 @@ class Compi_Admin_Menus {
 	} // END status_page()
 
 	/**
-	 * Initialize the Plugin Name import and export page.
+	 * Initialize the Compi import and export page.
 	 *
 	 * @since  1.0.0
 	 * @access public

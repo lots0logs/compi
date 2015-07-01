@@ -273,7 +273,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					if ( ! empty( $plugin_data['Name'] ) ) {
 
-						// link the plugin name to the plugin url if available
+						// link Compi name to Compi url if available
 						$compi = $plugin_data['Name'];
 						if ( ! empty( $plugin_data['PluginURI'] ) ) {
 							$compi = '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . __( 'Visit plugin homepage', COMPI_TEXT_DOMAIN ) . '">' . $compi . '</a>';

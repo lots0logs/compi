@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name Admin.
+ * Compi Admin.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -66,7 +66,7 @@ class Compi_Admin {
 	} // END includes()
 
 	/**
-	 * This includes the plugin tour.
+	 * This includes Compi tour.
 	 *
 	 * @since  1.0.*
 	 * @access public
@@ -131,8 +131,8 @@ class Compi_Admin {
 
 	/**
 	 * Filters the admin footer text by placing links
-	 * for the plugin including a simply thank you to
-	 * review the plugin on WordPress.org.
+	 * for Compi including a simply thank you to
+	 * review Compi on WordPress.org.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -175,9 +175,9 @@ class Compi_Admin {
 
 	/**
 	 * Filters the update footer by placing details
-	 * of the plugin and links to contribute or
-	 * report issues with the plugin when viewing any
-	 * of the plugin pages.
+	 * of Compi and links to contribute or
+	 * report issues with Compi when viewing any
+	 * of Compi pages.
 	 *
 	 * @since  1.0.0
 	 * @access public

@@ -1,11 +1,11 @@
 <?php
 /**
- * Help is provided for this plugin on the plugin pages.
+ * Help is provided for this plugin on Compi pages.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Admin
- * @package  Plugin Name
+ * @package  Compi
  * @license  GPL-2.0+
  */
 
@@ -32,7 +32,7 @@ class Compi_Admin_Help {
 	} // END __construct()
 
 	/**
-	 * Adds help tabs to the plugin pages.
+	 * Adds help tabs to Compi pages.
 	 *
 	 * @since  1.0.0
 	 * @access public

@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name Shortcodes.
+ * Compi Shortcodes.
  *
  * @since    1.0.0
  * @author wpdots
  * @category Class
- * @package  Plugin Name/Classes
+ * @package  Compi/Classes
  * @license  GPL-2.0+
  */
 class Compi_Shortcodes {
