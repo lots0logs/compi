@@ -45,6 +45,8 @@ class Compi_Admin_Status {
 	 *
 	 * @since  1.0.0
 	 * @access public
+	 *
+	 * @param $port
 	 */
 	public static function status_port( $port ) {
 		//global $compi, $wpdb;

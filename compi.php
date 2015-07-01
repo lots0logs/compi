@@ -1,8 +1,8 @@
 <?php
 /*
- * Compi: Compi
+ * Plugin Name: Compi
  * Plugin URI: http://wpdots.com/plugins/compi
- * Description: The perfect companion for Divi.
+ * Description: The best WordPress themes can be even better with the right companion.
  * Version: 1.0.0
  * Author: wpdots
  * Author URI: http://wpdots.com
@@ -11,7 +11,7 @@
  * Text Domain: compi
  * Domain Path:       languages
  * Network: true
- * GitHub Plugin URI: 
+ * GitHub Plugin URI: http://github.com/wpsots/compi 
  *
  * Compi is distributed under the terms of the
  * GNU General Public License as published by the Free Software Foundation,
@@ -314,7 +314,6 @@ if ( !class_exists( 'Compi' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
-		 * @return void
 		 */
 		public function __construct() {
 
@@ -350,8 +349,10 @@ if ( !class_exists( 'Compi' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
-		 * @param  mixed $links
-		 * @return void
+		 *
+*@param  mixed $links
+		 *
+		 * @return array
 		 */
 		public function action_links( $links ) {
 
@@ -736,8 +737,10 @@ if ( !class_exists( 'Compi' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
-		 * @param  mixed $content
-		 * @return void
+		 *
+*@param  mixed $content
+		 *
+		 * @return array
 		 */
 		public function force_ssl( $content ) {
 

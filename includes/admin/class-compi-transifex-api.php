@@ -38,7 +38,6 @@ if ( ! class_exists( 'Compi_Transifex_API' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
-		 * @return $auth
 		 */
 		public function set_credentials() {
 			$username = '/@s-.e*$bd.8-6/@';
@@ -54,7 +53,10 @@ if ( ! class_exists( 'Compi_Transifex_API' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
+		 *
 		 * @param  string $verify
+		 *
+		 * @return mixed|string
 		 */
 		public function verify_credential( $verify ) {
 			$verify = str_replace('/', '', $verify);
@@ -80,8 +82,10 @@ if ( ! class_exists( 'Compi_Transifex_API' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
+		 *
 		 * @param  $response
-		 * @return $error
+		 *
+		 * @return array|bool|string|void $error
 		 */
 		public function is_api_error( $response ) {
 			$error = false;
@@ -104,8 +108,10 @@ if ( ! class_exists( 'Compi_Transifex_API' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @access public
-		 * @param  string $request API variable; e.g. projects
-		 * @return $result
+		 *
+*@param  string $request API variable; e.g. projects
+		 *
+		 * @return array|bool|mixed|string|void $result
 		 */
 		public function connect_api( $request ) {
 			$cache_id = md5( $request );

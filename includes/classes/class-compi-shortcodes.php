@@ -32,8 +32,11 @@ class Compi_Shortcodes {
 	 *
 	 * @since  1.0.0
 	 * @access public
+	 *
 	 * @param  mixed $function
 	 * @param  array $atts (default: array())
+	 * @param array $wrapper
+	 *
 	 * @return string
 	 */
 	public function shortcode_wrapper(

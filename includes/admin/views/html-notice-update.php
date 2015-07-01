@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 </div>
 <script type="text/javascript">
 	jQuery('.compi-update-now').click('click', function(){
-		var answer = confirm( '<?php _e( 'It is strongly recommended that you backup your database before proceeding. Are you sure you wish to run the updater now?', COMPI_TEXT_DOMAIN ); ?>' );
-		return answer;
+		return confirm('<?php _e( 'It is strongly recommended that you backup your database before proceeding. Are you sure you wish to run the updater now?', COMPI_TEXT_DOMAIN ); ?>');
 	});
 </script>

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5c0ea11-7c3b-4463-9b79-ab51d76b1035" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/admin/activation.css" afterPath="$PROJECT_DIR$/assets/css/admin/activation.css" />
+    <list default="true" id="f5c0ea11-7c3b-4463-9b79-ab51d76b1035" name="Default" comment="change colors in css. reformat all files.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/chosen/chosen.jquery.js" afterPath="$PROJECT_DIR$/assets/js/chosen/chosen.jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-help.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-help.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/compi-admin-functions.php" afterPath="$PROJECT_DIR$/includes/admin/compi-admin-functions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/compi-theme-support.php" afterPath="$PROJECT_DIR$/includes/admin/compi-theme-support.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/admin/compi.css" afterPath="$PROJECT_DIR$/assets/css/admin/compi.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compi.iml" afterPath="$PROJECT_DIR$/.idea/compi.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-notices.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-notices.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-settings.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-settings.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-status.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-status.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-welcome.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-admin-welcome.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-install.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-install.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/classes/class-compi-shortcodes.php" afterPath="$PROJECT_DIR$/includes/classes/class-compi-shortcodes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-transifex-api.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-transifex-api.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/class-compi-transifex-stats.php" afterPath="$PROJECT_DIR$/includes/admin/class-compi-transifex-stats.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/compi-core-functions.php" afterPath="$PROJECT_DIR$/includes/compi-core-functions.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/compi-formatting-functions.php" afterPath="$PROJECT_DIR$/includes/compi-formatting-functions.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compi.php" afterPath="$PROJECT_DIR$/compi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/views/html-notice-theme-support.php" afterPath="$PROJECT_DIR$/includes/admin/views/html-notice-theme-support.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/admin/views/html-notice-update.php" afterPath="$PROJECT_DIR$/includes/admin/views/html-notice-update.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.js" afterPath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="compi.iws" />
@@ -40,8 +47,8 @@
       <file leaf-file-name="compi.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/compi.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8075561">
-              <caret line="479" column="84" selection-start-line="479" selection-start-column="84" selection-end-line="479" selection-end-column="84" />
+            <state vertical-scroll-proportion="4.324435">
+              <caret line="625" column="16" selection-start-line="625" selection-start-column="16" selection-end-line="625" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -62,13 +69,20 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/compi.php" />
-        <option value="$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php" />
         <option value="$PROJECT_DIR$/includes/admin/compi-theme-support.php" />
         <option value="$PROJECT_DIR$/includes/admin/compi-admin-functions.php" />
         <option value="$PROJECT_DIR$/includes/admin/views/html-notice-theme-support.php" />
         <option value="$PROJECT_DIR$/assets/css/admin/compi.css" />
         <option value="$PROJECT_DIR$/assets/css/admin/activation.css" />
+        <option value="$PROJECT_DIR$/includes/compi-formatting-functions.php" />
+        <option value="$PROJECT_DIR$/compi.php" />
+        <option value="$PROJECT_DIR$/assets/js/chosen/chosen.jquery.js" />
+        <option value="$PROJECT_DIR$/includes/admin/views/html-notice-update.php" />
+        <option value="$PROJECT_DIR$/includes/admin/class-compi-transifex-api.php" />
+        <option value="$PROJECT_DIR$/includes/admin/class-compi-admin-notices.php" />
+        <option value="$PROJECT_DIR$/includes/admin/class-compi-admin-settings.php" />
+        <option value="$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php" />
+        <option value="$PROJECT_DIR$/includes/admin/class-compi-install.php" />
       </list>
     </option>
   </component>
@@ -93,6 +107,22 @@
     <option name="width" value="1920" />
     <option name="height" value="1047" />
   </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>BashSupport</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -116,9 +146,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -151,62 +179,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -216,10 +192,13 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="settings.editor.selected.configurable" value="php.wordpress.base.configurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -505,12 +484,20 @@
       <workItem from="1435732084617" duration="13000" />
       <workItem from="1435732123342" duration="124000" />
       <workItem from="1435732382047" duration="53000" />
-      <workItem from="1435732644244" duration="3277000" />
+      <workItem from="1435732644244" duration="3364000" />
+      <workItem from="1435742259828" duration="4247000" />
     </task>
+    <task id="LOCAL-00001" summary="change colors in css. reformat all files.">
+      <created>1435738379019</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1435738379019</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3611000" />
+    <option name="totallyTimeSpent" value="7945000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -530,12 +517,13 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3991131" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1687966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17039403" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -545,10 +533,10 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Kotlin Bytecode" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -562,6 +550,11 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change colors in css. reformat all files." />
+    <option name="LAST_COMMIT_MESSAGE" value="change colors in css. reformat all files." />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
   <component name="WordPressConfiguration" enabled="true">
     <wordpressPath>$USER_HOME$/wordpress</wordpressPath>
   </component>
@@ -570,7 +563,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/css/admin/welcome.css">
+    <entry file="file://$PROJECT_DIR$/compi.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -610,17 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/admin/compi-admin-functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5690672">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1435736999788" expanded="true" signature="-1:-1" placeholder="SELECT ID FR..wp_posts..." />
-            <marker date="1435736999788" expanded="true" signature="-1:-1" placeholder="SELECT ID FR..wp_posts..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/admin/compi-theme-support.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04250295">
@@ -629,21 +611,222 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="116.62963">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/compi-formatting-functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3333335">
+          <caret line="46" column="1" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/chosen/chosen.jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="446" column="6" selection-start-line="446" selection-start-column="6" selection-end-line="446" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/views/html-notice-update.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="9" column="187" selection-start-line="9" selection-start-column="187" selection-end-line="9" selection-end-column="187" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/chosen/ajax-chosen.jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="14" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-transifex-api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3333335">
+          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-admin-notices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3333335">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/admin/welcome.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="4" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-install.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.0">
+          <caret line="189" column="8" selection-start-line="189" selection-start-column="8" selection-end-line="189" selection-end-column="8" />
+          <folding>
+            <marker date="1435744718941" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1435744718941" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1435744718941" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1435744718941" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1435744718941" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-admin-settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="651" column="27" selection-start-line="651" selection-start-column="27" selection-end-line="651" selection-end-column="27" />
+          <folding>
+            <marker date="1435745376077" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/admin/compi-admin-functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.0">
+          <caret line="136" column="24" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
+          <folding>
+            <marker date="1435736999788" expanded="true" signature="-1:-1" placeholder="SELECT ID FR..wp_posts..." />
+            <marker date="1435736999788" expanded="true" signature="-1:-1" placeholder="SELECT ID FR..wp_posts..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/compi-template-hooks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/compi-hooks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.21133412">
-          <caret line="260" column="11" selection-start-line="260" selection-start-column="11" selection-end-line="260" selection-end-column="11" />
+        <state vertical-scroll-proportion="2.2936344">
+          <caret line="303" column="12" selection-start-line="303" selection-start-column="12" selection-end-line="303" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/compi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8075561">
-          <caret line="479" column="84" selection-start-line="479" selection-start-column="84" selection-end-line="479" selection-end-column="84" />
+        <state vertical-scroll-proportion="4.324435">
+          <caret line="625" column="16" selection-start-line="625" selection-start-column="16" selection-end-line="625" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>jQuery-2.0.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>compi</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

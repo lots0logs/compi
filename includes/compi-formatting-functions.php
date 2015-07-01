@@ -41,10 +41,10 @@ function compi_sanitize_taxonomy_name( $taxonomy ) {
  */
 function compi_get_filename_from_url( $file_url ) {
 	$parts = parse_url( $file_url );
-	if ( isset( $parts['path'] ) ) {
-		return basename( $parts['path'] );
-	}
-} // END compi_get_filename_from_url()
+	$parts_path = ( isset( $parts['path'] ) ) ? basename( $parts['path'] ) : '';
+
+	return $parts_path;
+}
 
 /**
  * Normalise dimensions, unify to cm then convert to wanted unit value

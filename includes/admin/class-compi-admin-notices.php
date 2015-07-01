@@ -23,7 +23,6 @@ class Compi_Admin_Notices {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'admin_print_styles', array( $this, 'add_notices' ) );

@@ -160,7 +160,7 @@ class Compi_Install {
 	 * @since  1.0.0
 	 * @access public
 	 * @filter compi_pages
-	 * @return void
+	 * @return array
 	 */
 	public function compi_pages() {
 		return apply_filters( 'compi_pages', array(

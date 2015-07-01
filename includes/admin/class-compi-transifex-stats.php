@@ -167,8 +167,8 @@ if ( ! class_exists( 'Compi_Transifex_Stats' ) ) {
 		 * @since  1.0.0
 		 * @access public
 		 * @filter compi_transifex_stats
-		 * @param  string $project_slug Transifex Project slug
-		 * @param  string $resource_slug Transifex Resource slug
+		 * @internal param string $project_slug Transifex Project slug
+		 * @internal param string $resource_slug Transifex Resource slug
 		 */
 		public function display_translations_progress() {
 			if ( ! $this->project_slug ) {

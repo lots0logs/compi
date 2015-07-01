@@ -444,10 +444,8 @@
       if (!this.display_disabled_options && option.disabled) {
         return false;
       }
-      if (option.empty) {
-        return false;
-      }
-      return true;
+      return !option.empty;
+
     };
 
     AbstractChosen.browser_is_supported = function() {

@@ -1,5 +1,5 @@
 # Compi
-##### The best WordPress themes can be even better with the right companion.
+##### A companion plugin for Elegant Themes' Divi 
 
 ### Description
 

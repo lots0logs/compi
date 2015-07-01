@@ -183,24 +183,29 @@ if ( ! class_exists( 'Compi_Admin_Menus' ) ) {
 		public function menu_order( $menu_order ) {
 
 			// Initialize our custom order array
-			$compi_menu_order = array();
+			//$compi_menu_order = array();
 
 			// Get the index of our custom separator
-			$compi_separator = array_search( 'separator-compi', $menu_order );
+			//$compi_separator = array_search( 'separator-compi', $menu_order );
 
 			// Loop through menu order and do some rearranging
-			foreach ( $menu_order as $index => $item ) {
+			/*foreach ( $menu_order as $index => $item ) {
 
 				if ( ( ( str_replace( '_', '-', COMPI_SLUG ) ) == $item ) ) {
 					$compi_menu_order[] = 'separator-' . str_replace( '_', '-', COMPI_SLUG );
+					$compi_menu_order[] = 'admin.php?page=et_divi_options';
 					$compi_menu_order[] = $item;
 					$compi_menu_order[] = 'admin.php?page=' . COMPI_PAGE;
+					$compi_menu_order[] = 'separator-' . str_replace( '_', '-', COMPI_SLUG );
 					unset( $menu_order[ $compi_separator ] );
 				} elseif ( ! in_array( $item, array( 'separator-' . str_replace( '_', '-', COMPI_SLUG ) ) ) ) {
 					$compi_menu_order[] = $item;
 				}
 
-			}
+			}*/
+			$compi_menu_order   = array( 'separator', 'admin.php?page=et_divi_options' );
+			$compi_menu_order[] = 'admin.php?page=' . COMPI_PAGE;
+			$compi_menu_order[] = 'separator';
 
 			// Return menu order
 			return $compi_menu_order;
@@ -230,9 +235,6 @@ if ( ! class_exists( 'Compi_Admin_Menus' ) ) {
 							$parent_file = 'admin.php?page=' . COMPI_SLUG . '&tab=tools';
 						}
 					}
-					break;
-				default:
-					$parent_file = $parent_file;
 					break;
 			}
 

@@ -25,7 +25,6 @@ class Compi_Admin_Help {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'current_screen', array( $this, 'add_help_tabs' ), 50 );

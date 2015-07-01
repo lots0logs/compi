@@ -25,8 +25,7 @@ class Compi_Admin_Welcome {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
-	 */
+*/
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menus') );
 		add_action( 'admin_head', array( $this, 'admin_head' ) );

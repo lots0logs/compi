@@ -170,7 +170,6 @@ function compi_enqueue_js( $code ) {
  * @since  1.0.0
  * @access public
  * @global $compi_queued_js
- * @return $compi_queued_js
  */
 function compi_print_js() {
 	global $compi_queued_js;

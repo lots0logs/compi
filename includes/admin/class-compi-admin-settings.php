@@ -29,8 +29,7 @@ class Compi_Admin_Settings {
 	 *
 	 * @since  1.0.2
 	 * @access public
-	 * @return void
-	 */
+*/
 	public function __construct() {
 		add_action( 'compi_settings_start',  array( $this, 'settings_top' ),    10, 2 );
 		add_action( 'compi_settings_finish', array( $this, 'settings_bottom' ), 10, 2 );
@@ -42,8 +41,8 @@ class Compi_Admin_Settings {
 	 * @since  1.0.0
 	 * @access public static
 	 * @filter compi_get_settings_pages
-	 * @return $settings
-	 */
+* @return array|mixed|void $settings
+*/
 	public static function get_settings_pages() {
 		if ( empty( self::$settings ) ) {
 			$settings = array();
@@ -222,9 +221,14 @@ class Compi_Admin_Settings {
 	 *
 	 * @since  1.0.0
 	 * @access public static
-	 * @param  mixed $option
-	 * @return string
-	 */
+*
+* @param $option_name
+* @param string $default
+*
+*@return string
+
+*@internal param mixed $option
+*/
 	public static function get_option( $option_name, $default = '' ) {
 		// Array value
 		if ( strstr( $option_name, '[' ) ) {
@@ -640,9 +644,13 @@ class Compi_Admin_Settings {
 	 *
 	 * @since  1.0.0
 	 * @access public static
-	 * @param  array $options Opens array to output
-	 * @return bool
-	 */
+*
+*@param  array $options Opens array to output
+* @param $current_tab
+* @param string $current_section
+*
+*@return bool
+*/
 	public static function save_fields( $options, $current_tab, $current_section = '' ) {
 		if ( empty( $_POST ) )
 			return false;
