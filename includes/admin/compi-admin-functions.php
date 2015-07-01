@@ -9,7 +9,9 @@
  * @license  GPL-2.0+
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly
 
 /**
  * Get all Compi screen ids
@@ -19,7 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @return array
  */
 function compi_get_screen_ids() {
-	$menu_name = strtolower( str_replace ( ' ', '-', Compi()->menu_name ) );
+
+	$menu_name = strtolower( str_replace( ' ', '-', Compi()->menu_name ) );
 
 	$compi_screen_id = COMPI_SCREEN_ID;
 
@@ -45,28 +48,31 @@ function compi_get_screen_ids() {
  *
  * @since  1.0.0
  * @access public
+ *
  * @param  mixed $slug Slug for the new page
  * @param  mixed $option Option name to store the page's ID
  * @param  string $page_title (default: '') Title for the new page
  * @param  string $page_content (default: '') Content for the new page
  * @param  int $post_parent (default: 0) Parent for the new page
+ *
  * @return int page ID
  */
 function compi_create_page( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0 ) {
+
 	global $wpdb;
 
 	$option_value = get_option( $option );
 
-	if ( $option_value > 0 && get_post( $option_value ) )
-		return -1;
+	if ( $option_value > 0 && get_post( $option_value ) ) {
+		return - 1;
+	}
 
 	$page_found = null;
 
 	if ( strlen( $page_content ) > 0 ) {
 		// Search for an existing page with the specified page content (typically a shortcode)
 		$page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM " . $wpdb->posts . " WHERE post_type='page' AND post_content LIKE %s LIMIT 1;", "%{$page_content}%" ) );
-	}
-	else {
+	} else {
 		// Search for an existing page with the specified page slug
 		$page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM " . $wpdb->posts . " WHERE post_type='page' AND post_name = %s LIMIT 1;", $slug ) );
 	}
@@ -80,14 +86,14 @@ function compi_create_page( $slug, $option = '', $page_title = '', $page_content
 	}
 
 	$page_data = array(
-		'post_status'       => 'publish',
-		'post_type'         => 'page',
-		'post_author'       => 1,
-		'post_name'         => $slug,
-		'post_title'        => $page_title,
-		'post_content'      => $page_content,
-		'post_parent'       => $post_parent,
-		'comment_status'    => 'closed'
+		'post_status'    => 'publish',
+		'post_type'      => 'page',
+		'post_author'    => 1,
+		'post_name'      => $slug,
+		'post_title'     => $page_title,
+		'post_content'   => $page_content,
+		'post_parent'    => $post_parent,
+		'comment_status' => 'closed',
 	);
 
 	$page_id = wp_insert_post( $page_data );
@@ -106,9 +112,11 @@ function compi_create_page( $slug, $option = '', $page_title = '', $page_content
  *
  * @since  1.0.0
  * @access public
+ *
  * @param  array $options Opens array to output
  */
 function compi_admin_fields( $options ) {
+
 	if ( ! class_exists( 'Compi_Admin_Settings' ) ) {
 		include 'class-compi-admin-settings.php';
 	}
@@ -121,10 +129,13 @@ function compi_admin_fields( $options ) {
  *
  * @since  1.0.0
  * @access public
+ *
  * @param  array $options
+ *
  * @return void
  */
 function compi_update_options( $options ) {
+
 	if ( ! class_exists( 'Compi_Admin_Settings' ) ) {
 		include 'class-compi-admin-settings.php';
 	}
@@ -137,11 +148,14 @@ function compi_update_options( $options ) {
  *
  * @since  1.0.0
  * @access public
+ *
  * @param  mixed $option_name
  * @param  mixed $default
+ *
  * @return string
  */
 function compi_settings_get_option( $option_name, $default = '' ) {
+
 	if ( ! class_exists( 'Compi_Admin_Settings' ) ) {
 		include 'class-compi-admin-settings.php';
 	}
@@ -193,6 +207,7 @@ function transifex_display_translators() {
  * @return void
  */
 function compi_do_actions() {
+
 	if ( isset( $_REQUEST['compi_action'] ) ) {
 		do_action( 'compi_' . $_REQUEST['compi_action'], $_REQUEST );
 	}

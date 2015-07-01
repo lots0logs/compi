@@ -22,7 +22,7 @@
 
 .compi-message{
 	position: relative;
-	border-left-color: #EC8642 !important;
+	border-left-color: #B777F7 !important;
 	overflow: hidden;
 }
 
@@ -31,8 +31,8 @@
 .compi-message a.button-primary,
 .compi-actions a.button-primary,
 .help-tab-content a.button-primary{
-	background: #EC8642;
-	border-color: #EB6D19;
+	background: #B777F7;
+	border-color: #9E6FDD;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(0,0,0,.15);
 	box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(0,0,0,.15);
 	color: #ffffff;
@@ -44,7 +44,7 @@
 .compi-message a.button-primary:hover,
 .compi-actions a.button-primary:hover,
 .help-tab-content a.button-primary:hover{
-	background: #EB6D19;
+	background: #9E6FDD;
 	border-color: #EB3B19;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(0,0,0,.15);
 	box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(0,0,0,.15);
@@ -55,8 +55,8 @@
 .compi-message a.button-primary:active,
 .compi-actions a.button-primary:active,
 .help-tab-content a.button-primary:active{
-	background: #fac75a;
-	border-color: #EC8642;
+	background: #D6ABFF;
+	border-color: #B777F7;
 }
 
 .compi-message a.skip,
@@ -825,7 +825,7 @@ img.help_tip{
 #tiptip_holder.tip_top #tiptip_arrow_inner{
 	margin-top:-7px;
 	margin-left:-6px;
-	border-top-color:#fac75a;
+	border-top-color: #D6ABFF;
 }
 
 #tiptip_holder.tip_bottom{padding-top:5px}
@@ -833,7 +833,7 @@ img.help_tip{
 #tiptip_holder.tip_bottom #tiptip_arrow_inner{
 	margin-top:-5px;
 	margin-left:-6px;
-	border-bottom-color:#fac75a;
+	border-bottom-color: #D6ABFF;
 }
 
 #tiptip_holder.tip_right{padding-left:5px}
@@ -841,7 +841,7 @@ img.help_tip{
 #tiptip_holder.tip_right #tiptip_arrow_inner{
 	margin-top:-6px;
 	margin-left:-5px;
-	border-right-color:#fac75a;
+	border-right-color: #D6ABFF;
 }
 
 #tiptip_holder.tip_left{padding-right:5px}
@@ -849,14 +849,14 @@ img.help_tip{
 #tiptip_holder.tip_left #tiptip_arrow_inner{
 	margin-top:-6px;
 	margin-left:-7px;
-	border-left-color:#fac75a;
+	border-left-color: #D6ABFF;
 }
 
 #tiptip_content, .compi_error_tip{
 	font-size:11px;
 	color:#333;
 	padding:.5em;
-	background:#fac75a;
+	background: #D6ABFF;
 	-webkit-border-radius:3px;
 	-moz-border-radius:3px;
 	border-radius:3px;

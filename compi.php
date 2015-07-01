@@ -439,7 +439,7 @@ if ( !class_exists( 'Compi' ) ) {
 		/**
 		 * Define Constants
 		 *
-		 *         2. Change 'compi' with Compi slug of your plugin on "WordPress.org"
+		 *
 		 * @since  1.0.0
 		 * @access private
 		 */
