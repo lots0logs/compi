@@ -67,7 +67,8 @@ class Compi_Admin_Notices {
 	public function install_notice() {
 		// If we need to update, include a message with the update button.
 		if ( get_option( '_compi_needs_update' ) == 1 ) {
-			include( 'views/html-notice-update.php' );
+			$notice = 'update';
+			include( 'views/html-admin-notice.php' );
 		}
 
 		/**
@@ -75,7 +76,8 @@ class Compi_Admin_Notices {
 		 * include a message with an action button to install Compis pages.
 		 */
 		else if ( get_option( '_compi_needs_pages' ) == 1 ) {
-			include( 'views/html-notice-install.php' );
+			$notice = 'install';
+			include( 'views/html-admin-notice.php' );
 		}
 	} // END install_notice()
 
@@ -86,7 +88,9 @@ class Compi_Admin_Notices {
 	 * @access public
 	 */
 	public function theme_check_notice() {
-		include( 'views/html-notice-theme-support.php' );
+
+		$notice = 'support';
+		include( 'views/html-admin-notice.php' );
 	} // END theme_check_notice()
 
 } // END Compi_Admin_Notices class.
