@@ -1,133 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5c0ea11-7c3b-4463-9b79-ab51d76b1035" name="Default" comment="started combining files where it makes sense to reduce the clutter.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/includes/class-compi-activation.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dashboard/class-compi-dashboard.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/includes/class-compi-deactivation" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/includes/class-compi-i18n.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/includes/class-compi-loader.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/class-compi-public.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/includes/class-compi.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/compi-custom.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dashboard/templates/compi-dashboard-view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dashboard/css/compi-dashboard.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dashboard/js/compi-dashboard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/compi-public-view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/compi-style.css" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/admin/activation.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/admin/compi.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/admin/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/admin/menu.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/admin/welcome.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/chosen.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/compi.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/prettyPhoto.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/dashicons.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/dashicons.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/dashicons.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/dashicons.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/ajax-loader.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/ajax-loader@2x.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/chosen-sprite.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/chosen-sprite@2x.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/fxbenard.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/gear.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/help.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/sebd.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/welcome/compi-badge.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/welcome/compi-badge@2x.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/welcome/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/admin-menu.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/admin-menu.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/compi.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/compi.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/round.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/round.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/settings.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/settings.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/transifex.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/admin/transifex.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/ajax-chosen.jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/ajax-chosen.jquery.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/chosen-rtl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/chosen-rtl.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/chosen.jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/chosen.jquery.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/chosen/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/frontend/compi.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/frontend/compi.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/frontend/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-blockui/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-blockui/jquery.blockUI.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-blockui/jquery.blockUI.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-cookie/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-cookie/jquery.cookie.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-cookie/jquery.cookie.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-tiptip/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-tiptip/jquery.tipTip.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/jquery-tiptip/jquery.tipTip.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.init.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.init.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/prettyPhoto/jquery.prettyPhoto.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-help.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-menus.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-notices.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-page.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-settings.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-status.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin-welcome.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-admin.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-install.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-transifex-api.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/class-compi-transifex-stats.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/compi-admin-functions.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/compi-theme-support.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/settings/class-compi-settings-page.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/settings/class-compi-settings-tab-one.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/settings/class-compi-settings-tab-two.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/settings/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/updates/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-notice.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-page-status-report.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-page-status-tools.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-page-status.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-page.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/html-admin-settings.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/admin/views/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/classes/class-compi-shortcodes.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/classes/class-compi-validation.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/classes/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/classes/shortcodes/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-ajax.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-conditional-functions.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-core-functions.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-formatting-functions.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-functions.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-hooks.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/compi-template-hooks.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/widgets.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/includes/widgets/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/languages/compi-fr_FR.mo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/languages/compi-fr_FR.po" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/languages/compi.mo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/languages/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/phpunit.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uninstall.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compi.php" afterPath="$PROJECT_DIR$/compi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="f5c0ea11-7c3b-4463-9b79-ab51d76b1035" name="Default" comment="went back to the drawing board..much more organized structure now">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compi.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="compi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -178,7 +60,7 @@
       <file leaf-file-name="class-compi.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/includes/class-compi.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31272727">
+            <state vertical-scroll-proportion="0.3138686">
               <caret line="205" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
               <folding>
                 <element signature="e#7#311#0#PHP" expanded="true" />
@@ -690,7 +572,7 @@
       <workItem from="1435827270544" duration="1400000" />
       <workItem from="1435925614844" duration="4421000" />
       <workItem from="1435989986692" duration="747000" />
-      <workItem from="1435990743168" duration="3482000" />
+      <workItem from="1435990743168" duration="3685000" />
     </task>
     <task id="LOCAL-00001" summary="change colors in css. reformat all files.">
       <created>1435738379019</created>
@@ -710,11 +592,17 @@
       <option name="project" value="LOCAL" />
       <updated>1435822989866</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="went back to the drawing board..much more organized structure now">
+      <created>1435994265279</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1435994265279</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23411000" />
+    <option name="totallyTimeSpent" value="23614000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -731,12 +619,13 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3292683" sideWeight="0.5094095" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.5120052" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3292683" sideWeight="0.4905905" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.48799482" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.49772874" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17944622" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -753,7 +642,6 @@
       <window_info id="Kotlin Bytecode" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -772,7 +660,8 @@
     <MESSAGE value="change colors in css. reformat all files." />
     <MESSAGE value="code inspection fixes" />
     <MESSAGE value="started combining files where it makes sense to reduce the clutter." />
-    <option name="LAST_COMMIT_MESSAGE" value="started combining files where it makes sense to reduce the clutter." />
+    <MESSAGE value="went back to the drawing board..much more organized structure now" />
+    <option name="LAST_COMMIT_MESSAGE" value="went back to the drawing board..much more organized structure now" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WordPressConfiguration" enabled="true">
@@ -965,7 +854,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/class-compi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31272727">
+        <state vertical-scroll-proportion="0.3138686">
           <caret line="205" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
           <folding>
             <element signature="e#7#311#0#PHP" expanded="true" />
