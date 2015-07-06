@@ -58,7 +58,7 @@ class Compi_Options_Table {
 		);
 
 		$compi_options_all = array(
-			'builder' => array(
+			'builder'       => array(
 				'section_start'       => array(
 					'type' => 'section_start',
 				),
@@ -83,30 +83,44 @@ class Compi_Options_Table {
 					'type'        => 'section_end',
 					'sub_section' => 'true',
 				),
-				'builder_title'       => array(
-					'type'     => 'main_title',
-					'title'    => __( 'Builder Enhancements', 'Compi' ),
-					'subtitle' => __( 'You can select any combination of the five placements below.', 'Compi' ),
-				),
-				'theme_title'         => array(
-					'type'     => 'main_title',
-					'title'    => __( 'Theme Enhancements', 'Compi' ),
-					'subtitle' => __( 'Add and rearrange any combination of social networks below. You can define the Network Label and Username to the right of each.', 'Monarch' ),
-				),
-				'compi_title'         => array(
-					'type'  => 'main_title',
-					'title' => __( 'Compi Plugin Settings', 'Compi' ),
-				),
-				'import'              => array(
-					'type'  => 'import',
-					'title' => __( 'Import', 'Compi' ),
-				),
-				'export'              => array(
-					'type'  => 'export',
-					'title' => __( 'Export', 'Compi' ),
-				),
+			),
+			'builder_title' => array(
+				'type'     => 'main_title',
+				'title'    => __( 'Builder Enhancements', 'Compi' ),
+				'subtitle' => __( 'You can select any combination of the five placements below.', 'Compi' ),
+			),
+			'theme_title'   => array(
+				'type'     => 'main_title',
+				'title'    => __( 'Theme Enhancements', 'Compi' ),
+				'subtitle' => __( 'Add and rearrange any combination of social networks below. You can define the Network Label and Username to the right of each.', 'Monarch' ),
+			),
+			'compi_title'   => array(
+				'type'  => 'main_title',
+				'title' => __( 'Compi Plugin Settings', 'Compi' ),
+			),
+			'import'        => array(
+				'type'  => 'import',
+				'title' => __( 'Import', 'Compi' ),
+			),
+			'export'        => array(
+				'type'  => 'export',
+				'title' => __( 'Export', 'Compi' ),
 			),
 		);
+
+		$builder_options     = array(
+			$compi_options_all['builder_title'],
+			$compi_options_all['builder'],
+			$compi_options_all['locations_note'],
+		);
+
+		$header_import_options = array(
+			$compi_options_all['import']
+		);
+		$header_export_options = array(
+			$compi_options_all['export']
+		);
+
 	
 	}
 }

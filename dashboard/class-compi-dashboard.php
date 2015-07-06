@@ -57,6 +57,23 @@ class Compi_Admin {
 	}
 
 	/**
+	 * Register our admin page and menu link
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_menu_link() {
+
+		$menu_page = add_submenu_page( 'et_divi_options', __( 'Compi Settings', 'Compi' ), __( 'Compi Settings', 'Compi' ), 'manage_options', 'dots_compi_options', array(
+				$this,
+				'options_page'
+			) );
+			add_action( "admin_print_scripts-{$menu_page}", array( $this, 'plugin_page_js' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'plugin_page_css' ) );
+
+	}
+
+
+	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
