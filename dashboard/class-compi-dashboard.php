@@ -57,6 +57,9 @@ class Compi_Admin {
 		$this->dashboard_dir = plugin_dir_path( __FILE__ );
 		$this->template_dir  = $this->dashboard_dir . 'templates';
 		$this->css_stylesheet = plugins_url( '/css/compi-dashboard.css', __FILE__ );
+		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.yellow-red.min.css';
+		$this->css_mdl_icons = '//fonts.googleapis.com/icon?family=Material+Icons';
+		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script  = plugins_url( '/js/compi-dashboard.js', __FILE__ );
 		$this->loader        = $loader;
 
@@ -77,7 +80,7 @@ class Compi_Admin {
 		) );
 
 		$this->loader->add_action( "admin_print_scripts-{$menu_page}", $this, 'enqueue_scripts' );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
 
 	}
 
@@ -101,7 +104,9 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, $this->css_stylesheet, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
 
 	}
 
@@ -124,6 +129,7 @@ class Compi_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_script( $this->plugin_name . 'mdl-js', $this->admin_mdl_script, array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery' ), $this->version, false );
 
 	}
