@@ -13,23 +13,6 @@
  */
 
 
-$compi_options               = $this->compi_options;
-$compi_sections              = $this->compi_sections;
-$sharing_locations_options   = $this->sharing_locations_options;
-$sharing_networks_options    = $this->sharing_networks_options;
-$sharing_sidebar_options     = $this->sharing_sidebar_options;
-$sharing_inline_options      = $this->sharing_inline_options;
-$sharing_popup_options       = $this->sharing_popup_options;
-$sharing_flyin_options       = $this->sharing_flyin_options;
-$sharing_media_options       = $this->sharing_media_options;
-$follow_networks_options     = $this->follow_networks_options;
-$follow_widget_options       = $this->follow_widget_options;
-$follow_shortcode_options    = $this->follow_shortcode_options;
-$general_main_options        = $this->general_main_options;
-$compi_post_types            = $this->compi_post_types;
-$header_importexport_options = $this->header_importexport_options;
-$header_stats_options        = $this->header_stats_options;
-
 echo '
 		<div id="dots_admin_wrapper_outer">
 			<div id="dots_admin_wrapper" class="dots_admin">

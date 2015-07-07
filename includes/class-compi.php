@@ -59,6 +59,15 @@ class Compi {
 	protected $version;
 
 	/**
+	 * The plugin's dashboard.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string $dashboard The admin dashboard.
+	 */
+	protected $dashboard;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -143,6 +152,18 @@ class Compi {
 	}
 
 	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The name of the plugin.
+	 */
+	public function get_plugin_name() {
+
+		return $this->plugin_name;
+	}
+
+	/**
 	 * Register all of the hooks related to the dashboard functionality
 	 * of the plugin.
 	 *
@@ -151,11 +172,20 @@ class Compi {
 	 */
 	private function define_dashboard_hooks() {
 
-		$plugin_dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version() );
+		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version(), $this->loader );
+		$this->loader->add_action( 'admin_menu', $this->dashboard, 'setup_dashboard' );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_dashboard, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_dashboard, 'enqueue_scripts' );
+	}
 
+	/**
+	 * Retrieve the version number of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
+	 */
+	public function get_version() {
+
+		return $this->version;
 	}
 
 	/**
@@ -185,18 +215,6 @@ class Compi {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-
-		return $this->plugin_name;
-	}
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
@@ -205,17 +223,6 @@ class Compi {
 	public function get_loader() {
 
 		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-
-		return $this->version;
 	}
 
 }

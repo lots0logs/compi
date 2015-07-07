@@ -48,11 +48,17 @@ class Compi_Admin {
 	 *
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version     The version of this plugin.
+	 * @param             $loader
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $loader ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
+		$this->plugin_name   = $plugin_name;
+		$this->version       = $version;
+		$this->dashboard_dir = plugin_dir_path( __FILE__ );
+		$this->template_dir  = $this->dashboard_dir . 'dashboard/templates';
+		$this->css_styleheet = $this->dashboard_dir . 'dashboard/css/compi-dashboard.css';
+		$this->admin_script  = $this->dashboard_dir . 'dashboard/js/compi-dashboard.js';
+		$this->loader        = $loader;
 
 	}
 
@@ -61,14 +67,15 @@ class Compi_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_menu_link() {
+	public function setup_dashboard() {
 
 		$menu_page = add_submenu_page( 'et_divi_options', __( 'Compi Settings', 'Compi' ), __( 'Compi Settings', 'Compi' ), 'manage_options', 'dots_compi_options', array(
-				$this,
-				'options_page'
-			) );
-			add_action( "admin_print_scripts-{$menu_page}", array( $this, 'plugin_page_js' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'plugin_page_css' ) );
+			$this,
+			'options_page',
+		) );
+
+		$this->loader->add_action( "admin_print_scripts-{$menu_page}", $this, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_styles' );
 
 	}
 
@@ -92,7 +99,7 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'dashboard/css/compi-dashboard.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, $this->css_styleheet, array(), $this->version, 'all' );
 
 	}
 
@@ -115,7 +122,47 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'dashboard/js/compi-dashboard.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery' ), $this->version, false );
+
+	}
+
+	/**
+	 * Include options from options file.
+	 *
+	 * @since    1.0.0
+	 */
+	public function include_options() {
+
+		require_once( $this->dashboard_dir . 'class-compi-options.php' );
+
+		$include_options = new Compi_Options_Table();
+
+		$this->dash_sections         = $include_options->dash_sections;
+		$this->builder_options       = $include_options->builder_options;
+		$this->theme_options         = $include_options->theme_options;
+		$this->plugin_options        = $include_options->plugin_options;
+		$this->header_import_options = $include_options->header_import_options;
+		$this->header_export_options = $include_options->header_export_options;
+
+
+	}
+
+	/**
+	 * Output the dashboard HTML
+	 *
+	 * @since    1.0.0
+	 */
+	public function options_page() {
+
+		$dash_sections         = $this->dash_sections;
+		$builder_options       = $this->builder_options;
+		$theme_options         = $this->theme_options;
+		$plugin_options        = $this->plugin_options;
+		$header_import_options = $this->header_import_options;
+		$header_export_options = $this->header_export_options;
+
+		require_once( $this->template_dir . '/compi-dashboard-view.php' );
+
 
 	}
 
