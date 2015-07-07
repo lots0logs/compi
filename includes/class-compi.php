@@ -173,7 +173,7 @@ class Compi {
 	private function define_dashboard_hooks() {
 
 		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version(), $this->loader );
-		$this->loader->add_action( 'admin_menu', $this->dashboard, 'setup_dashboard' );
+		$this->loader->add_action( 'admin_menu', $this->dashboard, 'setup_dashboard', 90 );
 
 	}
 

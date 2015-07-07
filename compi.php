@@ -40,11 +40,11 @@ function activate_compi() {
 	Compi_Activator::activate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_compi' );
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-compi-deactivation.php
+ * This action is documented in includes/class-compi-deactivation.php.php
  */
 function deactivate_compi() {
 
@@ -52,7 +52,7 @@ function deactivate_compi() {
 	Compi_Deactivator::deactivate();
 }
 
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_deactivation_hook( __FILE__, 'deactivate_compi' );
 
 /**
  * The core plugin class that is used to define internationalization,

@@ -27,7 +27,7 @@ class Compi_Options_Table {
 
 	public function __construct() {
 
-		$dash_sections = array(
+		$this->dash_sections = array(
 			'builder' => array(
 				'title'    => __( 'Divi Builder', 'Compi' ),
 				'contents' => array(
@@ -44,7 +44,7 @@ class Compi_Options_Table {
 					'footer'  => __( 'Footer', 'Compi' ),
 				),
 			),
-			'plugin'   => array(
+			'plugin'  => array(
 				'title'    => __( 'Compi Settings', 'Compi' ),
 				'contents' => array(
 					'main' => __( 'Main', 'Compi' ),
@@ -58,7 +58,7 @@ class Compi_Options_Table {
 			),
 		);
 
-		$dash_options_all = array(
+		$this->dash_options_all = array(
 			'builder'       => array(
 				'section_start'       => array(
 					'type' => 'section_start',
@@ -85,6 +85,30 @@ class Compi_Options_Table {
 					'sub_section' => 'true',
 				),
 			),
+			'theme'         => array(
+				'section_start'      => array(
+					'type' => 'section_start',
+				),
+				'end_of_section'     => array(
+					'type' => 'section_end',
+				),
+				'end_of_sub_section' => array(
+					'type'        => 'section_end',
+					'sub_section' => 'true',
+				),
+			),
+			'plugin'        => array(
+				'section_start'      => array(
+					'type' => 'section_start',
+				),
+				'end_of_section'     => array(
+					'type' => 'section_end',
+				),
+				'end_of_sub_section' => array(
+					'type'        => 'section_end',
+					'sub_section' => 'true',
+				),
+			),
 			'builder_title' => array(
 				'type'     => 'main_title',
 				'title'    => __( 'Builder Enhancements', 'Compi' ),
@@ -95,9 +119,21 @@ class Compi_Options_Table {
 				'title'    => __( 'Theme Enhancements', 'Compi' ),
 				'subtitle' => __( 'Add and rearrange any combination of social networks below. You can define the Network Label and Username to the right of each.', 'Monarch' ),
 			),
-			'plugin_title'   => array(
+			'plugin_title'  => array(
 				'type'  => 'main_title',
 				'title' => __( 'Compi Plugin Settings', 'Compi' ),
+			),
+			'builder_note'  => array(
+				'type' => 'note',
+				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
+			),
+			'theme_note'    => array(
+				'type' => 'note',
+				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
+			),
+			'plugin_note'   => array(
+				'type' => 'note',
+				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
 			),
 			'import'        => array(
 				'type'  => 'import',
@@ -109,31 +145,31 @@ class Compi_Options_Table {
 			),
 		);
 
-		$builder_options     = array(
-			$dash_options_all['builder_title'],
-			$dash_options_all['builder'],
-			$dash_options_all['builder_note'],
+		$this->builder_options = array(
+			$this->dash_options_all['builder_title'],
+			$this->dash_options_all['builder'],
+			$this->dash_options_all['builder_note'],
 		);
 
-		$theme_options = array(
-			$dash_options_all['theme_title'],
-			$dash_options_all['theme'],
-			$dash_options_all['theme_note'],
+		$this->theme_options = array(
+			$this->dash_options_all['theme_title'],
+			$this->dash_options_all['theme'],
+			$this->dash_options_all['theme_note'],
 		);
 
-		$plugin_options = array(
-			$dash_options_all['plugin_title'],
-			$dash_options_all['plugin'],
-			$dash_options_all['plugin_note'],
+		$this->plugin_options = array(
+			$this->dash_options_all['plugin_title'],
+			$this->dash_options_all['plugin'],
+			$this->dash_options_all['plugin_note'],
 		);
 
-		$header_import_options = array(
-			$dash_options_all['import']
+		$this->header_import_options = array(
+			$this->dash_options_all['import'],
 		);
-		$header_export_options = array(
-			$dash_options_all['export']
+		$this->header_export_options = array(
+			$this->dash_options_all['export'],
 		);
 
-	
+
 	}
 }

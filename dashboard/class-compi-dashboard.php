@@ -55,10 +55,12 @@ class Compi_Admin {
 		$this->plugin_name   = $plugin_name;
 		$this->version       = $version;
 		$this->dashboard_dir = plugin_dir_path( __FILE__ );
-		$this->template_dir  = $this->dashboard_dir . 'dashboard/templates';
-		$this->css_styleheet = $this->dashboard_dir . 'dashboard/css/compi-dashboard.css';
-		$this->admin_script  = $this->dashboard_dir . 'dashboard/js/compi-dashboard.js';
+		$this->template_dir  = $this->dashboard_dir . 'templates';
+		$this->css_styleheet = $this->dashboard_dir . 'css/compi-dashboard.css';
+		$this->admin_script  = $this->dashboard_dir . 'js/compi-dashboard.js';
 		$this->loader        = $loader;
+
+		$this->include_options();
 
 	}
 
