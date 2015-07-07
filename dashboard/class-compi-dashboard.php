@@ -56,8 +56,8 @@ class Compi_Admin {
 		$this->version       = $version;
 		$this->dashboard_dir = plugin_dir_path( __FILE__ );
 		$this->template_dir  = $this->dashboard_dir . 'templates';
-		$this->css_styleheet = $this->dashboard_dir . 'css/compi-dashboard.css';
-		$this->admin_script  = $this->dashboard_dir . 'js/compi-dashboard.js';
+		$this->css_stylesheet = plugins_url( '/css/compi-dashboard.css', __FILE__ );
+		$this->admin_script  = plugins_url( '/js/compi-dashboard.js', __FILE__ );
 		$this->loader        = $loader;
 
 		$this->include_options();
@@ -77,7 +77,7 @@ class Compi_Admin {
 		) );
 
 		$this->loader->add_action( "admin_print_scripts-{$menu_page}", $this, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_styles' );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
 	}
 
@@ -101,7 +101,7 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, $this->css_styleheet, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, $this->css_stylesheet, array(), $this->version, 'all' );
 
 	}
 

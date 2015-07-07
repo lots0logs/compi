@@ -1,4 +1,342 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+/*------------------------------------------------*/
+/*-----------------[RESET]------------------------*/
+/*------------------------------------------------*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+
+ol, ul { list-style: none; }
+
+a { text-decoration: none; }
+
+button { border: none; }
+
+#dots_admin_wrapper a:focus { box-shadow: none; }
+
+/*------------------------------------------------*/
+/*------------------[TYPOGRAPHY]------------------*/
+/*------------------------------------------------*/
+
+body, p, button { font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 400; color: #939AAA; line-height: 1.7em; }
+
+h1, h2, h3, h4, h5, h6, button, .dots_admin_action_button a { line-height: 1.1em; padding-bottom: .5em; color: #373942; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+h1 { font-size: 26px; }
+
+h2 { font-size: 16px; }
+
+h3 { font-size: 16px; }
+
+h4 { font-size: 14px; }
+
+h5 { font-size: 12px; }
+
+h6 { font-size: 10px; }
+
+.dots_admin_row h2 { margin-bottom: 10px; }
+
+p { padding-bottom: 1.7em; }
+
+p:last-of-type { padding-bottom: 0; }
+
+.dots_admin_note span { letter-spacing: normal; text-transform: none; font-style: italic; display: inline-block; }
+
+.dots_admin_note p, .dots_admin_note h2 { display: inline-block; }
+
+.dots_admin_note h2 { margin-right: 5px; }
+
+/*------------------------------------------------*/
+/*-----------------[BASIC STYLES]-----------------*/
+/*------------------------------------------------*/
+
+#dots_admin_wrapper_outer input, #dots_admin_wrapper_outer select, #dots_admin_wrapper_outer textarea { border: none; -webkit-box-shadow: none; box-shadow: none; }
+
+#dots_admin_wrapper_outer { padding: 30px 20px 20px 15px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+#dots_admin_wrapper { background-color: #ECF0F6; overflow: hidden; box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.06); position: relative; z-index: 0; margin-bottom: 100px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+
+#dots_admin_content { position: relative; margin-left: 200px; padding: 60px 40px 0; min-height: 600px; }
+
+.dots_admin_row { margin-bottom: 55px; float: left; width: 100%; }
+
+.dots_admin_tab_content_follow_widget .dots_admin_form.dots_admin_row:last-child { padding-bottom: 70px; }
+
+.clearfix { clear: both; }
+
+.dots_admin li, .dots_admin a, .dots_admin h1, .dots_admin button, .dots_admin_location, .dots_admin_location_content, .dots_admin_network span, .dots_admin_network span:before, .dots_admin_network a:before, .network_label, .dots_admin_overlay, .dots_admin_location_icons, .dots_admin_shape_tile, .dots_admin_icon:before, .dots_admin_icon:after { transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
+
+.dots_admin li.input.dots_admin_color_picker, .dots_admin li.input.dots_admin_color_picker a { transition: none !important; -moz-transition: none !important; -webkit-transition: none !important; }
+
+.dots_admin button, .dots_admin_action_button a { color: #FFFFFF; background-color: #BDC4D6; padding: 15px 20px; margin: 0; font-size: 14px; line-height: 1em; height: 45px; margin-right: 10px; cursor: pointer; overflow: hidden; position: relative; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+
+.dots_admin button:last-of-type, .dots_admin_action_button a:last-of-type { margin-right: 0; }
+
+.dots_admin button:hover, .dots_admin_action_button a:hover { background-color: #AAB0C0; }
+
+.dots_admin_action_button a { height: 15px; }
+
+.dots_admin_form li.dots_admin_action_button { width: 216px; }
+
+.dots_admin_save_changes button { background-color: #008AFF !important; }
+
+.dots_admin_shortcode_gen button, .dots_admin_action_button a { background-color: #86D700 !important; margin-bottom: 10px; }
+
+button.dots_admin_addnetwork { margin-bottom: 30px; }
+
+.dots_admin button.dots_admin_icon:hover, .dots_admin_action_button a:hover { padding: 15px 10px 15px 55px; }
+
+.dots_admin button.dots_admin_icon:before, .dots_admin_action_button a:before { position: absolute; background-color: rgba(0, 0, 0, 0.1); width: 45px; line-height: 45px; top: 0; left: -45px; }
+
+.dots_admin button.dots_admin_icon:hover:before, .dots_admin_action_button a:hover:before { left: 0px; }
+
+
+
+/*------------------------------------------------*/
+/*-------------------[HEADER]---------------------*/
+/*------------------------------------------------*/
+
+#dots_admin_header { width: 100%; background-color: #FF6E24; float: left; }
+
+#dots_admin_logo { width: 200px; height: 60px; color: #FFFFFF; line-height: 60px; float: left; text-align: center; background-color: #FF5903; }
+
+#dots_admin_logo:before { font-size: 32px; }
+
+#dots_admin_header ul { float: right; }
+
+#dots_admin_header li { height: 60px; float: left; }
+
+#dots_admin_header li a { width: 60px; color: #FFFFFF; background-color: rgba(255, 255, 255, 0); line-height: 60px; text-align: center; display: block; position: relative; }
+
+#dots_admin_header li a:hover { background-color: rgba(255, 255, 255, 0.15); }
+
+#dots_admin_header .dots_admin_icon:before { line-height: 60px; }
+
+#dots_admin_header ul li a.current { background-color: rgba(255, 255, 255, 0.15); }
+
+#dots_admin_header ul li a.current:after { -webkit-animation: arrow-top .7s; animation: arrow-top .7s; background-color: #ECF0F6; content: ''; width: 20px; height: 20px; right: 20px; bottom: -14px; position: absolute; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); }
+
+/*------------------------------------------------*/
+/*---------------[MAIN NAVIGATION]----------------*/
+/*------------------------------------------------*/
+
+#dots_admin_navigation { width: 200px; height: 100%; background-color: #373942; position: absolute; text-transform: uppercase; }
+
+#dots_admin_navigation li a { font-size: 12px; font-weight: 700; color: #FFFFFF; padding: 18px 15px 18px 20px; display: block; position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+#dots_admin_navigation li a:hover { padding-left: 30px; background-color: rgba(255, 255, 255, 0.05); }
+
+#dots_admin_navigation li a.current:after { -webkit-animation: arrow .7s; animation: arrow .7s; content: ''; width: 20px; height: 20px; right: -14px; top: 14px; display: block; position: absolute; background-color: #ECF0F6; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); }
+
+#dots_admin_navigation .dots_admin_sharing_nav.current_section { max-height: 400px; }
+
+#dots_admin_navigation .dots_admin_follow_nav.current_section { max-height: 150px; }
+
+#dots_admin_navigation .dots_admin_general_nav.current_section { max-height: 100px; }
+
+#dots_admin_navigation > ul > li > ul { max-height: 0; overflow: hidden; -webkit-transition: all 0.7s ease-in-out; transition: all 0.7s ease-in-out; -moz-transition: all 0.7s ease-in-out; }
+
+#dots_admin_navigation li li a { color: #939AAA; height: 50px; padding: 12px 15px 12px 20px; background-color: rgba(0, 0, 0, 0.3); }
+
+#dots_admin_navigation li li a:hover, #dots_admin_navigation a.current { font-weight: 700; color: #FFFFFF; background-color: rgba(0, 0, 0, 0.5); }
+
+#dots_admin_navigation .dots_admin_icon:before { font-size: 16px; position: relative; margin-right: 15px; top: 2px; }
+
+/*------------------------------------------------*/
+/*------------------[SELECTABLE]------------------*/
+/*------------------------------------------------*/
+
+.dots_admin_selection { margin-bottom: 40px; }
+
+.dots_admin_multi_selectable, .dots_admin_single_selectable { padding-bottom: 45px; float: left; position: relative; text-align: center; cursor: pointer; margin-bottom: 20px; }
+
+.dots_admin_multi_selectable:after, .dots_admin_single_selectable:after { position: absolute; left: 50%; margin-left: -15px; width: 30px; height: 30px; line-height: 30px; bottom: 45px; color: rgba(255, 255, 255, 0); z-index: -1; background-color: rgba(147, 154, 170, 0); -webkit-border-radius: 100px; -moz-border-radius: 100px; border-radius: 100px; }
+
+.dots_admin_multi_selectable:hover:after, .dots_admin_single_selectable:hover:after { bottom: 0; color: rgba(255, 255, 255, 1); background-color: rgba(147, 154, 170, 1) }
+
+.dots_admin_multi_selectable.dots_admin_selected:after, .dots_admin_single_selectable.dots_admin_selected:after { bottom: 0; color: rgba(255, 255, 255, 1); background-color: rgba(134, 215, 0, 1); }
+
+.dots_admin_multi_selectable.dots_admin_selected:hover:after { background-color: rgba(255, 89, 3, 1); }
+
+.dots_admin_selected.dots_admin_just_selected:hover:after { bottom: 0; color: rgba(255, 255, 255, 1); background-color: rgba(134, 215, 0, 1); }
+
+/*------------------------------------------------*/
+/*---------------------[FORM]---------------------*/
+/*------------------------------------------------*/
+
+.dots_admin_form li { height: 30px; margin-bottom: 10px; }
+
+.dots_admin_form li p { float: left; width: 200px; line-height: 30px; padding-bottom: 0; }
+
+li.dots_admin_auto_height { height: auto; }
+
+.dots_admin_form ul.inline li { width: auto; margin-right: 40px; float: left; }
+
+.dots_admin_form ul.inline li:last-of-type { margin-right: 0; }
+
+.dots_admin_form ul.inline li p { width: auto; margin-left: 10px; }
+
+.dots_admin_form input, .dots_admin_form select, .dots_admin_form textarea, .dots_admin_networks input, p.dots_admin_checkmark_holder { height: 30px; float: left; border: none; background-color: #FFFFFF; font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 300; color: #939AAA; letter-spacing: 1px; margin: 0; padding: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+.dots_admin_longinput input { width: 350px !important; }
+
+.dots_admin_form select { padding: 0; }
+
+.dots_admin_form input:focus, .dots_admin_form select:focus, .dots_admin_form textarea:focus, .dots_admin_networks input:focus, button:focus { outline: none; }
+
+.dots_admin_form input[type=text] { width: 60px; }
+
+.dots_admin_form select { width: 140px; }
+
+.dots_admin_form textarea { width: 100%; height: inherit; }
+
+.dots_admin_form input[type=checkbox] { visibility: hidden; position: absolute; }
+
+.dots_admin_checkbox label { float: left; cursor: pointer; width: 30px; height: 30px; background: #FFFFFF; text-align: center; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; }
+
+.dots_admin_checkbox label:after { color: rgba(147, 154, 170, 0); line-height: 30px; text-align: center; }
+
+.dots_admin_checkbox label:after { color: #E0E4E9; }
+
+.dots_admin_checkbox input[type=checkbox]:checked + label:after, .dots_admin_checkbox label:hover:after { color: rgba(134, 215, 0, 1); }
+
+.dots_admin_form span.more_info { height: 30px; float: left; padding: 7px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; cursor: pointer; }
+
+.dots_admin_form span.more_info:before { color: #FFFFFF; width: 16px; line-height: 16px; height: 16px; background-color: rgba(147, 154, 170, 0.4); display: inline-block; text-align: center; -webkit-border-radius: 100px; -moz-border-radius: 100px; border-radius: 100px; }
+
+.dots_admin_form span.more_info:hover:before { background-color: rgba(147, 154, 170, 0.7); }
+
+.dots_admin_form span.dots_admin_more_text { padding-left: 5px; display: none; }
+
+.dots_admin_sortable_placeholder { height: 40px; width: 100%; border: 1px dashed #BDC4D6; margin-bottom: 13px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+
+.ui-sortable-helper span, .ui-sortable-helper input { box-shadow: 0 10px 20px rgba(0, 0, 0, .1); }
+
+/*------------------------------------------------*/
+/*---------------------[TABS]---------------------*/
+/*------------------------------------------------*/
+
+.dots_admin_tab_content { display: none; }
+
+.dots_tab_selected { display: block; -webkit-animation: tab .7s; animation: tab .7s; }
+
+/*------------------------------------------------*/
+/*-------------------[ANIMATION]------------------*/
+/*------------------------------------------------*/
+
+@-webkit-keyframes arrow {
+	0% { right: -28px; }
+	100% { right: -14px; }
+}
+
+@keyframes arrow {
+	0% { right: -28px; }
+	100% { right: -14px; }
+}
+
+@-webkit-keyframes tab {
+	0% { -ms-transform: translate(-20px, 0); -webkit-transform: translate(-20px, 0); transform: translate(-20px, 0); opacity: 0; }
+	100% { -ms-transform: translate(0, 0); -webkit-transform: translate(0, 0); transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes tab {
+	0% { -ms-transform: translate(-20px, 0); -webkit-transform: translate(-20px, 0); transform: translate(-20px, 0); opacity: 0; }
+	100% { -ms-transform: translate(0, 0); -webkit-transform: translate(0, 0); transform: translate(0, 0); opacity: 1; }
+}
+
+@-webkit-keyframes tab-top {
+	0% { -ms-transform: translate(0, -20px); -webkit-transform: translate(0, -20px); transform: translate(0, -20px); opacity: 0; }
+	100% { -ms-transform: translate(0, 0); -webkit-transform: translate(0, 0); transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes tab-top {
+	0% { -ms-transform: translate(0px, -20px); -webkit-transform: translate(0, -20px); transform: translate(0, -20px); opacity: 0; }
+	100% { -ms-transform: translate(0, 0); -webkit-transform: translate(0, 0); transform: translate(0, 0); opacity: 1; }
+}
+
+@-webkit-keyframes arrow-top {
+	0% { bottom: -28px; }
+	100% { bottom: -14px; }
+}
+
+@keyframes arrow-top {
+	0% { bottom: -28px; }
+	100% { bottom: -14px; }
+}
+
+@-webkit-keyframes graph {
+	0% { height: 0; opacity: 0; }
+	100% { opacity: 1; }
+}
+
+@keyframes graph {
+	0% { height: 0; opacity: 0; }
+	100% { opacity: 1; }
+}
+
+@-webkit-keyframes tooltip {
+	0% { top: -130px; opacity: 0; }
+	100% { top: -110px; opacity: 1; }
+}
+
+@keyframes tooltip {
+	0% { top: -130px; opacity: 0; }
+	100% { top: -110px; opacity: 1; }
+}
+
+/*------------------------------------------------*/
+/*-----------------[RESPONSIVE]-------------------*/
+/*------------------------------------------------*/
+@media only screen and (max-width: 1662px) {
+	.dots_admin_networks_modal .dots_admin_inner_container { width: 677px; }
+}
+
+@media screen and (max-width: 960px) {
+	.dots_admin_location { width: 45%; margin-right: 5%; }
+
+	.dots_admin_location:nth-of-type(n+3) { margin-top: 20px; }
+}
+
+@media screen and (max-width: 782px) {
+	.dots_admin_networks_modal { position: absolute; padding-top: 90px; }
+
+	#dots_admin_content { margin-left: 0; }
+
+	#dots_admin_navigation { width: 100%; position: relative; }
+
+	#dots_admin_navigation li a.current:after { background-color: #F0F0F0; }
+
+	#dots_admin_header ul li a.current:after { background-color: #373942; }
+
+	#dots_admin_wrapper { min-width: 300px; }
+
+	#dots_admin_logo { width: 100px; }
+
+	.dots_admin_globalstat span { font-size: 42px; }
+
+	span.dots_admin_globalstat_label { font-size: 14px; }
+
+	.dots_admin_networks_modal .dots_admin_inner_container { width: 357px; }
+
+	.dots_admin_networks_modal .social_icons_container div { width: 48.5%; }
+
+	.social_icons_container div { clear: none; margin-right: 3% !important; }
+
+	.social_icons_container div:nth-child(2n) { margin-right: 0 !important; }
+}
+
+@media screen and (max-width: 480px) {
+	.dots_admin_location { width: 100%; margin-right: 0; }
+
+	.dots_admin_location:nth-of-type(n+1) { margin-top: 20px; }
+
+	.dots_admin_form ul.inline li { width: 100%; }
+
+	.dots_admin_globalstat { width: 100%; margin-bottom: 30px; }
+
+	.dots_admin_globalstat:last-of-type { margin-bottom: 0; }
+
+	.dots_admin_globalstat span { font-size: inherit; }
+
+	.dots_admin_networks_modal .dots_admin_inner_container { width: 247px; }
+
+	.dots_admin_inner_container .social_icons_container div { width: 100%; margin-right: 0; }
+}
