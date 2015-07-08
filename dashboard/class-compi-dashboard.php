@@ -52,18 +52,40 @@ class Compi_Admin {
 	 */
 	public function __construct( $plugin_name, $version, $loader ) {
 
-		$this->plugin_name   = $plugin_name;
-		$this->version       = $version;
-		$this->dashboard_dir = plugin_dir_path( __FILE__ );
-		$this->template_dir  = $this->dashboard_dir . 'templates';
-		$this->css_stylesheet = plugins_url( '/css/compi-dashboard.css', __FILE__ );
-		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.yellow-red.min.css';
-		$this->css_mdl_icons = '//fonts.googleapis.com/icon?family=Material+Icons';
-		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
-		$this->admin_script  = plugins_url( '/js/compi-dashboard.js', __FILE__ );
-		$this->loader        = $loader;
+		$this->plugin_name        = $plugin_name;
+		$this->version            = $version;
+		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
+		$this->template_dir       = $this->dashboard_dir . 'templates';
+		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
+		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
+		$this->css_mdl_icons      = '//fonts.googleapis.com/icon?family=Material+Icons';
+		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
+		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
+		$this->loader             = $loader;
 
 		$this->include_options();
+
+	}
+
+	/**
+	 * Include options from options file.
+	 *
+	 * @since    1.0.0
+	 */
+	public function include_options() {
+
+		require_once( $this->dashboard_dir . 'class-compi-options.php' );
+
+		$include_options = new Compi_Options_Table();
+
+		$this->dash_sections         = $include_options->dash_sections;
+		$this->enhancements_options  = $include_options->enhancements_options;
+		$this->new_modules_options   = $include_options->new_modules_options;
+		$this->theme_options         = $include_options->theme_options;
+		$this->support_options       = $include_options->support_options;
+		$this->header_import_options = $include_options->header_import_options;
+		$this->header_export_options = $include_options->header_export_options;
+
 
 	}
 
@@ -79,11 +101,10 @@ class Compi_Admin {
 			'options_page',
 		) );
 
-		$this->loader->add_action( "admin_print_scripts-{$menu_page}", $this, 'enqueue_scripts' );
+		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
 
 	}
-
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -135,37 +156,19 @@ class Compi_Admin {
 	}
 
 	/**
-	 * Include options from options file.
-	 *
-	 * @since    1.0.0
-	 */
-	public function include_options() {
-
-		require_once( $this->dashboard_dir . 'class-compi-options.php' );
-
-		$include_options = new Compi_Options_Table();
-
-		$this->dash_sections         = $include_options->dash_sections;
-		$this->builder_options       = $include_options->builder_options;
-		$this->theme_options         = $include_options->theme_options;
-		$this->plugin_options        = $include_options->plugin_options;
-		$this->header_import_options = $include_options->header_import_options;
-		$this->header_export_options = $include_options->header_export_options;
-
-
-	}
-
-	/**
 	 * Output the dashboard HTML
 	 *
 	 * @since    1.0.0
 	 */
 	public function options_page() {
 
+		$this->include_options();
+
 		$dash_sections         = $this->dash_sections;
-		$builder_options       = $this->builder_options;
+		$enhancements_options  = $this->enhancements_options;
+		$new_modules_options   = $this->new_modules_options;
 		$theme_options         = $this->theme_options;
-		$plugin_options        = $this->plugin_options;
+		$support_options       = $this->support_options;
 		$header_import_options = $this->header_import_options;
 		$header_export_options = $this->header_export_options;
 

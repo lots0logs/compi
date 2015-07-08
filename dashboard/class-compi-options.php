@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Options array that contains all of the options available in Compi's Control Panel
  *
- * @property  builder_options
  * @package    Compi
  * @subpackage Compi/dashboard
  * @author     wpdots <dev@wpdots.com>
@@ -53,7 +52,7 @@ class Compi_Options_Table {
 					'section_three' => __( 'Section Three', 'Compi' ),
 				),
 			),
-			'theme_options'   => array(
+			'theme_general'   => array(
 				'title'    => __( 'Theme Options', 'Compi' ),
 				'contents' => array(
 					'section_one'   => __( 'Section One', 'Compi' ),
@@ -83,11 +82,13 @@ class Compi_Options_Table {
 					'type' => 'section_start',
 				),
 				'posts_for_portfolio' => array(
-					'type'      => 'checkbox',
-					'title'     => __( 'Make regular posts available in the Portfolio Module.', 'Compi' ),
+					'type'      => 'card',
+					'title'     => 'Portfolio Posts',
+					'description'     => __( 'Make regular posts available in the Portfolio Module.', 'Compi' ),
 					'name'      => 'posts_for_portfolio',
 					'hint_text' => __( "By default, portfolios can only display porject posts. This will allow you to display regular posts in addition to project posts.", 'Compi' ),
-					'default'   => 'false',
+					'default'   => 1,
+					'conditional' => 'posts_for_portfolios_enabled'
 				),
 				'reset_postdata'      => array(
 					'type'      => 'checkbox',
@@ -128,7 +129,7 @@ class Compi_Options_Table {
 					'sub_section' => 'true',
 				),
 			),
-			'theme_options' => array(
+			'theme_general' => array(
 				'section_start'      => array(
 					'type' => 'section_start',
 				),
@@ -152,29 +153,45 @@ class Compi_Options_Table {
 					'sub_section' => 'true',
 				),
 			),
-			'builder_title' => array(
+			'enhancements_title' => array(
 				'type'     => 'main_title',
-				'title'    => __( 'Builder Enhancements', 'Compi' ),
-				'subtitle' => __( 'You can select any combination of the five placements below.', 'Compi' ),
+				'title'    => __( 'Module Enhancements' , 'Compi' ),
+				'subtitle' => __( 'Tweaks and/or new features for existing modules.', 'Compi' ),
 			),
-			'theme_title'   => array(
+			'new_modules_title'   => array(
 				'type'     => 'main_title',
-				'title'    => __( 'Theme Enhancements', 'Compi' ),
-				'subtitle' => __( 'Add and rearrange any combination of social networks below. You can define the Network Label and Username to the right of each.', 'Monarch' ),
+				'title'    => __( 'New Modules', 'Compi' ),
+				'subtitle' => __( 'New modules only available with Compi.', 'Monarch' ),
 			),
-			'plugin_title'  => array(
+			'builder_general_title'  => array(
 				'type'  => 'main_title',
-				'title' => __( 'Compi Plugin Settings', 'Compi' ),
+				'title' => __( 'Builder General Settings', 'Compi' ),
+			),
+			'theme_general_title' => array(
+				'type'  => 'main_title',
+				'title' => __( 'Builder General Settings', 'Compi' ),
+			),
+			'support_title' => array(
+				'type'  => 'main_title',
+				'title' => __( 'Support', 'Compi' ),
 			),
 			'enhancements_note'  => array(
 				'type' => 'note',
 				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
 			),
-			'theme_note'    => array(
+			'new_modules_note'    => array(
 				'type' => 'note',
 				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
 			),
-			'plugin_note'   => array(
+			'builder_general_note'   => array(
+				'type' => 'note',
+				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
+			),
+			'theme_general_note' => array(
+				'type' => 'note',
+				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
+			),
+			'support_note' => array(
 				'type' => 'note',
 				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
 			),
@@ -196,6 +213,7 @@ class Compi_Options_Table {
 
 		$this->enhancements_section_one_options = array(
 			$this->dash_options_all['enhancements']['section_start'],
+				$this->dash_options_all['enhancements'],
 			$this->dash_options_all['enhancements']['end_of_section'],
 		);
 
@@ -222,7 +240,7 @@ class Compi_Options_Table {
 
 		$this->new_modules_section_two_options = array(
 			$this->dash_options_all['new_modules']['section_start'],
-			$this->dash_options_all['theme']['end_of_section'],
+			$this->dash_options_all['new_modules']['end_of_section'],
 		);
 
 		$this->new_modules_section_three_options = array(
@@ -251,31 +269,31 @@ class Compi_Options_Table {
 			$this->dash_options_all['builder_general']['end_of_section'],
 		);
 
-		$this->theme_options = array(
-			$this->dash_options_all['theme_title'],
-			$this->dash_options_all['theme_options'],
-			$this->dash_options_all['theme_options_note'],
+		$this->theme_general_options = array(
+			$this->dash_options_all['theme_general_title'],
+			$this->dash_options_all['theme_general'],
+			$this->dash_options_all['theme_general_note'],
 		);
 
-		$this->theme_options_section_one_options = array(
-			$this->dash_options_all['theme_options']['section_start'],
-			$this->dash_options_all['theme_options']['end_of_section'],
+		$this->theme_general_section_one_options = array(
+			$this->dash_options_all['theme_general']['section_start'],
+			$this->dash_options_all['theme_general']['end_of_section'],
 		);
 
-		$this->theme_options_section_two_options = array(
-			$this->dash_options_all['theme_options']['section_start'],
-			$this->dash_options_all['theme_options']['end_of_section'],
+		$this->theme_general_section_two_options = array(
+			$this->dash_options_all['theme_general']['section_start'],
+			$this->dash_options_all['theme_general']['end_of_section'],
 		);
 
-		$this->theme_options_section_three_options = array(
-			$this->dash_options_all['theme_options']['section_start'],
-			$this->dash_options_all['theme_options']['end_of_section'],
+		$this->theme_general_section_three_options = array(
+			$this->dash_options_all['theme_general']['section_start'],
+			$this->dash_options_all['theme_general']['end_of_section'],
 		);
 
 		$this->support_options = array(
 			$this->dash_options_all['support_title'],
-			$this->dash_options_all['support_options'],
-			$this->dash_options_all['support_options_note'],
+			$this->dash_options_all['support'],
+			$this->dash_options_all['support_note'],
 		);
 
 		$this->support_section_one_options = array(
