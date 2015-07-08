@@ -14,8 +14,9 @@
 
 
 echo '
-		<div id="dots_admin_wrapper_outer">
+		<div id="dots_admin_wrapper_outer" class="mdl-grid">
 			<div id="dots_admin_wrapper" class="dots_admin">
+			<form id="dots_compi_options" enctype="multipart/form-data">
 				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
 					<header class="mdl-layout__header">
 						<div class="mdl-layout__header-row">
@@ -24,11 +25,17 @@ echo '
 						<div class="mdl-layout__tab-bar mdl-js-ripple-effect">';
 
 
-if ( isset( $compi_sections['header']['contents'] ) ) {
-	foreach ( $compi_sections['header']['contents'] as $key => $value ) {
-		printf( '<a href="#fixed-tab-%1$s" class="mdl-layout__tab is-active">%1$s</a>',
-		        esc_attr( $key )
-		);
+if ( isset( $dash_sections ) ) {
+	$first = true;
+	foreach ( $dash_sections as $key => $value ) {
+		if ( isset( $value['title'] ) ) {
+			printf( '<a href="#fixed-tab-%1$s" class="mdl-layout__tab%3$s">%2$s</a>',
+			        esc_attr( $key ),
+			        $value['title'],
+			        ( true === $first ) ? ' is-active' : ''
+			);
+			$first = false;
+		}
 	}
 }
 
@@ -39,9 +46,9 @@ echo '					</div>
 						<span class="mdl-layout-title">Plugin Settings</span>';
 
 
-if ( isset( $compi_sections['plugin']['contents'] ) ) {
+if ( isset( $dash_sections['plugin']['contents'] ) ) {
 	echo '<nav class="mdl-navigation">';
-	foreach ( $compi_sections['plugin']['contents'] as $key => $value ) {
+	foreach ( $dash_sections['plugin']['contents'] as $key => $value ) {
 		printf( '<a class="mdl-navigation__link" href="">%s</a>',
 		        esc_attr( $key )
 		);
@@ -51,27 +58,29 @@ if ( isset( $compi_sections['plugin']['contents'] ) ) {
 
 
 echo '				</div>
-					<main class="mdl-layout__content">
-					<form id="et_monarch_options" enctype="multipart/form-data">';
+					<main class="mdl-layout__content">';
 
 
 $menu_count = 0;
 settings_fields( 'dots_compi_settings_group' );
 
-if ( isset( $compi_sections ) ) {
-	foreach ( $compi_sections as $key => $value ) {
+if ( isset( $dash_sections ) ) {
+	$first = true;
+	foreach ( $dash_sections as $key => $value ) {
 		$current_section = $key;
 
 		if ( $key !== 'header' ) {
+			printf( '<section class="mdl-layout__tab-panel%2$s" id="fixed-tab-%1$s">
+												<div class="page-content mdl-grid">',
+			        esc_attr( $current_section ),
+				( true === $first ) ? ' is-active' : ''
+			);
+			$first = false;
 			foreach ( $value['contents'] as $key => $value ) {
 				$current_location = $key;
 				$options_prefix   = $current_section . '_' . $key;
 				$options_array    = ${$current_section . '_' . $key . '_options'};
 				$sidebar_section  = 'sidebar' == $key ? true : false;
-
-				printf( '<section class="mdl-layout__tab-panel is-active" id="fixed-tab-%1$s">
-												<div class="page-content">', esc_attr( $current_section )
-				);
 
 				foreach ( $options_array as $option ) {
 					$current_option_name = '';
@@ -316,19 +325,22 @@ if ( isset( $compi_sections ) ) {
 							break;
 					} // end switch
 				} // end foreach( $options_array as $option)
-				echo '</div></section>';
 			} // end foreach( $value['contents'] as $key => $value )
+			echo '</div></section>';
 		} // end if ( $key !== 'header')
 	} // end foreach ( $compi_sections as $key => $value )
 } // end if ( isset( $compi_sections ) )
+
+echo '
+</main>';
 printf(
-	'<div class="dots_admin_row dots_admin_save_changes">
-						<button class="dots_admin_icon">%1$s</button>
-						<span class="spinner"></span>
-					</div>
-					<input type="hidden" name="action" value="save_compi" />',
+	'<div class="admin-row"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">%1$s</button>
+					<input type="hidden" name="action" value="save_compi" /></div>',
 	esc_html__( 'Save Changes', 'Compi' )
 );
-echo '</form>
-</main>
+echo '
+</div>
+</div>
+</form>
+</div>
 </div>';
