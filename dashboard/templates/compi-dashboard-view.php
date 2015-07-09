@@ -25,9 +25,9 @@ echo '
 						<div class="mdl-layout__tab-bar mdl-js-ripple-effect">';
 
 
-if ( isset( $dash_sections ) ) {
+if ( isset( $dash_tabs ) ) {
 	$first = true;
-	foreach ( $dash_sections as $key => $value ) {
+	foreach ( $dash_tabs as $key => $value ) {
 		if ( isset( $value['title'] ) ) {
 			printf( '<a href="#fixed-tab-%1$s" class="mdl-layout__tab%3$s">%2$s</a>',
 			        esc_attr( $key ),
@@ -46,9 +46,9 @@ echo '					</div>
 						<span class="mdl-layout-title">Plugin Settings</span>';
 
 
-if ( isset( $dash_sections['plugin']['contents'] ) ) {
+if ( isset( $dash_tabs['plugin']['contents'] ) ) {
 	echo '<nav class="mdl-navigation">';
-	foreach ( $dash_sections['plugin']['contents'] as $key => $value ) {
+	foreach ( $dash_tabs['plugin']['contents'] as $key => $value ) {
 		printf( '<a class="mdl-navigation__link" href="">%s</a>',
 		        esc_attr( $key )
 		);
@@ -64,9 +64,9 @@ echo '				</div>
 $menu_count = 0;
 settings_fields( 'dots_compi_settings_group' );
 
-if ( isset( $dash_sections ) ) {
+if ( isset( $dash_tabs ) ) {
 	$first = true;
-	foreach ( $dash_sections as $key => $value ) {
+	foreach ( $dash_tabs as $key => $value ) {
 		$current_section = $key;
 
 		if ( $key !== 'header' ) {
@@ -87,6 +87,7 @@ if ( isset( $dash_sections ) ) {
 					if ( isset( $option['name'] ) ) {
 						$current_option_name = $options_prefix . '_' . $option['name'];
 					}
+
 
 					$current_option_value = isset( $compi_options[ $current_option_name ] ) ? $compi_options[ $current_option_name ] : '';
 
@@ -349,26 +350,38 @@ if ( isset( $dash_sections ) ) {
 
 						case 'card' :
 							printf(
-								'<div class="mdl-card mdl-shadow--2dp%2$s">
+								'<div class="mdl-card mdl-shadow--2dp%1$s">
 									<div class="mdl-card__title mdl-card--expand">
-										<h2 class="mdl-card__title-text">%3$s</h2>
+										<h2 class="mdl-card__title-text">%2$s</h2>
 									</div>
-									<div class="mdl-card__supporting-text">%1$s</div>
+									<div class="mdl-card__supporting-text">%3$s</div>
 									<div class="mdl-card__actions mdl-card--border">
-										<label for="dots_admin[%4$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect%5$s" %7$s %9$s>
-											<input type="checkbox" id="dots_admin[%8$s]" name="dots_admin[%8$s]" value="1" class="mdl-switch__input" %6$s>
-											<span class="mdl-switch__label">%4$s</span>
-										</label>
-
+										<table class="mdl-data-table mdl-js-data-table">
+											<thead>
+												<tr>
+													<th class="mdl-data-table__cell--non-numeric">Enable</th>
+													<th class="mdl-data-table__cell--non-numeric">Enhancement</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="mdl-data-table__cell--non-numeric">
+														<label for="dots_admin[%4$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+															<input type="checkbox" id="dots_admin[%4$s]" name="dots_admin[%4$s]" class="mdl-switch__input" %5$s>
+															<span class="mdl-switch__label"></span>
+														</label>
+													</td>
+													<td class="mdl-data-table__cell--non-numeric">%3$s</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>',
-								isset( $option['description'] ) ? esc_html( $option['description'] ) : '',
 								esc_html( $option['class'] ),
+								esc_html( $option['title'] ),
+								isset( $option['description'] ) ? esc_html( $option['description'] ) : '',
 								esc_attr( $current_option_name ),
-								checked( $current_option_value, 1, false ),
-								isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
-								isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
-								isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
+								checked( $current_option_value, 1, false )
 							);
 							break;
 					} // end switch

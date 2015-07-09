@@ -62,6 +62,7 @@ class Compi_Admin {
 		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
 		$this->loader             = $loader;
+		$this->compi_options = $this->get_options_array();
 
 		$this->include_options();
 
@@ -78,18 +79,20 @@ class Compi_Admin {
 
 		$include_options = new Compi_Options_Table();
 
-		$this->dash_sections         = $include_options->dash_sections;
-		$this->enhancements_options  = $include_options->enhancements_options;
-		$this->new_modules_options   = $include_options->new_modules_options;
-		$this->theme_options         = $include_options->theme_options;
-		$this->support_options       = $include_options->support_options;
-		$this->header_import_options = $include_options->header_import_options;
-		$this->header_export_options = $include_options->header_export_options;
+		$this->dash_tabs                           = $include_options->dash_tabs;
+		$this->enhancements_section_one_options    = $include_options->enhancements_section_one_options;
+		$this->new_modules_section_one_options     = $include_options->new_modules_section_one_options;
+		$this->builder_general_section_one_options = $include_options->builder_general_section_one_options;
+		$this->theme_general_section_one_options   = $include_options->theme_general_section_one_options;
+		$this->support_section_one_options         = $include_options->support_section_one_options;
+		$this->header_import_options               = $include_options->header_import_options;
+		$this->header_export_options               = $include_options->header_export_options;
 
 
 	}
 
 	/**
+	 *
 	 * Register our admin page and menu link
 	 *
 	 * @since    1.0.0
@@ -103,6 +106,18 @@ class Compi_Admin {
 
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
+
+	}
+
+	/**
+	 *
+	 * Get our options array from database
+	 *
+	 * @since    1.0.0
+	 */
+	public static function get_options_array() {
+
+		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 
 	}
 
@@ -164,13 +179,14 @@ class Compi_Admin {
 
 		$this->include_options();
 
-		$dash_sections         = $this->dash_sections;
-		$enhancements_options  = $this->enhancements_options;
-		$new_modules_options   = $this->new_modules_options;
-		$theme_options         = $this->theme_options;
-		$support_options       = $this->support_options;
-		$header_import_options = $this->header_import_options;
-		$header_export_options = $this->header_export_options;
+		$dash_tabs                       = $this->dash_tabs;
+		$enhancements_section_one_options    = $this->enhancements_section_one_options;
+		$new_modules_section_one_options     = $this->new_modules_section_one_options;
+		$builder_general_section_one_options = $this->builder_general_section_one_options;
+		$theme_general_section_one_options   = $this->theme_general_section_one_options;
+		$support_section_one_options         = $this->support_section_one_options;
+		$header_import_options   = $this->header_import_options;
+		$header_export_options   = $this->header_export_options;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 
