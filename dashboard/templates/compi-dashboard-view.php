@@ -14,7 +14,7 @@
 
 
 echo '
-		<div id="dots_admin_wrapper_outer" class="mdl-grid">
+		<div id="dots_admin_wrapper_outer" class="units-row">
 			<div id="dots_admin_wrapper" class="dots_admin">
 			<form id="dots_compi_options" enctype="multipart/form-data">
 				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
@@ -71,7 +71,7 @@ if ( isset( $dash_tabs ) ) {
 
 		if ( $key !== 'header' ) {
 			printf( '<section class="mdl-layout__tab-panel%2$s" id="fixed-tab-%1$s">
-												<div class="page-content mdl-grid">',
+												<div class="page-content units-row units-padding">',
 			        esc_attr( $current_section ),
 			        ( true === $first ) ? ' is-active' : ''
 			);
@@ -258,10 +258,10 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'section_start' :
 							printf(
-								'%5$s<div class="mdl-cell--stretch dots_admin_row%2$s"%3$s%4$s>
+								'%5$s<div class="units-row dots_admin_row%2$s"%3$s%4$s>
 																			%1$s
 																			%6$s
-																			<ul>',
+																			<div class="unit-100">',
 								isset( $option['title'] ) ? sprintf( '<h2>%1$s</h2>', esc_html( $option['title'] ) ) : '',
 								isset( $option['display_if'] ) ? ' dots_admin_hidden_option' : '',
 								isset( $option['display_if'] ) ? ' data-condition="' . esc_attr( $option['display_if'] ) . '"' : '',
@@ -278,7 +278,7 @@ if ( isset( $dash_tabs ) ) {
 							break;
 
 						case 'section_end' :
-							printf( '</ul></div>%1$s',
+							printf( '</div></div>%1$s',
 							        ( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '</li>' : ''
 							);
 							break;
@@ -350,33 +350,32 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'card' :
 							printf(
-								'<div class="mdl-card mdl-shadow--2dp%1$s">
-									<div class="mdl-card__title mdl-card--expand">
-										<h2 class="mdl-card__title-text">%2$s</h2>
-									</div>
-									<div class="mdl-card__supporting-text">%3$s</div>
-									<div class="mdl-card__actions mdl-card--border">
-										<table class="mdl-data-table mdl-js-data-table">
+								'<div class="unit-30">
+										<h2>%2$s</h2>
+
+									<p class="h4">%3$s</p>
+
+										<table class="table-hovered">
 											<thead>
 												<tr>
-													<th class="mdl-data-table__cell--non-numeric">Enable</th>
-													<th class="mdl-data-table__cell--non-numeric">Enhancement</th>
+													<th class="width-25">Enable</th>
+													<th class="width-75">Enhancement</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td class="mdl-data-table__cell--non-numeric">
+													<td class="width-25">
 														<label for="dots_admin[%4$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
 															<input type="checkbox" id="dots_admin[%4$s]" name="dots_admin[%4$s]" class="mdl-switch__input" %5$s>
 															<span class="mdl-switch__label"></span>
 														</label>
 													</td>
-													<td class="mdl-data-table__cell--non-numeric">%3$s</td>
+													<td class="width-75">%3$s</td>
 												</tr>
 											</tbody>
 										</table>
-									</div>
-								</div>',
+
+								</p></div>',
 								esc_html( $option['class'] ),
 								esc_html( $option['title'] ),
 								isset( $option['description'] ) ? esc_html( $option['description'] ) : '',
