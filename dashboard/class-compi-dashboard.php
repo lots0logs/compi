@@ -57,14 +57,28 @@ class Compi_Admin {
 		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
 		$this->template_dir       = $this->dashboard_dir . 'templates';
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
+		$this->css_stylesheet     = plugins_url( '/css/kube.min.css', __FILE__ );
 		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
 		$this->css_mdl_icons      = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
+		$this->kube_script        = plugins_url( '/js/kube.min.js', __FILE__ );
 		$this->loader             = $loader;
-		$this->compi_options = $this->get_options_array();
+		$this->compi_options      = static::get_options_array();
 
 		$this->include_options();
+
+	}
+
+	/**
+	 *
+	 * Get our options array from database
+	 *
+	 * @since    1.0.0
+	 */
+	public static function get_options_array() {
+
+		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 
 	}
 
@@ -110,18 +124,6 @@ class Compi_Admin {
 	}
 
 	/**
-	 *
-	 * Get our options array from database
-	 *
-	 * @since    1.0.0
-	 */
-	public static function get_options_array() {
-
-		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
-
-	}
-
-	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
@@ -142,7 +144,8 @@ class Compi_Admin {
 
 		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'kube' ), $this->version, 'all' );
 
 	}
 
@@ -167,6 +170,7 @@ class Compi_Admin {
 
 		wp_enqueue_script( $this->plugin_name . 'mdl-js', $this->admin_mdl_script, array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'kube-js', $this->kube_script, array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -179,14 +183,14 @@ class Compi_Admin {
 
 		$this->include_options();
 
-		$dash_tabs                       = $this->dash_tabs;
+		$dash_tabs                           = $this->dash_tabs;
 		$enhancements_section_one_options    = $this->enhancements_section_one_options;
 		$new_modules_section_one_options     = $this->new_modules_section_one_options;
 		$builder_general_section_one_options = $this->builder_general_section_one_options;
 		$theme_general_section_one_options   = $this->theme_general_section_one_options;
 		$support_section_one_options         = $this->support_section_one_options;
-		$header_import_options   = $this->header_import_options;
-		$header_export_options   = $this->header_export_options;
+		$header_import_options               = $this->header_import_options;
+		$header_export_options               = $this->header_export_options;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 
