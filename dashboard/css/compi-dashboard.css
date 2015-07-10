@@ -2,7 +2,7 @@
 /*-----------------[RESET]------------------------*/
 /*------------------------------------------------*/
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+/*html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
 
 ol, ul { list-style: none; }
 
@@ -10,13 +10,13 @@ a { text-decoration: none; }
 
 button { border: none; }
 
-#dots_admin_wrapper a:focus { box-shadow: none; }
+#dots_admin_wrapper a:focus { box-shadow: none; }*/
 
 /*------------------------------------------------*/
 /*------------------[TYPOGRAPHY]------------------*/
 /*------------------------------------------------*/
 
-body, p, button { font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 400; color: #939AAA; line-height: 1.7em; }
+/*body, p, button { font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 400; color: #939AAA; line-height: 1.7em; }
 
 h1, h2, h3, h4, h5, h6, button, .dots_admin_action_button a { line-height: 1.1em; padding-bottom: .5em; color: #373942; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
@@ -42,34 +42,65 @@ p:last-of-type { padding-bottom: 0; }
 
 .dots_admin_note p, .dots_admin_note h2 { display: inline-block; }
 
-.dots_admin_note h2 { margin-right: 5px; }
+.dots_admin_note h2 { margin-right: 5px; }*/
 
 /*------------------------------------------------*/
 /*-----------------[BASIC STYLES]-----------------*/
 /*------------------------------------------------*/
 
-#dots_admin_wrapper_outer input, #dots_admin_wrapper_outer select, #dots_admin_wrapper_outer textarea { border: none; -webkit-box-shadow: none; box-shadow: none; }
-
-#dots_admin_wrapper_outer { padding: 30px 20px 20px 15px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@font-face {
+	font-family: 'etbuilder';
+	src: url('../../../../themes/Divi/includes/builder/fonts/etbuilder_v2_4.eot');
+	src: url('../../../../themes/Divi/includes/builder/fonts/etbuilder_v2_4.eot?#iefix') format('embedded-opentype'),
+	url('../../../../themes/Divi/includes/builder/fonts/etbuilder_v2_4.woff') format('woff'),
+	url('../../../../themes/Divi/includes/builder/fonts/etbuilder_v2_4.ttf') format('truetype'),
+	url('../../../../themes/Divi/includes/builder/fonts/etbuilder_v2_4.svg#etbuilder') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 #dots_admin_wrapper {
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-	0 3px 1px -2px rgba(0, 0, 0, 0.2),
-	0 1px 5px 0 rgba(0, 0, 0, 0.12);
-	width: 100%;
-	position: relative;
 	min-height: 600px;
 }
 
-#dots_admin_wrapper .mdl-layout__content {
-	background: white;
+#wpcontent {
+	padding-left: 0px !important;
 }
 
-.mdl-grid {
-	max-width: 89%;
+.mdl-layout__drawer {
+	left: initial;
+	right: 0;
+	-webkit-transform: translateX(250px);
+	-ms-transform: translateX(250px);
+	transform: translateX(250px);
+
 }
 
-.admin-row {
-	padding-left: 87%;
-	padding-bottom: 1%;
+.mdl-layout__drawer-button {
+	left: initial;
+	right: 0;
+}
+
+.dots_pb_icon:before {
+	font-family: 'etbuilder';
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 48px;
+}
+
+.regular.dots_pb_icon:before {
+	color: #008BDB;
+}
+
+.fullwidth.dots_pb_icon:before {
+	color: #9343F5;
+}
+
+.dots_pb_portfolio:before {
+	content: '\57';
 }

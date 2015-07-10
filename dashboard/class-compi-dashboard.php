@@ -57,7 +57,7 @@ class Compi_Admin {
 		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
 		$this->template_dir       = $this->dashboard_dir . 'templates';
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
-		$this->kube_stylesheet     = plugins_url( '/css/kube.min.css', __FILE__ );
+		$this->kube_stylesheet     = plugins_url( '/css/kube.prefixed.min.css', __FILE__ );
 		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
 		$this->css_mdl_icons      = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
@@ -142,10 +142,10 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'kube' ), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array( $this->plugin_name . 'kube' ), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
 
 	}
 

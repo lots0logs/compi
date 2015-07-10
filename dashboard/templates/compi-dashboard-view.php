@@ -14,8 +14,8 @@
 
 
 echo '
-		<div id="dots_admin_wrapper_outer" class="units-row">
-			<div id="dots_admin_wrapper" class="dots_admin">
+		<div id="dots_admin_wrapper_outer">
+			<div id="dots_admin_wrapper" class="dots_admin units-row">
 			<form id="dots_compi_options" enctype="multipart/form-data">
 				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
 					<header class="mdl-layout__header">
@@ -71,6 +71,7 @@ if ( isset( $dash_tabs ) ) {
 
 		if ( $key !== 'header' ) {
 			printf( '<section class="mdl-layout__tab-panel%2$s" id="fixed-tab-%1$s">
+											<div class="kb">
 												<div class="page-content units-row units-padding">',
 			        esc_attr( $current_section ),
 			        ( true === $first ) ? ' is-active' : ''
@@ -258,22 +259,13 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'section_start' :
 							printf(
-								'%5$s<div class="units-row dots_admin_row%2$s"%3$s%4$s>
-																			%1$s
-																			%6$s
-																			<div class="unit-100">',
+								'<div class="units-row dots_admin_row%2$s">
+									<div class="unit-100">
+										%1$s
+										%3$s',
 								isset( $option['title'] ) ? sprintf( '<h2>%1$s</h2>', esc_html( $option['title'] ) ) : '',
-								isset( $option['display_if'] ) ? ' dots_admin_hidden_option' : '',
-								isset( $option['display_if'] ) ? ' data-condition="' . esc_attr( $option['display_if'] ) . '"' : '',
-								( isset( $current_option_name ) && '' != $current_option_name )
-									? sprintf( ' data-name="dots_admin[%1$s]"', esc_attr( $current_option_name ) )
-									: '',
-								( isset( $option['sub_section'] ) && true == $option['sub_section'] )
-									? '<li class="dots_admin_auto_height">'
-									: '',
-								isset( $option['subtitle'] )
-									? sprintf( '<p class="dots_admin_section_subtitle">%1$s</p>', esc_html( $option['subtitle'] ) )
-									: ''
+								( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '' : ' ',
+								isset( $option['subtitle'] ) ? sprintf( '<p class="h5">%1$s</p>', esc_html( $option['subtitle'] ) ) : ''
 							);
 							break;
 
@@ -348,14 +340,16 @@ if ( isset( $dash_tabs ) ) {
 							);
 							break;
 
-						case 'card' :
+						case 'card_start' :
 							printf(
 								'<div class="unit-30">
-										<h2>%2$s</h2>
-
-									<p class="h4">%3$s</p>
-
-										<table class="table-hovered">
+									<div class="mdl-card mdl-shadow--2dp">
+									<span class="dots_pb_icon dots_pb_portfolio%2$s"></span>
+										<div class="mdl-card__title mdl-card--expand">
+											<h2 class="mdl-card__title-text">%1$s</h2>
+										</div>
+										<div class="mdl-card__actions mdl-card--border">
+											<table class="table-hovered">
 											<thead>
 												<tr>
 													<th class="width-25">Enable</th>
@@ -363,30 +357,41 @@ if ( isset( $dash_tabs ) ) {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td class="width-25">
-														<label for="dots_admin[%4$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-															<input type="checkbox" id="dots_admin[%4$s]" name="dots_admin[%4$s]" class="mdl-switch__input" %5$s>
-															<span class="mdl-switch__label"></span>
-														</label>
-													</td>
-													<td class="width-75">%3$s</td>
-												</tr>
-											</tbody>
-										</table>
-
-								</p></div>',
-								esc_html( $option['class'] ),
+												',
 								esc_html( $option['title'] ),
+								(isset($option['regular']) && true === $option['regular']) ? ' regular' : ' fullwidth'
+							);
+							break;
+
+						case 'card_option' :
+							printf(
+								'<tr>
+									<td class="width-25">
+										<label for="dots_admin[%2$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+											<input type="checkbox" id="dots_admin[%2$s]" name="dots_admin[%2$s]" class="mdl-switch__input" %3$s>
+											<span class="mdl-switch__label"></span>
+										</label>
+									</td>
+									<td class="width-75">%1$s</td>
+								</tr>',
 								isset( $option['description'] ) ? esc_html( $option['description'] ) : '',
 								esc_attr( $current_option_name ),
 								checked( $current_option_value, 1, false )
 							);
 							break;
+
+						case 'card_end' :
+							printf(
+								'		</tbody>
+									</table>
+								</div>'
+							);
+							break;
+
 					} // end switch
 				} // end foreach( $options_array as $option)
 			} // end foreach( $value['contents'] as $key => $value )
-			echo '</div></section>';
+			echo '</div></div></section>';
 		} // end if ( $key !== 'header')
 	} // end foreach ( $compi_sections as $key => $value )
 } // end if ( isset( $compi_sections ) )

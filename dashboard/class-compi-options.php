@@ -70,16 +70,26 @@ class Compi_Options_Table {
 			'enhancements_tab'      => array(
 				'section_start'       => array(
 					'type' => 'section_start',
+					'title' => '',
+					'subtitle' => ''
+				),
+				'card_start' => array(
+					'type' => 'card_start',
+					'title' => 'Portfolio',
+					'regular' => true
 				),
 				'posts_for_portfolio' => array(
-					'type'        => 'card',
-					'title'       => 'Portfolio Posts',
-					'description' => __( 'Make regular posts available in the Portfolio Module.', 'Compi' ),
+					'type'        => 'card_option',
+					'title'       => '',
+					'description' => __( 'Make regular posts available in this module.', 'Compi' ),
 					'name'        => 'posts_for_portfolio',
-					'hint_text'   => __( "By default, portfolios can only display porject posts. This will allow you to display regular posts in addition to project posts.", 'Compi' ),
+					'hint_text'   => __( 'By default, portfolios can only display porject posts. This will allow you to display regular posts in addition to project posts.', 'Compi' ),
 					'default'     => 1,
 					'conditional' => 'posts_for_portfolios_enabled',
 					'class'       => '',
+				),
+				'card_end' => array(
+					'type' => 'card_end',
 				),
 				'section_end'         => array(
 					'type' => 'section_end',
@@ -172,7 +182,9 @@ class Compi_Options_Table {
 
 		$this->enhancements_section_one_options = array(
 			$this->dash_options_all['enhancements_tab']['section_start'],
+			$this->dash_options_all['enhancements_tab']['card_start'],
 			$this->dash_options_all['enhancements_tab']['posts_for_portfolio'],
+			$this->dash_options_all['enhancements_tab']['card_end'],
 			$this->dash_options_all['enhancements_tab']['section_end'],
 		);
 
