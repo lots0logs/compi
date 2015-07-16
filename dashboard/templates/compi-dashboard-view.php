@@ -15,9 +15,11 @@
 
 echo '
 		<div id="dots_admin_wrapper_outer">
-			<div id="dots_admin_wrapper" class="dots_admin units-row">
-			<form id="dots_compi_options" enctype="multipart/form-data">
-				<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+			<div id="dots_admin_wrapper" class="dots_admin">
+			<form id="dots_compi_options" enctype="multipart/form-data">';
+$menu_count = 0;
+settings_fields( 'dots_compi_settings_group' );
+				echo '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
 					<header class="mdl-layout__header">
 						<div class="mdl-layout__header-row">
 							<span class="mdl-layout-title">Compi Control</span>
@@ -60,10 +62,6 @@ if ( isset( $dash_tabs['plugin']['contents'] ) ) {
 echo '				</div>
 					<main class="mdl-layout__content">';
 
-
-$menu_count = 0;
-settings_fields( 'dots_compi_settings_group' );
-
 if ( isset( $dash_tabs ) ) {
 	$first = true;
 	foreach ( $dash_tabs as $key => $value ) {
@@ -71,8 +69,8 @@ if ( isset( $dash_tabs ) ) {
 
 		if ( $key !== 'header' ) {
 			printf( '<section class="mdl-layout__tab-panel%2$s" id="fixed-tab-%1$s">
-											<div class="kb">
-												<div class="page-content units-row units-padding">',
+						<div class="page-content">
+							<div class="mdl-grid">',
 			        esc_attr( $current_section ),
 			        ( true === $first ) ? ' is-active' : ''
 			);
@@ -259,18 +257,17 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'section_start' :
 							printf(
-								'<div class="units-row dots_admin_row%2$s">
-									<div class="unit-100">
+								'<div class="mdl-cell mdl-cell--12-col%2$s">
 										%1$s
-										%3$s',
-								isset( $option['title'] ) ? sprintf( '<h2>%1$s</h2>', esc_html( $option['title'] ) ) : '',
+										%3$s</div>',
+								isset( $option['title'] ) ? sprintf( '<h4>%1$s</h4>', esc_html( $option['title'] ) ) : '',
 								( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '' : ' ',
-								isset( $option['subtitle'] ) ? sprintf( '<p class="h5">%1$s</p>', esc_html( $option['subtitle'] ) ) : ''
+								isset( $option['subtitle'] ) ? sprintf( '<p>%1$s</p>', esc_html( $option['subtitle'] ) ) : ''
 							);
 							break;
 
 						case 'section_end' :
-							printf( '</div></div>%1$s',
+							printf( '%1$s',
 							        ( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '</li>' : ''
 							);
 							break;
@@ -306,7 +303,7 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'main_title' :
 							printf(
-								'<div class="mdl-cell--stretch dots_admin_row dots_admin_selection">
+								'<div class="mdl-cell mdl-cell--12-col dots_admin_row dots_admin_selection">
 																			<h1>%1$s</h1>
 																			%2$s
 																		</div>',
@@ -342,37 +339,38 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'card_start' :
 							printf(
-								'<div class="unit-30">
-									<div class="mdl-card mdl-shadow--2dp">
-									<span class="dots_pb_icon dots_pb_portfolio%2$s"></span>
-										<div class="mdl-card__title mdl-card--expand">
+								'<div class="mdl-cell mdl-cell--4-col" style="margin-left:0px;">
+									<div class="mdl-card mdl-shadow--2dp dots_card">
+										<div class="mdl-card__title mdl-card--expand%2$s">
+											<span class="dots_pb_icon dots_pb_%3$s"></span>
 											<h2 class="mdl-card__title-text">%1$s</h2>
 										</div>
-										<div class="mdl-card__actions mdl-card--border">
-											<table class="table-hovered">
+										<div class="mdl-card__actions">
+											<table class="mdl-data-table mdl-js-data-table">
 											<thead>
 												<tr>
-													<th class="width-25">Enable</th>
-													<th class="width-75">Enhancement</th>
+													<th class="mdl-data-table__cell--non-numeric">Enhancement</th>
+													<th class="mdl-data-table__cell--non-numeric">On/Off</th>
 												</tr>
 											</thead>
 											<tbody>
 												',
 								esc_html( $option['title'] ),
-								(isset($option['regular']) && true === $option['regular']) ? ' regular' : ' fullwidth'
+								(isset($option['regular']) && true === $option['regular']) ? ' regular' : ' fullwidth',
+									esc_attr($option['icon'])
 							);
 							break;
 
 						case 'card_option' :
 							printf(
 								'<tr>
-									<td class="width-25">
+									<td class="mdl-data-table__cell--non-numeric">%1$s</td>
+									<td class="mdl-data-table__cell--non-numeric">
 										<label for="dots_admin[%2$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
 											<input type="checkbox" id="dots_admin[%2$s]" name="dots_admin[%2$s]" class="mdl-switch__input" %3$s>
 											<span class="mdl-switch__label"></span>
 										</label>
 									</td>
-									<td class="width-75">%1$s</td>
 								</tr>',
 								isset( $option['description'] ) ? esc_html( $option['description'] ) : '',
 								esc_attr( $current_option_name ),
@@ -384,7 +382,7 @@ if ( isset( $dash_tabs ) ) {
 							printf(
 								'		</tbody>
 									</table>
-								</div>'
+								</div></div></div>'
 							);
 							break;
 
@@ -397,15 +395,10 @@ if ( isset( $dash_tabs ) ) {
 } // end if ( isset( $compi_sections ) )
 
 echo '
-</main>';
+</main></div>';
 printf(
-	'<div class="admin-row"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">%1$s</button>
-					<input type="hidden" name="action" value="save_compi" /></div>',
+	'<div class="mdl-grid dots_save_wrap"><div class="mdl-cell mdl-cell--12-col"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent dots_save">%1$s</button>
+					<input type="hidden" name="action" value="save_compi" /></div></div>',
 	esc_html__( 'Save Changes', 'Compi' )
 );
-echo '
-</div>
-</div>
-</form>
-</div>
-</div>';
+echo '</form></div></div>';

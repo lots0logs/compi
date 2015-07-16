@@ -142,8 +142,8 @@ class Compi_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array( $this->plugin_name . 'kube' ), $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
 
@@ -169,8 +169,8 @@ class Compi_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name . 'mdl-js', $this->admin_mdl_script, array(), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . 'kube-js', $this->kube_script, array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery', 'mdl-js' ), $this->version, false );
+		//wp_enqueue_script( $this->plugin_name . 'kube-js', $this->kube_script, array( 'jquery' ), $this->version, false );
 
 	}
 

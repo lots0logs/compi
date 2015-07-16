@@ -27,15 +27,8 @@ class Compi_Options_Table {
 	public function __construct() {
 
 		$this->dash_tabs = array(
-			'enhancements'    => array(
-				'title'    => __( 'Module Enhancements', 'Compi' ),
-				'contents' => array(
-					'section_one' => __( 'Section One', 'Compi' ),
-				),
-
-			),
-			'new_modules'     => array(
-				'title'    => __( 'New Modules', 'Compi' ),
+			'modules'    => array(
+				'title'    => __( 'Modules', 'Compi' ),
 				'contents' => array(
 					'section_one' => __( 'Section One', 'Compi' ),
 				),
@@ -52,26 +45,26 @@ class Compi_Options_Table {
 					'section_one' => __( 'Section One', 'Compi' ),
 				),
 			),
+			'compi_opts' => array(
+				'title'    => __( 'Compi Options', 'Compi' ),
+				'contents' => array(
+					'section_one' => __( 'Section One', 'Compi' ),
+				),
+			),
 			'support'         => array(
 				'title'    => __( 'Support', 'Compi' ),
 				'contents' => array(
 					'section_one' => __( 'Section One', 'Compi' ),
 				),
 			),
-			'header'          => array(
-				'contents' => array(
-					'import' => __( 'Import', 'Compi' ),
-					'export' => __( 'Export', 'Compi' ),
-				),
-			),
 		);
 
 		$this->dash_options_all = array(
-			'enhancements_tab'      => array(
+			'modules_tab'      => array(
 				'section_start'       => array(
 					'type' => 'section_start',
-					'title' => 'Enhance The Builder\'s Default Modules',
-					'subtitle' => 'Use the controls below to enable your desired enhancements.'
+					'title' => 'Modules',
+					'subtitle' => 'Use the controls below to enable your desired features.'
 				),
 				'card1_start'                => array(
 					'type'    => 'card_start',
