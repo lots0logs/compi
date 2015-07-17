@@ -81,6 +81,12 @@ class Compi {
 		$this->plugin_name = 'compi';
 		$this->version     = '1.0.0';
 
+		// Register activation hook.
+		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
+
+		// Register deactivation hook.
+		register_deactivation_hook( __FILE__, array( 'Compi', 'deactivation_hook' ) );
+
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_dashboard_hooks();
@@ -223,6 +229,14 @@ class Compi {
 	public function get_loader() {
 
 		return $this->loader;
+	}
+	
+	public function activation_hook() {
+		
+	}
+
+	public function deactivation_hook() {
+		
 	}
 
 }

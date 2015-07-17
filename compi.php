@@ -31,30 +31,6 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-compi-activation.php
- */
-function activate_compi() {
-
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-compi-activation.php';
-	Compi_Activator::activate();
-}
-
-register_activation_hook( __FILE__, 'activate_compi' );
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-compi-deactivation.php.php
- */
-function deactivate_compi() {
-
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-compi-deactivation.php';
-	Compi_Deactivator::deactivate();
-}
-
-register_deactivation_hook( __FILE__, 'deactivate_compi' );
-
-/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
