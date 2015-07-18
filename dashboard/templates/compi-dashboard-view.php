@@ -13,28 +13,26 @@
  */
 
 
-echo '
-		<div id="dots_admin_wrapper_outer">
-			<div id="dots_admin_wrapper" class="dots_admin">
-			<form id="dots_compi_options" enctype="multipart/form-data">';
+echo '<form id="dots_compi_options" enctype="multipart/form-data">
+		<div id="dots_admin_wrapper_outer" class="units-container dots">
+			<div id="dots_admin_wrapper" class="dots_admin units-row units-padding">
+			<div class="unit-centered unit-70" style="position: relative;min-height:700px;">
+			';
 $menu_count = 0;
 settings_fields( 'dots_compi_settings_group' );
-				echo '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
-					<header class="mdl-layout__header">
-						<div class="mdl-layout__header-row">
-							<span class="mdl-layout-title">Compi Control</span>
-						</div>
-						<div class="mdl-layout__tab-bar mdl-js-ripple-effect">';
+echo '<h4>Compi Settings</h4>
+						<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+  <div class="mdl-tabs__tab-bar">';
 
 
 if ( isset( $dash_tabs ) ) {
 	$first = true;
 	foreach ( $dash_tabs as $key => $value ) {
 		if ( isset( $value['title'] ) ) {
-			printf( '<a href="#fixed-tab-%1$s" class="mdl-layout__tab%3$s">%2$s</a>',
-			        esc_attr( $key ),
-			        $value['title'],
-			        ( true === $first ) ? ' is-active' : ''
+			printf( '<a href="#fixed-tab-%1$s" class="mdl-tabs__tab%3$s">%2$s</a>',
+				esc_attr( $key ),
+				$value['title'],
+				( true === $first ) ? ' is-active' : ''
 			);
 			$first = false;
 		}
@@ -42,25 +40,8 @@ if ( isset( $dash_tabs ) ) {
 }
 
 
-echo '					</div>
-					</header>
-					<div class="mdl-layout__drawer">
-						<span class="mdl-layout-title">Plugin Settings</span>';
 
-
-if ( isset( $dash_tabs['plugin']['contents'] ) ) {
-	echo '<nav class="mdl-navigation">';
-	foreach ( $dash_tabs['plugin']['contents'] as $key => $value ) {
-		printf( '<a class="mdl-navigation__link" href="">%s</a>',
-		        esc_attr( $key )
-		);
-	}
-	echo '</nav>';
-}
-
-
-echo '				</div>
-					<main class="mdl-layout__content">';
+echo '</div>';
 
 if ( isset( $dash_tabs ) ) {
 	$first = true;
@@ -68,11 +49,12 @@ if ( isset( $dash_tabs ) ) {
 		$current_section = $key;
 
 		if ( $key !== 'header' ) {
-			printf( '<section class="mdl-layout__tab-panel%2$s" id="fixed-tab-%1$s">
-						<div class="page-content">
-							<div class="mdl-grid">',
-			        esc_attr( $current_section ),
-			        ( true === $first ) ? ' is-active' : ''
+			printf( '<section class="mdl-tabs__panel%2$s" id="fixed-tab-%1$s">
+						<div class="page-content units-row units-padding">
+						<div class="unit-centered unit-60">
+						<div class="units-row units-split">',
+				esc_attr( $current_section ),
+				( true === $first ) ? ' is-active' : ''
 			);
 			$first = false;
 			foreach ( $value['contents'] as $key => $value ) {
@@ -102,16 +84,16 @@ if ( isset( $dash_tabs ) ) {
 							$current_option_value = '' == $current_option_value ? array() : $current_option_value;
 							foreach ( $option['value'] as $location => $location_name ) {
 								printf( '<div class="dots_admin_location dots_admin_multi_selectable  dots_admin_icon"><div class="dots_admin_location_tile"><h1>%1$s</h1><div class="dots_admin_location_content %7$s">%8$s<div class="dots_admin_location_icons dots_admin_location_icons_%2$s">%9$s%10$s</div></div><input class="dots_admin_toggle" type="checkbox" id="dots_admin[%3$s][%6$s]" name="dots_admin[%3$s][]" value="%4$s" %5$s></div>',
-								        esc_html( $location_name ),
-								        esc_attr( $location ),
-								        esc_attr( $current_option_name ),
-								        esc_attr( $location ),
-								        checked( in_array( $location, $current_option_value ), true, false ),
-								        esc_attr( $i ),
-								        ( 'inline' === $location || 'media' === $location ) ? esc_attr( 'dots_admin_location_content_' . $location ) : '',
-								        ( 'popup' === $location || 'media' === $location ) ? '' : '</div>',
-								        ( 'popup' === $location || 'media' === $location ) ? '</div>' : '',
-								        ( 'media' === $location ) ? '<i class="dots_admin_icon_image dots_admin_icon"></i>' : ''
+									esc_html( $location_name ),
+									esc_attr( $location ),
+									esc_attr( $current_option_name ),
+									esc_attr( $location ),
+									checked( in_array( $location, $current_option_value ), true, false ),
+									esc_attr( $i ),
+									( 'inline' === $location || 'media' === $location ) ? esc_attr( 'dots_admin_location_content_' . $location ) : '',
+									( 'popup' === $location || 'media' === $location ) ? '' : '</div>',
+									( 'popup' === $location || 'media' === $location ) ? '</div>' : '',
+									( 'media' === $location ) ? '<i class="dots_admin_icon_image dots_admin_icon"></i>' : ''
 								);
 								$i ++;
 							}
@@ -131,9 +113,9 @@ if ( isset( $dash_tabs ) ) {
 
 							foreach ( $current_option_list as $actual_value => $display_value ) {
 								printf( '<option value="%1$s" %2$s>%3$s</option>',
-								        esc_attr( $actual_value ),
-								        selected( $actual_value, $current_option_value, false ),
-								        esc_html( $display_value )
+									esc_attr( $actual_value ),
+									selected( $actual_value, $current_option_value, false ),
+									esc_html( $display_value )
 								);
 							}
 
@@ -150,12 +132,12 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'checkbox' :
 							printf( '<li><label for="dots_admin[%2$s]" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect%5$s"%4$s%6$s><input type="checkbox" id="dots_admin[%2$s]" name="dots_admin[%2$s]" value="1" class="mdl-checkbox__input" %3$s><span class="mdl-checkbox__label">%1$s</span></label>',
-							        isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
-							        esc_attr( $current_option_name ),
-							        checked( $current_option_value, 1, false ),
-							        isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
-							        isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
-							        isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
+								isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
+								esc_attr( $current_option_name ),
+								checked( $current_option_value, 1, false ),
+								isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
+								isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
+								isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
 							);
 							if ( isset( $option['hint_text'] ) ) {
 								printf(
@@ -168,12 +150,12 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'radio' :
 							printf( '<li><label for="dots_admin[%2$s]" class="mdl-radio mdl-js-radio%5$s"%4$s%6$s><input type="radio" id="dots_admin[%2$s]" name="dots_admin[%2$s]" value="1" class="mdl-radio__button" %3$s><span class="mdl-radio__label">%1$s</span></label>',
-							        isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
-							        esc_attr( $current_option_name ),
-							        checked( $current_option_value, 1, false ),
-							        isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
-							        isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
-							        isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
+								isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
+								esc_attr( $current_option_name ),
+								checked( $current_option_value, 1, false ),
+								isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
+								isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
+								isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
 							);
 							if ( isset( $option['hint_text'] ) ) {
 								printf(
@@ -185,13 +167,13 @@ if ( isset( $dash_tabs ) ) {
 							break;
 
 						case 'switch' :
-							printf( '<li><label for="dots_admin[%2$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect%5$s"%4$s%6$s><input type="checkbox" id="dots_admin[%2$s]" name="dots_admin[%2$s]" value="1" class="mdl-switch__input" %3$s><span class="mdl-switch__label">%1$s</span></label>',
-							        isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
-							        esc_attr( $current_option_name ),
-							        checked( $current_option_value, 1, false ),
-							        isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
-							        isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
-							        isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
+							printf( '<div class="unit-10 unit-push-right dots_switch"><label for="dots_admin%2$s" class="mdl-switch mdl-js-switch mdl-js-ripple-effect%5$s"%4$s%6$s><input type="checkbox" id="dots_admin%2$s" name="dots_admin%2$s" value="1" class="mdl-switch__input" %3$s><span class="mdl-switch__label">%1$s</span></label></div>',
+								isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
+								esc_attr( $current_option_name ),
+								checked( $current_option_value, 1, false ),
+								isset( $option['conditional'] ) ? ' data-enables_1="' . esc_attr( $options_prefix . '_' . $option['conditional'] ) . '"' : '',
+								isset( $option['conditional'] ) ? ' dots_admin_conditional' : '',
+								isset( $option['conditional_2'] ) ? ' data-enables_2="' . esc_attr( $options_prefix . '_' . $option['conditional_2'] ) . '"' : ''
 							);
 							if ( isset( $option['hint_text'] ) ) {
 								printf(
@@ -199,7 +181,6 @@ if ( isset( $dash_tabs ) ) {
 									esc_html( $option['hint_text'] )
 								);
 							}
-							echo '</li>';
 							break;
 
 						case 'input_field' :
@@ -245,10 +226,10 @@ if ( isset( $dash_tabs ) ) {
 
 							foreach ( $post_types as $post_type ) {
 								printf( '<li class="dots_admin_checkbox"><input type="checkbox" id="dots_admin[%1$s][%4$s]" name="dots_admin[%1$s][]" value="%3$s" %2$s><label for="dots_admin[%1$s][%4$s]"></label><p>%3$s</p></li>',
-								        esc_attr( $current_option_name ),
-								        checked( in_array( $post_type, $current_option_value ), true, false ),
-								        esc_attr( $post_type ),
-								        esc_attr( $i )
+									esc_attr( $current_option_name ),
+									checked( in_array( $post_type, $current_option_value ), true, false ),
+									esc_attr( $post_type ),
+									esc_attr( $i )
 								);
 								$i ++;
 							}
@@ -257,10 +238,10 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'section_start' :
 							printf(
-								'<div class="mdl-cell mdl-cell--12-col%2$s">
+								'<div class="units-row units-split dots_option_row"><div class="unit-90%2$s">
 										%1$s
 										%3$s</div>',
-								isset( $option['title'] ) ? sprintf( '<h4>%1$s</h4>', esc_html( $option['title'] ) ) : '',
+								isset( $option['title'] ) ? sprintf( '<h6>%1$s</h6>', esc_html( $option['title'] ) ) : '',
 								( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '' : ' ',
 								isset( $option['subtitle'] ) ? sprintf( '<p>%1$s</p>', esc_html( $option['subtitle'] ) ) : ''
 							);
@@ -268,8 +249,9 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'section_end' :
 							printf( '%1$s',
-							        ( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '</li>' : ''
+								( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '</li>' : ''
 							);
+							echo '</div>';
 							break;
 
 						case 'text' :
@@ -339,7 +321,7 @@ if ( isset( $dash_tabs ) ) {
 
 						case 'card_start' :
 							printf(
-								'<div class="mdl-cell mdl-cell--4-col" style="margin-left:0px;">
+								'<div class="unit-30">
 									<div class="mdl-card mdl-shadow--2dp dots_card">
 										<div class="mdl-card__title mdl-card--expand%2$s">
 											<span class="dots_pb_icon dots_pb_%3$s"></span>
@@ -356,8 +338,8 @@ if ( isset( $dash_tabs ) ) {
 											<tbody>
 												',
 								esc_html( $option['title'] ),
-								(isset($option['regular']) && true === $option['regular']) ? ' regular' : ' fullwidth',
-									esc_attr($option['icon'])
+								( isset( $option['regular'] ) && true === $option['regular'] ) ? ' regular' : ' fullwidth',
+								esc_attr( $option['icon'] )
 							);
 							break;
 
@@ -389,16 +371,15 @@ if ( isset( $dash_tabs ) ) {
 					} // end switch
 				} // end foreach( $options_array as $option)
 			} // end foreach( $value['contents'] as $key => $value )
-			echo '</div></div></section>';
+			echo '</div></div></div></section>';
 		} // end if ( $key !== 'header')
 	} // end foreach ( $compi_sections as $key => $value )
 } // end if ( isset( $compi_sections ) )
 
-echo '
-</main></div>';
+echo '</div>';
 printf(
 	'<div class="mdl-grid dots_save_wrap"><div class="mdl-cell mdl-cell--12-col"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent dots_save">%1$s</button>
 					<input type="hidden" name="action" value="save_compi" /></div></div>',
 	esc_html__( 'Save Changes', 'Compi' )
 );
-echo '</form></div></div>';
+echo '</div></div></div></form>';

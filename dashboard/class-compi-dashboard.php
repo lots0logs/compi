@@ -47,7 +47,7 @@ class Compi_Admin {
 	 * @since    1.0.0
 	 *
 	 * @param      string $plugin_name The name of this plugin.
-	 * @param      string $version     The version of this plugin.
+	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -56,12 +56,11 @@ class Compi_Admin {
 		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
 		$this->template_dir       = $this->dashboard_dir . 'templates';
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
-		$this->kube_stylesheet     = plugins_url( '/css/kube.prefixed.min.css', __FILE__ );
-		$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
+		$this->css_mdl_stylesheet     = plugins_url( '/css/material.prefixed.min.css', __FILE__ );
+		//$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
 		$this->css_mdl_icons      = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
-		$this->kube_script        = plugins_url( '/js/kube.min.js', __FILE__ );
 		$this->compi_options      = static::get_options_array();
 
 		$this->include_options();
@@ -91,15 +90,10 @@ class Compi_Admin {
 
 		$include_options = new Compi_Options_Table();
 
-		$this->dash_tabs                           = $include_options->dash_tabs;
-		$this->enhancements_section_one_options    = $include_options->enhancements_section_one_options;
-		$this->new_modules_section_one_options     = $include_options->new_modules_section_one_options;
-		$this->builder_general_section_one_options = $include_options->builder_general_section_one_options;
-		$this->theme_general_section_one_options   = $include_options->theme_general_section_one_options;
-		$this->support_section_one_options         = $include_options->support_section_one_options;
-		$this->header_import_options               = $include_options->header_import_options;
-		$this->header_export_options               = $include_options->header_export_options;
-
+		$this->dash_tabs                   = $include_options->dash_tabs;
+		$this->general_section_one_options = $include_options->general_section_one_options;
+		$this->tweaks_section_one_options  = $include_options->tweaks_section_one_options;
+		$this->support_section_one_options = $include_options->support_section_one_options;
 
 	}
 
@@ -167,7 +161,10 @@ class Compi_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name . 'mdl-js', $this->admin_mdl_script, array(), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, $this->admin_script, array( 'jquery', 'mdl-js' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, $this->admin_script, array(
+			'jquery',
+			'mdl-js'
+		), $this->version, false );
 		//wp_enqueue_script( $this->plugin_name . 'kube-js', $this->kube_script, array( 'jquery' ), $this->version, false );
 
 	}
@@ -181,14 +178,10 @@ class Compi_Admin {
 
 		$this->include_options();
 
-		$dash_tabs                           = $this->dash_tabs;
-		$enhancements_section_one_options    = $this->enhancements_section_one_options;
-		$new_modules_section_one_options     = $this->new_modules_section_one_options;
-		$builder_general_section_one_options = $this->builder_general_section_one_options;
-		$theme_general_section_one_options   = $this->theme_general_section_one_options;
-		$support_section_one_options         = $this->support_section_one_options;
-		$header_import_options               = $this->header_import_options;
-		$header_export_options               = $this->header_export_options;
+		$dash_tabs                   = $this->dash_tabs;
+		$general_section_one_options = $this->general_section_one_options;
+		$tweaks_section_one_options  = $this->tweaks_section_one_options;
+		$support_section_one_options = $this->support_section_one_options;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 
