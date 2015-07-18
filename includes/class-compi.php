@@ -66,10 +66,10 @@ class Compi {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $version ) {
 
 		$this->plugin_name = 'compi';
-		$this->version     = '1.0.0';
+		$this->version     = $version;
 
 		// Register activation hook.
 		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
@@ -172,7 +172,7 @@ class Compi {
 	private function define_dashboard_hooks() {
 
 		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version() );
-		
+
 		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
 
 	}
