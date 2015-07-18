@@ -31,41 +31,28 @@
 class Compi {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Compi_Loader $loader Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
-
-	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
-	protected $plugin_name;
+	public $plugin_name;
 
 	/**
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string $version The current version of the plugin.
 	 */
-	protected $version;
+	public $version;
 
 	/**
 	 * The plugin's dashboard.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string $dashboard The admin dashboard.
 	 */
-	protected $dashboard;
+	public $dashboard;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -76,14 +63,30 @@ class Compi {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $version ) {
 
+		// Set plugin's name (and slug).
 		$this->plugin_name = 'compi';
-		$this->version     = '1.0.0';
 
+		// Set plugin's version.
+		$this->version     = $version;
+
+		// Register activation hook.
+		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
+
+		// Register deactivation hook.
+		register_deactivation_hook( __FILE__, array( 'Compi', 'deactivation_hook' ) );
+
+		// Load all plugin dependencies.
 		$this->load_dependencies();
+
+		// Set localization.
 		$this->set_locale();
+
+		// Define dashboard hooks.
 		$this->define_dashboard_hooks();
+
+		// Define public hooks.
 		$this->define_public_hooks();
 
 	}
@@ -107,12 +110,6 @@ class Compi {
 	private function load_dependencies() {
 
 		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-compi-loader.php';
-
-		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
@@ -129,8 +126,6 @@ class Compi {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-compi-public.php';
 
-		$this->loader = new Compi_Loader();
-
 	}
 
 	/**
@@ -145,22 +140,10 @@ class Compi {
 	private function set_locale() {
 
 		$plugin_i18n = new Compi_i18n();
-		$plugin_i18n->set_domain( $this->get_plugin_name() );
+		$plugin_i18n->set_domain( $this->plugin_name );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
-	}
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-
-		return $this->plugin_name;
 	}
 
 	/**
@@ -172,20 +155,10 @@ class Compi {
 	 */
 	private function define_dashboard_hooks() {
 
-		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version(), $this->loader );
-		$this->loader->add_action( 'admin_menu', $this->dashboard, 'setup_dashboard', 90 );
+		$this->dashboard = new Compi_Admin( $this->plugin_name, $this->version );
 
-	}
+		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-
-		return $this->version;
 	}
 
 	/**
@@ -197,32 +170,25 @@ class Compi {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Compi_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Compi_Public( $this->plugin_name, $this->version );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
 
+	}
+	
+	/**
+	 * Runs on plugin activation.
+	 */
+	public function activation_hook() {
+		
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
+	 * Runs on plugin deactivation.
 	 */
-	public function run() {
-
-		$this->loader->run();
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Compi_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-
-		return $this->loader;
+	public function deactivation_hook() {
+		
 	}
 
 }
