@@ -31,16 +31,6 @@
 class Compi {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Compi_Loader $loader Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
-
-	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
@@ -113,12 +103,6 @@ class Compi {
 	private function load_dependencies() {
 
 		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-compi-loader.php';
-
-		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
@@ -134,8 +118,6 @@ class Compi {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-compi-public.php';
-
-		$this->loader = new Compi_Loader();
 
 	}
 
@@ -153,7 +135,7 @@ class Compi {
 		$plugin_i18n = new Compi_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
 
@@ -170,20 +152,6 @@ class Compi {
 	}
 
 	/**
-	 * Register all of the hooks related to the dashboard functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_dashboard_hooks() {
-
-		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version(), $this->loader );
-		$this->loader->add_action( 'admin_menu', $this->dashboard, 'setup_dashboard', 90 );
-
-	}
-
-	/**
 	 * Retrieve the version number of the plugin.
 	 *
 	 * @since     1.0.0
@@ -192,6 +160,21 @@ class Compi {
 	public function get_version() {
 
 		return $this->version;
+	}
+
+	/**
+	 * Register all of the hooks related to the dashboard functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_dashboard_hooks() {
+
+		$this->dashboard = new Compi_Admin( $this->get_plugin_name(), $this->get_version() );
+		
+		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
+
 	}
 
 	/**
@@ -205,36 +188,21 @@ class Compi {
 
 		$plugin_public = new Compi_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
 
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-
-		$this->loader->run();
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Compi_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-
-		return $this->loader;
 	}
 	
+	/**
+	 * Runs on plugin activation.
+	 */
 	public function activation_hook() {
 		
 	}
 
+	/**
+	 * Runs on plugin deactivation.
+	 */
 	public function deactivation_hook() {
 		
 	}

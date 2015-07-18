@@ -48,7 +48,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-compi.php';
 function run_compi() {
 
 	$plugin = new Compi();
-	$plugin->run();
 
 }
 

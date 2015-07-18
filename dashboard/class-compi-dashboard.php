@@ -48,9 +48,8 @@ class Compi_Admin {
 	 *
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version     The version of this plugin.
-	 * @param             $loader
 	 */
-	public function __construct( $plugin_name, $version, $loader ) {
+	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
@@ -63,7 +62,6 @@ class Compi_Admin {
 		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
 		$this->kube_script        = plugins_url( '/js/kube.min.js', __FILE__ );
-		$this->loader             = $loader;
 		$this->compi_options      = static::get_options_array();
 
 		$this->include_options();
