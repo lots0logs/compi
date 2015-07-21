@@ -92,8 +92,8 @@ class Compi_Options_Table {
 					'type' => 'option_end'
 				),
 			),
-			'support_tab'  => array(),
 			'tools_tab' => array(),
+			'support_tab'  => array(),
 		);
 
 

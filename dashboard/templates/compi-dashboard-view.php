@@ -167,7 +167,7 @@ if ( isset( $dash_tabs ) ) {
 						break;
 
 					case 'switch' :
-						printf( '<div class="unit-10 unit-push-right dots_switch"><label for="dots_%2$s" class="mdl-switch mdl-js-switch mdl-js-ripple-effect%5$s"%4$s%6$s><input type="checkbox" id="dots_admin%2$s" name="dots_admin%2$s" value="1" class="mdl-switch__input" %3$s><span class="mdl-switch__label">%1$s</span></label></div>',
+						printf( '<div class="unit-10 unit-push-right dots_switch"><label for="dots_%2$s" class="mdl-switch mdl-js-switch mdl-js-ripple-effect%5$s"%4$s%6$s><input type="checkbox" id="dots_%2$s" name="dots_%2$s" value="1" class="mdl-switch__input" %3$s><span class="mdl-switch__label">%1$s</span></label></div>',
 							isset( $option[ 'title_' . $current_location ] ) ? esc_html( $option[ 'title_' . $current_location ] ) : esc_html( $option['title'] ),
 							esc_attr( $current_option_name ),
 							checked( $current_option_value, 1, false ),
@@ -379,7 +379,7 @@ if ( isset( $dash_tabs ) ) {
 echo '</div>';
 printf(
 	'<div class="mdl-grid dots_save_wrap"><div class="mdl-cell mdl-cell--12-col"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent dots_save">%1$s</button>
-					<input type="hidden" name="action" value="save_compi" /></div></div>',
+					<span class="mdl-spinner mdl-js-spinner mdl-spinner--single-color"></span><input type="hidden" name="action" value="save_compi" /></div></div>',
 	esc_html__( 'Save Changes', 'Compi' )
 );
 echo '</div></div></div></form>';

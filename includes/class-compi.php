@@ -71,6 +71,8 @@ class Compi {
 		// Set plugin's version.
 		$this->version     = $version;
 
+		$this->compi_options = static::get_options_array();
+
 		// Register activation hook.
 		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
 
@@ -88,6 +90,18 @@ class Compi {
 
 		// Define public hooks.
 		$this->define_public_hooks();
+
+	}
+
+	/**
+	 *
+	 * Get our options array from database
+	 *
+	 * @since    1.0.0
+	 */
+	public static function get_options_array() {
+
+		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 
 	}
 
@@ -155,7 +169,7 @@ class Compi {
 	 */
 	private function define_dashboard_hooks() {
 
-		$this->dashboard = new Compi_Admin( $this->plugin_name, $this->version );
+		$this->dashboard = new Compi_Admin( $this->plugin_name, $this->version, $this->compi_options );
 
 		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
 
@@ -170,10 +184,14 @@ class Compi {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Compi_Public( $this->plugin_name, $this->version );
+		$plugin_public = new Compi_Public( $this->plugin_name, $this->version, $this->compi_options );
 
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
+
+
+
+
 
 	}
 	

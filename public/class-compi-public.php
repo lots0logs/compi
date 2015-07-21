@@ -14,8 +14,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Definition.
  *
  * @package    Compi
  * @subpackage Compi/public
@@ -47,12 +46,18 @@ class Compi_Public {
 	 * @since    1.0.0
 	 *
 	 * @param      string $plugin_name The name of the plugin.
-	 * @param      string $version     The version of this plugin.
+	 * @param      string $version The version of this plugin.
+	 * @param $options
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $options ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->compi_options = $options;
+		$this->public_dir      = plugin_dir_path( __FILE__ );
+		$this->template_dir       = $this->public_dir . 'templates';
+		$this->css_stylesheet     = plugins_url( '/css/compi-style.css', __FILE__ );
+		$this->custom_script     = plugins_url( '/js/compi-custom.js', __FILE__ );
 
 	}
 
@@ -63,42 +68,57 @@ class Compi_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Compi_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Compi_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'public/css/compi-style.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'style', $this->css_stylesheet, array('divi-style'), $this->version );
 
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the scripts for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_Name_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array( 'jquery', 'divi-custom' ), $this->version, false );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'public/js/compi-custom.js', array( 'jquery' ), $this->version, false );
+	}
+
+	/**
+	 * Add filter to override a template file.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $template_type
+	 */
+	public function add_template_override_filter( $template_type ) {
+
+		$filter_name = $template_type . '_template';
+
+		add_filter( $filter_name, array($this, 'do_template_override' ) );
+
+	}
+
+	/**
+	 * Override a theme template with our own.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $template
+	 *
+	 * @return string
+	 */
+	public function do_template_override( $template ) {
+
+		$current_filter =  current_filter();
+		$template_name = preg_replace( '_template', '', $current_filter );
+		$template_name = ( $current_filter !== $template_name ) ? $template_name : '';
+
+		if ( '' !== $template_name ) {
+			return $this->template_dir . '/' . $template_name . '.php';
+		}
+
+		return $template;
 
 	}
 
