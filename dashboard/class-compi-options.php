@@ -30,91 +30,94 @@ class Compi_Options_Table {
 			'general' => array(
 				'title'    => __( 'General', 'Compi' ),
 				'contents' => array(
-					'section_one' => __( 'Section One', 'Compi' ),
+					'first' => __( 'General', 'Compi' ),
 				),
 
 			),
 			'tweaks'  => array(
 				'title'    => __( 'Theme Tweaks', 'Compi' ),
 				'contents' => array(
-					'section_one' => __( 'Section One', 'Compi' ),
+					'first' => __( 'Theme Tweaks', 'Compi' ),
 				),
 			),
 			'support' => array(
 				'title'    => __( 'Support', 'Compi' ),
 				'contents' => array(
-					'section_one' => __( 'Section One', 'Compi' ),
+					'first' => __( 'Support', 'Compi' ),
 				),
 			),
-			'header'  => array(
+			'tools'  => array(
+				'title'    => __( 'Tools', 'Compi' ),
 				'contents' => array(
-					'import' => __( 'Import', 'Compi' ),
-					'export' => __( 'Export', 'Compi' ),
+					'first' => __( 'Tools', 'Compi' ),
 				),
 			),
 		);
 
 		$this->dash_options_all = array(
 			'general_tab'  => array(
-				'option_heading' => array(
-					'type'     => 'section_start',
-					'title'    => 'Module Enhancements',
-					'subtitle' => 'Various tweaks for the Builder\'s default modules.'
+				'option1_heading' => array(
+					'type'     => 'option_heading',
+					'title'    => __( 'Module Enhancements' ),
+					'subtitle' => __( 'Various tweaks for the Builder\'s default modules.' )
 				),
-				'option_switch'  => array(
+				'option1_switch'  => array(
 					'type' => 'switch',
 				    'name' => 'module_enhancements'
 				),
 				'option2_heading' => array(
-					'type'     => 'section_start',
-					'title'    => 'New Modules',
-					'subtitle' => 'Exclusive new modules for the Builder.'
+					'type'     => 'option_heading',
+					'title'    => __( 'New Modules' ),
+					'subtitle' => __( 'Exclusive new modules for the Builder.' )
 				),
 				'option2_switch'  => array(
 					'type' => 'switch',
 					'name' => 'new_modules'
 				),
-				'section_end'  => array(
-					'type' => 'section_end'
+				'option_end'  => array(
+					'type' => 'option_end'
 				),
 			),
-			'tweaks_tab'   => array(),
+			'tweaks_tab'   => array(
+				'option1_heading' => array(
+					'type'     => 'option_heading',
+					'title'    => __( 'Global Masonry Grid' ),
+					'subtitle' => __( 'Use the Masonry grid layout on all category, archive, & index pages.' )
+				),
+				'option1_switch'  => array(
+					'type' => 'switch',
+				    'name' => 'global_masonry'
+				),
+				'option_end'  => array(
+					'type' => 'option_end'
+				),
+			),
 			'support_tab'  => array(),
-			'support_note' => array(
-				'type' => 'note',
-				'text' => __( 'Selected locations will use the display settings defined from the menu on the left.', 'Monarch' ),
-			),
-			'import'       => array(
-				'type'  => 'import',
-				'title' => __( 'Import', 'Compi' ),
-			),
-			'export'       => array(
-				'type'  => 'export',
-				'title' => __( 'Export', 'Compi' ),
-			),
+			'tools_tab' => array(),
 		);
 
 
-		$this->general_section_one_options = array(
-			$this->dash_options_all['general_tab']['option_heading'],
-			$this->dash_options_all['general_tab']['option_switch'],
-			$this->dash_options_all['general_tab']['section_end'],
+		$this->general_first_options = array(
+			$this->dash_options_all['general_tab']['option1_heading'],
+			$this->dash_options_all['general_tab']['option1_switch'],
+			$this->dash_options_all['general_tab']['option_end'],
 			$this->dash_options_all['general_tab']['option2_heading'],
 			$this->dash_options_all['general_tab']['option2_switch'],
-			$this->dash_options_all['general_tab']['section_end'],
+			$this->dash_options_all['general_tab']['option_end'],
 		);
 
 
-		$this->tweaks_section_one_options = array(
+		$this->tweaks_first_options = array(
+			$this->dash_options_all['tweaks_tab']['option1_heading'],
+			$this->dash_options_all['tweaks_tab']['option1_switch'],
+			$this->dash_options_all['tweaks_tab']['option_end'],
 		);
 
 
-		$this->support_section_one_options = array(
+		$this->support_first_options = array(
 		);
 
-		$this->header_import_options = array(
-		);
-		$this->header_export_options = array(
+		$this->tools_first_options   = array(
 		);
 
 

@@ -56,12 +56,12 @@ class Compi_Admin {
 		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
 		$this->template_dir       = $this->dashboard_dir . 'templates';
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
-		$this->css_mdl_stylesheet     = plugins_url( '/css/material.prefixed.min.css', __FILE__ );
+		$this->css_mdl_stylesheet = plugins_url( '/css/material.prefixed.min.css', __FILE__ );
 		//$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
-		$this->css_mdl_icons      = '//fonts.googleapis.com/icon?family=Material+Icons';
-		$this->admin_mdl_script   = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
-		$this->admin_script       = plugins_url( '/js/compi-dashboard.js', __FILE__ );
-		$this->compi_options      = static::get_options_array();
+		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
+		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
+		$this->admin_script     = plugins_url( '/js/compi-dashboard.js', __FILE__ );
+		$this->compi_options    = static::get_options_array();
 
 		$this->include_options();
 
@@ -90,10 +90,12 @@ class Compi_Admin {
 
 		$include_options = new Compi_Options_Table();
 
-		$this->dash_tabs                   = $include_options->dash_tabs;
-		$this->general_section_one_options = $include_options->general_section_one_options;
-		$this->tweaks_section_one_options  = $include_options->tweaks_section_one_options;
-		$this->support_section_one_options = $include_options->support_section_one_options;
+		$this->dash_tabs             = $include_options->dash_tabs;
+		$this->general_first_options = $include_options->general_first_options;
+		$this->tweaks_first_options  = $include_options->tweaks_first_options;
+		$this->support_first_options = $include_options->support_first_options;
+		$this->tools_first_options   = $include_options->tools_first_options;
+
 
 	}
 
@@ -122,19 +124,6 @@ class Compi_Admin {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_Name_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		//wp_enqueue_style( $this->plugin_name . 'kube', $this->kube_stylesheet, array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'mdl', $this->css_mdl_stylesheet, array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'mdl-icons', $this->css_mdl_icons, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'styles', $this->css_stylesheet, array( $this->plugin_name . 'mdl' ), $this->version, 'all' );
@@ -148,24 +137,11 @@ class Compi_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_Name_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->plugin_name . 'mdl-js', $this->admin_mdl_script, array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, $this->admin_script, array(
 			'jquery',
 			'mdl-js'
 		), $this->version, false );
-		//wp_enqueue_script( $this->plugin_name . 'kube-js', $this->kube_script, array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -178,10 +154,11 @@ class Compi_Admin {
 
 		$this->include_options();
 
-		$dash_tabs                   = $this->dash_tabs;
-		$general_section_one_options = $this->general_section_one_options;
-		$tweaks_section_one_options  = $this->tweaks_section_one_options;
-		$support_section_one_options = $this->support_section_one_options;
+		$dash_tabs             = $this->dash_tabs;
+		$general_first_options = $this->general_first_options;
+		$tweaks_first_options  = $this->tweaks_first_options;
+		$support_first_options = $this->support_first_options;
+		$tools_first_options   = $this->tools_first_options;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 

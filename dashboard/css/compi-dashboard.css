@@ -414,6 +414,10 @@
 	font-style: normal;
 }
 
+.toplevel_page_et_divi_options .wp-submenu li:last-child {
+	color: #E91C63;
+}
+
 #dots_admin_wrapper {
 	min-height: 600px;
 }
