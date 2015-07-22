@@ -422,6 +422,7 @@
 	min-height: 600px;
 }
 
+/*noinspection ALL*/
 #wpcontent {
 	padding-left: 0px !important;
 }
@@ -488,6 +489,7 @@
 	width: 440px;
 }
 
+/*noinspection ALL*/
 .dots_card .mdl-card__actions {
 	padding: 0px !important;
 }
@@ -496,6 +498,7 @@
 	width: 100%;
 }
 
+/*noinspection ALL*/
 h4 {
 	margin-top: 30px;
 	margin-bottom: 0px;
@@ -516,8 +519,12 @@ h4 + p {
 
 .dots_save_wrap {
 	position: absolute;
-	bottom: 0;
-	right: 0;
+	top: 110px;
+	right: 76px;
+}
+
+.dots .mdl-shadow--4dp {
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2) !important;
 }
 
 .mdl-layout--fixed-tabs .mdl-layout__tab, .mdl-layout--fixed-tabs .mdl-layout__tab:focus {
@@ -548,6 +555,8 @@ h4 {
 .dots_switch {
 	line-height: 93px;
 }
+
+/*noinspection ALL*/
 .dots_option_row {
 	border-bottom: 1px solid #e0e0e0;
 	padding-bottom: 0px;
@@ -562,4 +571,7 @@ h4 {
 }
 .dots .dots_option_row p {
 	margin: 0 0 24px;
+}
+.mdl-spinner {
+	margin: 0 auto;
 }

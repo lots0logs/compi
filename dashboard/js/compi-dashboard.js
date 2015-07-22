@@ -1,11 +1,13 @@
 (function ($) {
 
-	$('window').load(function() {
+	$(window).load(function () {
+		console.log('window loaded!');
 
-		$('.dots_save_wrap').on('click', '.dots_save', function (e) {
+		$('.dots_save_wrap').on('click', 'button', function () {
+			console.log('clicked!');
 
-			var options_fromform = $('#dots_compi_options').serialize();
-			$spinner = $(this).parent().find('.mdl-spinner');
+			var options_fromform = $('#dots_compi_options').serialize(),
+				$spinner = $(this).parent().find('.mdl-spinner');
 			$.ajax({
 				type: 'POST',
 				url: compiSettings.ajaxurl,
@@ -15,38 +17,46 @@
 					save_settings_nonce: compiSettings.save_settings
 				},
 				beforeSend: function (xhr) {
-					$spinner.addClass('is_active');
+					console.log(xhr);
+					$('.dots_save_wrap button').hide();
+					$spinner.addClass('is-active');
 				},
 				success: function (data) {
-					$spinner.removeClass('is_active');
-					display_warning(data);
+					setTimeout(function() {
+						$spinner.removeClass('is-active');
+						$('.dots_save_wrap button').show();
+						display_warning(data);
+					}, 1000);
+
 				}
 			});
 			return false;
 		});
 
 
-		function display_warning( $warn_window ) {
-			if ( '' == $warn_window ){
+
+
+		function display_warning($warn_window) {
+			if ('' == $warn_window) {
 				return;
 			}
 
-			$( '#wpwrap' ).append( $warn_window );
+			$('#wpwrap').append($warn_window);
 		}
 
-		function generate_warning( $message, $link ){
+		function generate_warning($message, $link) {
 			var link = '' == $link ? '#' : $link;
 			$.ajax({
 				type: 'POST',
 				url: compiSettings.ajaxurl,
 				data: {
-						action : 'generate_modal_warning',
-						message : $message,
-						ok_link : link,
-						generate_warning_nonce : compiSettings.generate_warning
-					},
-				success: function( data ){
-					display_warning( data );
+					action: 'generate_modal_warning',
+					message: $message,
+					ok_link: link,
+					generate_warning_nonce: compiSettings.generate_warning
+				},
+				success: function (data) {
+					display_warning(data);
 				}
 			});
 		}

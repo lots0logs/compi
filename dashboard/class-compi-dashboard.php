@@ -17,6 +17,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
+ * @property array tools_first_options
+ * @property array dash_tabs
+ * @property array general_first_options
+ * @property array tweaks_first_options
+ * @property array support_first_options
  * @package    Compi
  * @subpackage Compi/dashboard
  * @author     wpdots <dev@wpdots.com>
@@ -119,10 +124,6 @@ class Compi_Admin {
 
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
-		add_action( 'wp_ajax_ajax_save_settings', array( $this, 'ajax_save_settings' ) );
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		// Generates warning messages
-		add_action( 'wp_ajax_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
 	}
 
 

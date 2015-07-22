@@ -71,7 +71,7 @@ class Compi {
 		// Set plugin's version.
 		$this->version     = $version;
 
-		$this->compi_options = static::get_options_array();
+		$this->compi_options = $this->get_options_array();
 
 		// Register activation hook.
 		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
@@ -171,7 +171,11 @@ class Compi {
 
 		$this->dashboard = new Compi_Admin( $this->plugin_name, $this->version, $this->compi_options );
 
+		add_action( 'admin_init', array( $this->dashboard, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
+		add_action( 'wp_ajax_ajax_save_settings', array( $this->dashboard, 'ajax_save_settings' ) );
+		// Generates warning messages
+		add_action( 'wp_ajax_generate_modal_warning', array( $this->dashboard, 'generate_modal_warning' ) );
 
 	}
 
@@ -188,10 +192,6 @@ class Compi {
 
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
-
-
-
-
 
 	}
 	
