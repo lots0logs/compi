@@ -122,9 +122,7 @@ class Compi_Dashboard {
 
 		require_once( $this->dashboard_dir . 'class-compi-options.php' );
 
-		$include_options = new Compi_Options_Table();
-
-		$this->dash_options_all = $include_options->dash_options_all;
+		$this->dash_options_all = Compi_Options_Table::get_dash_options();
 
 	}
 

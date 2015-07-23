@@ -24,9 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Compi_Options_Table {
 
-	public function __construct() {
+	public static function get_dash_options() {
 
-		$this->dash_options_all = array(
+		return array(
 			'general' => array(
 				'title'    => __( 'General', 'Compi' ),
 				'contents' => array(
@@ -144,7 +144,5 @@ class Compi_Options_Table {
 		$this->support_first_options = array();
 
 		$this->tools_first_options = array();*/
-
-
 	}
 }
