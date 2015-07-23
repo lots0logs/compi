@@ -14,19 +14,12 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @property array tools_first_options
- * @property array dash_tabs
- * @property array general_first_options
- * @property array tweaks_first_options
- * @property array support_first_options
+ * @property array dash_options_all
  * @package    Compi
  * @subpackage Compi/dashboard
  * @author     wpdots <dev@wpdots.com>
  */
-class Compi_Admin {
+class Compi_Dashboard {
 
 	/**
 	 * The ID of this plugin.
@@ -53,25 +46,37 @@ class Compi_Admin {
 	 *
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version The version of this plugin.
-	 * @param $options
+	 *
 	 */
-	public function __construct( $plugin_name, $version, $options ) {
+	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
 		$this->dashboard_dir      = plugin_dir_path( __FILE__ );
-		$this->template_dir       = $this->dashboard_dir . 'templates';
+		$this->template_dir       = $this->dashboard_dir . 'templates/';
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
 		$this->css_mdl_stylesheet = plugins_url( '/css/material.prefixed.min.css', __FILE__ );
 		//$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
 		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script     = plugins_url( '/js/compi-dashboard.js', __FILE__ );
-		$this->compi_options    = $options;
-		$this->protocol = is_ssl() ? 'https' : 'http';
+		$this->compi_options    = $this->get_options_array();
+		$this->protocol         = is_ssl() ? 'https' : 'http';
+		$this->dash_options_all = array();
 
 		$this->include_options();
 
+	}
+
+	/**
+	 * Get options array from database.
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	public function get_options_array() {
+
+		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 	}
 
 	/**
@@ -83,9 +88,28 @@ class Compi_Admin {
 	 */
 	private function update_option( $update_array ) {
 
-		$compi_options = $this->compi_options;
+		$compi_options   = $this->get_options_array();
 		$updated_options = array_merge( $compi_options, $update_array );
 		update_option( 'dots_compi_options', $updated_options );
+		$this->write_log( array( 'UPDATE OPTION', $compi_options, $updated_options ) );
+	}
+
+	/**
+	 * Write to the debug log.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $log
+	 *
+	 */
+	public function write_log( $log ) {
+
+
+			if ( is_array( $log ) || is_object( $log ) ) {
+				error_log( print_r( $log, true ) );
+			} else {
+				error_log( $log );
+			}
 	}
 
 
@@ -100,12 +124,7 @@ class Compi_Admin {
 
 		$include_options = new Compi_Options_Table();
 
-		$this->dash_tabs             = $include_options->dash_tabs;
-		$this->general_first_options = $include_options->general_first_options;
-		$this->tweaks_first_options  = $include_options->tweaks_first_options;
-		$this->support_first_options = $include_options->support_first_options;
-		$this->tools_first_options   = $include_options->tools_first_options;
-
+		$this->dash_options_all = $include_options->dash_options_all;
 
 	}
 
@@ -117,15 +136,21 @@ class Compi_Admin {
 	 */
 	public function setup_dashboard() {
 
-		$menu_page = add_submenu_page( 'et_divi_options', __( 'Compi Settings', 'Compi' ), __( 'Compi Settings', 'Compi' ), 'manage_options', 'dots_compi_options', array(
-			$this,
-			'options_page',
-		) );
+		$menu_page = add_submenu_page( 'et_divi_options',
+				__( 'Compi Settings', 'Compi' ),
+				__( 'Compi Settings', 'Compi' ),
+				'manage_options',
+				'dots_compi_options',
+				array( $this, 'options_page', )
+		);
 
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
-	}
 
+		add_action( 'wp_ajax_dots_compi_save_settings', array( $this, 'dots_compi_save_settings' ) );
+		// Generates warning messages
+		add_action( 'wp_ajax_dots_compi_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
+	}
 
 
 	/**
@@ -149,14 +174,14 @@ class Compi_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( 'compi-mdl-js', $this->admin_mdl_script, array(), $this->version, false );
-		wp_enqueue_script( 'compi-dashboard', $this->admin_script, array( 'jquery', 'compi-mdl-js' ), $this->version, false );
+		wp_enqueue_script( 'compi-dashboard', $this->admin_script, array( 'jquery', 'compi-mdl-js' ), $this->version, true );
 
 		wp_localize_script( 'compi-dashboard', 'compiSettings', array(
-			'compi_nonce' => wp_create_nonce( 'compi_nonce' ),
-			'ajaxurl'       => admin_url( 'admin-ajax.php', $this->protocol ),
-			'shortcode_nonce' => wp_create_nonce( 'generate_shortcode' ),
-			'save_settings' => wp_create_nonce( 'save_settings' ),
-			'generate_warning' => wp_create_nonce( 'generate_warning' ),
+			'compi_nonce'      => wp_create_nonce( 'dots_compi_nonce' ),
+			'ajaxurl'          => admin_url( 'admin-ajax.php', $this->protocol ),
+			'shortcode_nonce'  => wp_create_nonce( 'dots_compi_generate_shortcode' ),
+			'save_settings'    => wp_create_nonce( 'dots_compi_save_settings' ),
+			'generate_warning' => wp_create_nonce( 'dots_compi_generate_warning' ),
 		) );
 
 	}
@@ -169,15 +194,10 @@ class Compi_Admin {
 	public function options_page() {
 
 		$this->include_options();
-
-		$dash_tabs             = $this->dash_tabs;
-		$general_first_options = $this->general_first_options;
-		$tweaks_first_options  = $this->tweaks_first_options;
-		$support_first_options = $this->support_first_options;
-		$tools_first_options   = $this->tools_first_options;
+		$compi_options = $this->get_options_array();
+		$dash_options_all = $this->dash_options_all;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
-
 
 	}
 
@@ -189,7 +209,8 @@ class Compi_Admin {
 	 * @internal param array $options
 	 */
 	public function register_settings() {
-		register_setting( 'dots_compi_settings_group', 'compi_settings' );
+
+		register_setting( 'dots_compi_settings_group', 'dots_compi_options' );
 	}
 
 	/**
@@ -199,14 +220,14 @@ class Compi_Admin {
 	 *
 	 * @param array $options
 	 */
-	public function ajax_save_settings( array $options ) {
-
-		wp_verify_nonce( $_POST['save_settings_nonce'], 'save_settings' );
+	public function dots_compi_save_settings( array $options ) {
+		$this->write_log( array( 'AJAX SAVE SETTINGS', $options ) );
+		wp_verify_nonce( $_POST['dots_compi_save_settings_nonce'], 'dots_compi_save_settings' );
 		$options = $_POST['options'];
 
 		$error_message = $this->process_and_update_options( $options );
 
-		die( $error_message );
+		wp_die( $error_message );
 	}
 
 	/**
@@ -224,14 +245,15 @@ class Compi_Admin {
 	 * @return string
 	 */
 	public function generate_modal_warning( $message = '', $ok_link = '#', $hide_close = false ) {
-		$ajax_request = isset( $_POST[ 'message' ] ) ? true : false;
-		if ( true === $ajax_request ){
-			wp_verify_nonce( $_POST['generate_warning_nonce'] , 'generate_warning' );
+
+		$ajax_request = isset( $_POST['message'] ) ? true : false;
+		if ( true === $ajax_request ) {
+			wp_verify_nonce( $_POST['generate_warning_nonce'], 'generate_warning' );
 		}
-		$message = isset( $_POST[ 'message' ] ) ? sanitize_text_field( $_POST[ 'message' ] ) : sanitize_text_field( $message );
-		$ok_link = isset( $_POST[ 'ok_link' ] ) ? $_POST[ 'ok_link' ] : $ok_link;
-		$hide_close = isset( $_POST[ 'hide_close' ] ) ? (bool) $_POST[ 'hide_close' ] : (bool) $hide_close;
-		$result = sprintf(
+		$message    = isset( $_POST['message'] ) ? sanitize_text_field( $_POST['message'] ) : sanitize_text_field( $message );
+		$ok_link    = isset( $_POST['ok_link'] ) ? $_POST['ok_link'] : $ok_link;
+		$hide_close = isset( $_POST['hide_close'] ) ? (bool) $_POST['hide_close'] : (bool) $hide_close;
+		$result     = sprintf(
 			'<div class="et_social_networks_modal et_social_warning">
 				<div class="et_social_inner_container">
 					<div class="et_social_modal_header">%4$s</div>
@@ -246,7 +268,7 @@ class Compi_Admin {
 			esc_url( $ok_link ),
 			false === $hide_close ? '<span class="et_social_close"></span>' : ''
 		);
-		if ( $ajax_request ){
+		if ( $ajax_request ) {
 			echo $result;
 			die;
 		} else {
@@ -265,60 +287,59 @@ class Compi_Admin {
 	 */
 	private function process_and_update_options( array $options ) {
 
-		$compi_options         = $this->compi_options;
-		$dash_tabs             = $this->dash_tabs;
-		$general_first_options = $this->general_first_options;
-		$tweaks_first_options  = $this->tweaks_first_options;
-		$support_first_options = $this->support_first_options;
-		$tools_first_options   = $this->tools_first_options;
+		$this->include_options();
+		$dash_options_all = $this->dash_options_all;
 
 		$error_message = '';
+		$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
 		if ( ! is_array( $options ) ) {
 			$processed_array = str_replace( array( '%5B', '%5D' ), array( '[', ']' ), $options );
 			parse_str( $processed_array, $output );
+			$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $output ) );
 		}
-		if ( isset( $dots_tabs ) ) {
-			foreach ( $dots_tabs as $tab => $value ) {
-				$current_section = $tab;
+		if ( isset( $dash_options_all ) ) {
+			foreach ( $dash_options_all as $tab_name => $tab ) {
+				$current_section = $tab_name;
 
-				if ( isset( $value['contents'] ) ) {
-					foreach ( $value['contents'] as $key => $value ) {
-						$options_prefix = $current_section . '_' . $key;
-						$options_array  = ${$current_section . '_' . $key . '_options'};
+				if ( isset( $tab['contents'] ) ) {
+					foreach ( $tab['contents'] as $option_item => $item_properties ) {
+						$options_prefix = $current_section;
+						$option         = $item_properties;
+						$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options_prefix, $option ) );
 
-						if ( isset( $options_array ) ) {
-							foreach ( $options_array as $option ) {
+						if ( isset( $option ) ) {
 
-								if ( isset( $option['name'] ) ) {
-									$current_option_name = $options_prefix . '_' . $option['name'];
-								}
 
-								switch ( $option['type'] ) {
+							$current_option_name = '';
+							if ( isset( $option['name'] ) ) {
+								$current_option_name = $options_prefix . '_' . $option['name'];
+							}
 
-									case 'switch':
-										if ( isset( $output['dots_'][ $current_option_name ] ) ) {
-											$compi_options_temp[ $current_option_name ] = in_array( $output['dots_'][ $current_option_name ], array(
+							switch ( $option['type'] ) {
+
+								case 'switch':
+									if ( isset( $output['dots_compi'][ $current_option_name ] ) ) {
+										$compi_options_temp[ $current_option_name ] = in_array( $output['dots_compi'][ $current_option_name ], array(
 												'1',
 												false
-											) )
-												? sanitize_text_field( $output['dots_'][ $current_option_name ] )
+										) )
+												? sanitize_text_field( $output['dots_compi'][ $current_option_name ] )
 												: false;
-										} else {
-											$compi_options_temp[ $current_option_name ] = false;
-										}
-										break;
+									} else {
+										$compi_options_temp[ $current_option_name ] = false;
+									}
+									break;
 
-								} // end switch
-							} // end foreach( $options_array as $option )
-						} //if ( isset( $options_array ) )
-					} // end foreach( $value[ 'contents' ] as $key => $value )
-				} // end if ( isset( $value[ 'contents' ] ) )
-			} // end foreach ( $dots_tabs as $tab => $value )
-		} //end if ( isset( $dots_tabs ) )
+							} // end switch
+						} //if ( isset( $option ) )
+					} // end ( $tab['contents'] as $option_item => $item_properties )
+				} // end if ( isset( $tab[ 'contents' ] ) )
+			} // end foreach ( $dash_options_all as $tab_name => $tab )
+		} //end if ( isset($dash_options_all ) )
 
 		$this->update_option( $compi_options_temp );
 
-		return $error_message;
+		return $compi_options_temp;
 
 	}
 }

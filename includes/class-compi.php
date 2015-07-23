@@ -86,7 +86,7 @@ class Compi {
 		$this->set_locale();
 
 		// Define dashboard hooks.
-		$this->define_dashboard_hooks();
+		add_action( 'plugins_loaded', array( $this, 'define_dashboard_hooks') );
 
 		// Define public hooks.
 		$this->define_public_hooks();
@@ -156,7 +156,7 @@ class Compi {
 		$plugin_i18n = new Compi_i18n();
 		$plugin_i18n->set_domain( $this->plugin_name );
 
-		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+		$plugin_i18n->load_plugin_textdomain();
 
 	}
 
@@ -167,15 +167,12 @@ class Compi {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_dashboard_hooks() {
+	public function define_dashboard_hooks() {
 
-		$this->dashboard = new Compi_Admin( $this->plugin_name, $this->version, $this->compi_options );
+		$this->dashboard = new Compi_Dashboard( $this->plugin_name, $this->version );
 
 		add_action( 'admin_init', array( $this->dashboard, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
-		add_action( 'wp_ajax_ajax_save_settings', array( $this->dashboard, 'ajax_save_settings' ) );
-		// Generates warning messages
-		add_action( 'wp_ajax_generate_modal_warning', array( $this->dashboard, 'generate_modal_warning' ) );
 
 	}
 

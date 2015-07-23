@@ -26,36 +26,63 @@ class Compi_Options_Table {
 
 	public function __construct() {
 
-		$this->dash_tabs = array(
+		$this->dash_options_all = array(
 			'general' => array(
 				'title'    => __( 'General', 'Compi' ),
 				'contents' => array(
-					'first' => __( 'General', 'Compi' ),
+					'option1_heading' => array(
+						'type'     => 'option_heading',
+						'title'    => __( 'Module Enhancements' ),
+						'subtitle' => __( 'Various tweaks for the Builder\'s default modules.' )
+					),
+					'option1_switch'  => array(
+						'type' => 'switch',
+						'name' => 'module_enhancements'
+					),
+					'option2_heading' => array(
+						'type'     => 'option_heading',
+						'title'    => __( 'New Modules' ),
+						'subtitle' => __( 'Exclusive new modules for the Builder.' )
+					),
+					'option2_switch'  => array(
+						'type' => 'switch',
+						'name' => 'new_modules'
+					),
+					'option_end'      => array(
+						'type' => 'option_end'
+					),
 				),
 
 			),
 			'tweaks'  => array(
 				'title'    => __( 'Theme Tweaks', 'Compi' ),
 				'contents' => array(
-					'first' => __( 'Theme Tweaks', 'Compi' ),
+					'option1_heading' => array(
+						'type'     => 'option_heading',
+						'title'    => __( 'Global Masonry Grid' ),
+						'subtitle' => __( 'Use the Masonry grid layout on all category, archive, & index pages.' )
+					),
+					'option1_switch'  => array(
+						'type' => 'switch',
+						'name' => 'global_masonry'
+					),
+					'option_end'      => array(
+						'type' => 'option_end'
+					),
 				),
 			),
 			'support' => array(
 				'title'    => __( 'Support', 'Compi' ),
-				'contents' => array(
-					'first' => __( 'Support', 'Compi' ),
-				),
+				'contents' => array(),
 			),
-			'tools'  => array(
+			'tools'   => array(
 				'title'    => __( 'Tools', 'Compi' ),
-				'contents' => array(
-					'first' => __( 'Tools', 'Compi' ),
-				),
+				'contents' => array(),
 			),
 		);
 
-		$this->dash_options_all = array(
-			'general_tab'  => array(
+		/*$this->dash_options_all = array(
+			'general_tab' => array(
 				'option1_heading' => array(
 					'type'     => 'option_heading',
 					'title'    => __( 'Module Enhancements' ),
@@ -63,7 +90,7 @@ class Compi_Options_Table {
 				),
 				'option1_switch'  => array(
 					'type' => 'switch',
-				    'name' => 'module_enhancements'
+					'name' => 'module_enhancements'
 				),
 				'option2_heading' => array(
 					'type'     => 'option_heading',
@@ -74,11 +101,11 @@ class Compi_Options_Table {
 					'type' => 'switch',
 					'name' => 'new_modules'
 				),
-				'option_end'  => array(
+				'option_end'      => array(
 					'type' => 'option_end'
 				),
 			),
-			'tweaks_tab'   => array(
+			'tweaks_tab'  => array(
 				'option1_heading' => array(
 					'type'     => 'option_heading',
 					'title'    => __( 'Global Masonry Grid' ),
@@ -86,14 +113,14 @@ class Compi_Options_Table {
 				),
 				'option1_switch'  => array(
 					'type' => 'switch',
-				    'name' => 'global_masonry'
+					'name' => 'global_masonry'
 				),
-				'option_end'  => array(
+				'option_end'      => array(
 					'type' => 'option_end'
 				),
 			),
-			'tools_tab' => array(),
-			'support_tab'  => array(),
+			'tools_tab'   => array(),
+			'support_tab' => array(),
 		);
 
 
@@ -114,11 +141,9 @@ class Compi_Options_Table {
 		);
 
 
-		$this->support_first_options = array(
-		);
+		$this->support_first_options = array();
 
-		$this->tools_first_options   = array(
-		);
+		$this->tools_first_options = array();*/
 
 
 	}
