@@ -515,6 +515,12 @@ h4 + p {
 .dots_save {
 	float: right;
 	margin-right: 89px;
+
+}
+
+#dots_save_button {
+	position: relative;
+	z-index: 99999 !important;
 }
 
 .dots_save_wrap {
@@ -574,4 +580,6 @@ h4 {
 }
 .mdl-spinner {
 	margin: 0 auto;
+	right: 37px;
+  	top: 10px;
 }

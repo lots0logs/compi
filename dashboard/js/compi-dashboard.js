@@ -24,13 +24,13 @@
 				beforeSend: function (xhr) {
 					//console.log(xhr);
 					console.log(options_fromform);
-					$('.dots_save_wrap button').hide();
+					$('.dots_save_wrap button').fadeOut();
 					$spinner.addClass('is-active');
 				},
 				success: function (data) {
 					setTimeout(function() {
 						$spinner.removeClass('is-active');
-						$('.dots_save_wrap button').show();
+						$('.dots_save_wrap button').fadeIn();
 						//display_warning(data);
 						console.log(data);
 					}, 1000);
