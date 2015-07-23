@@ -1,15 +1,18 @@
 (function ($) {
 
+	'use strict';
+
 	$(window).load(function () {
 		console.log('window loaded!');
 
 		$('.dots_save_wrap button').on('click', function (event) {
 			event.preventDefault();
 			event.stopPropagation();
-			console.log('clicked!');
+			//console.log('clicked!');
 
 			var options_fromform = $('#dots_compi_options').serialize(),
 				$spinner = $(this).parent().find('.mdl-spinner');
+
 			$.ajax({
 				type: 'POST',
 				url: compiSettings.ajaxurl,
@@ -19,7 +22,8 @@
 					save_settings_nonce: compiSettings.save_settings
 				},
 				beforeSend: function (xhr) {
-					console.log(xhr);
+					//console.log(xhr);
+					console.log(options_fromform);
 					$('.dots_save_wrap button').hide();
 					$spinner.addClass('is-active');
 				},
@@ -27,7 +31,8 @@
 					setTimeout(function() {
 						$spinner.removeClass('is-active');
 						$('.dots_save_wrap button').show();
-						display_warning(data);
+						//display_warning(data);
+						console.log(data);
 					}, 1000);
 
 				},

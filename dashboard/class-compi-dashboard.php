@@ -66,6 +66,13 @@ class Compi_Dashboard {
 
 		$this->include_options();
 
+		/**
+		 * ------------
+		 * AJAX ACTIONS
+		 * ------------
+		 */		
+		add_action( 'wp_ajax_dots_compi_save_settings', array( $this, 'dots_compi_save_settings' ) );
+		add_action( 'wp_ajax_dots_compi_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
 	}
 
 	/**
@@ -139,15 +146,12 @@ class Compi_Dashboard {
 				__( 'Compi Settings', 'Compi' ),
 				'manage_options',
 				'dots_compi_options',
-				array( $this, 'options_page', )
+				array( $this, 'options_page' )
 		);
 
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
 
-		add_action( 'wp_ajax_dots_compi_save_settings', array( $this, 'dots_compi_save_settings' ) );
-		// Generates warning messages
-		add_action( 'wp_ajax_dots_compi_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
 	}
 
 
@@ -218,14 +222,16 @@ class Compi_Dashboard {
 	 *
 	 * @param array $options
 	 */
-	public function dots_compi_save_settings( array $options ) {
-		$this->write_log( array( 'AJAX SAVE SETTINGS', $options ) );
-		wp_verify_nonce( $_POST['dots_compi_save_settings_nonce'], 'dots_compi_save_settings' );
-		$options = $_POST['options'];
+	public function dots_compi_save_settings() {
 
-		$error_message = $this->process_and_update_options( $options );
+		$ajax_request = isset( $_REQUEST['options'] ) ? true : false;
 
-		wp_die( $error_message );
+		if( wp_verify_nonce( $_REQUEST['save_settings_nonce'], 'dots_compi_save_settings' ) && $ajax_request ) {
+			parse_str( $_REQUEST['options'], $options );
+			$this->process_and_update_options( $options );
+		}
+
+		die();
 	}
 
 	/**
@@ -283,18 +289,19 @@ class Compi_Dashboard {
 	 *
 	 * @return string
 	 */
-	private function process_and_update_options( array $options ) {
+	private function process_and_update_options( $options ) {
 
-		$this->include_options();
-		$dash_options_all = $this->dash_options_all;
+		$dash_options_all = Compi_Options_Table::get_dash_options();
 
 		$error_message = '';
+
 		$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
 		if ( ! is_array( $options ) ) {
 			$processed_array = str_replace( array( '%5B', '%5D' ), array( '[', ']' ), $options );
-			parse_str( $processed_array, $output );
-			$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $output ) );
+			parse_str( $processed_array, $options );
+			$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
 		}
+
 		if ( isset( $dash_options_all ) ) {
 			foreach ( $dash_options_all as $tab_name => $tab ) {
 				$current_section = $tab_name;
@@ -307,7 +314,6 @@ class Compi_Dashboard {
 
 						if ( isset( $option ) ) {
 
-
 							$current_option_name = '';
 							if ( isset( $option['name'] ) ) {
 								$current_option_name = $options_prefix . '_' . $option['name'];
@@ -316,12 +322,12 @@ class Compi_Dashboard {
 							switch ( $option['type'] ) {
 
 								case 'switch':
-									if ( isset( $output['dots_compi'][ $current_option_name ] ) ) {
-										$compi_options_temp[ $current_option_name ] = in_array( $output['dots_compi'][ $current_option_name ], array(
+									if ( isset( $options['dots_compi'][ $current_option_name ] ) ) {
+										$compi_options_temp[ $current_option_name ] = in_array( $options['dots_compi'][ $current_option_name ], array(
 												'1',
 												false
 										) )
-												? sanitize_text_field( $output['dots_compi'][ $current_option_name ] )
+												? sanitize_text_field( $options['dots_compi'][ $current_option_name ] )
 												: false;
 									} else {
 										$compi_options_temp[ $current_option_name ] = false;
