@@ -98,7 +98,7 @@ class Compi_Dashboard {
 		$compi_options   = $this->get_options_array();
 		$updated_options = array_merge( $compi_options, $update_array );
 		update_option( 'dots_compi_options', $updated_options );
-		$this->write_log( array( 'UPDATE OPTION', $compi_options, $updated_options ) );
+		//$this->write_log( array( 'UPDATE OPTION', $compi_options, $updated_options ) );
 	}
 
 	/**
@@ -220,7 +220,6 @@ class Compi_Dashboard {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param array $options
 	 */
 	public function dots_compi_save_settings() {
 
@@ -231,7 +230,7 @@ class Compi_Dashboard {
 			$this->process_and_update_options( $options );
 		}
 
-		die();
+		wp_die();
 	}
 
 	/**
@@ -239,8 +238,6 @@ class Compi_Dashboard {
 	 * Ok_link could be a link to particular tab in dashboard, external link or empty
 	 *
 	 * @since    1.0.0
-	 *
-	 * @internal param array $options
 	 *
 	 * @param string $message
 	 * @param string $ok_link
@@ -295,11 +292,11 @@ class Compi_Dashboard {
 
 		$error_message = '';
 
-		$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
+		//$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
 		if ( ! is_array( $options ) ) {
 			$processed_array = str_replace( array( '%5B', '%5D' ), array( '[', ']' ), $options );
 			parse_str( $processed_array, $options );
-			$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
+			//$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options ) );
 		}
 
 		if ( isset( $dash_options_all ) ) {
@@ -310,7 +307,7 @@ class Compi_Dashboard {
 					foreach ( $tab['contents'] as $option_item => $item_properties ) {
 						$options_prefix = $current_section;
 						$option         = $item_properties;
-						$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options_prefix, $option ) );
+						//$this->write_log( array( 'PROCESS AND UPDATE OPTIONS', $options_prefix, $option ) );
 
 						if ( isset( $option ) ) {
 
@@ -342,6 +339,8 @@ class Compi_Dashboard {
 		} //end if ( isset($dash_options_all ) )
 
 		$this->update_option( $compi_options_temp );
+
+		$this->write_log($compi_options_temp);
 
 		return $compi_options_temp;
 

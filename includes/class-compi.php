@@ -185,10 +185,12 @@ class Compi {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Compi_Public( $this->plugin_name, $this->version, $this->compi_options );
+		$plugin_public = new Compi_Public( $this->plugin_name, $this->version );
 
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
+
+		$plugin_public->maybe_activate_features();
 
 	}
 	

@@ -47,18 +47,28 @@ class Compi_Public {
 	 *
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version The version of this plugin.
-	 * @param $options
 	 */
-	public function __construct( $plugin_name, $version, $options ) {
+	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->compi_options = $options;
+		$this->compi_options = $this->get_options_array();
 		$this->public_dir      = plugin_dir_path( __FILE__ );
 		$this->template_dir       = $this->public_dir . 'templates';
 		$this->css_stylesheet     = plugins_url( '/css/compi-style.css', __FILE__ );
 		$this->custom_script     = plugins_url( '/js/compi-custom.js', __FILE__ );
 
+	}
+
+	/**
+	 * Get options array from database.
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	private function get_options_array() {
+
+		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 	}
 
 	/**
@@ -100,6 +110,24 @@ class Compi_Public {
 	}
 
 	/**
+	 * Write to the debug log.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $log
+	 *
+	 */
+	public function write_log( $log ) {
+
+
+			if ( is_array( $log ) || is_object( $log ) ) {
+				error_log( print_r( $log, true ) );
+			} else {
+				error_log( $log );
+			}
+	}
+
+	/**
 	 * Override a theme template with our own.
 	 *
 	 * @since    1.0.0
@@ -111,7 +139,8 @@ class Compi_Public {
 	public function do_template_override( $template ) {
 
 		$current_filter =  current_filter();
-		$template_name = preg_replace( '_template', '', $current_filter );
+		$this->write_log($current_filter);
+		$template_name = str_replace( '_template', '', $current_filter );
 		$template_name = ( $current_filter !== $template_name ) ? $template_name : '';
 
 		if ( '' !== $template_name ) {
@@ -119,6 +148,22 @@ class Compi_Public {
 		}
 
 		return $template;
+
+	}
+
+	/**
+	 * Activate features that are enabled in our options array.
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	public function maybe_activate_features() {
+
+		$options = $this->get_options_array();
+
+		if ( isset($options['tweaks_global_masonry']) && $options['tweaks_global_masonry'] == 1) {
+			$this->add_template_override_filter('category');
+		}
 
 	}
 
