@@ -22,6 +22,8 @@
  */
 class Compi_Public {
 
+	private static $_this;
+
 	/**
 	 * The ID of this plugin.
 	 *
@@ -40,23 +42,37 @@ class Compi_Public {
 	 */
 	private $version;
 
+	public $global_fullwidth;
+	public $global_masonry;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 *
 	 * @param      string $plugin_name The name of the plugin.
-	 * @param      string $version The version of this plugin.
+	 * @param      string $version     The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->compi_options = $this->get_options_array();
-		$this->public_dir      = plugin_dir_path( __FILE__ );
-		$this->template_dir       = $this->public_dir . 'templates';
-		$this->css_stylesheet     = plugins_url( '/css/compi-style.css', __FILE__ );
-		$this->custom_script     = plugins_url( '/js/compi-custom.js', __FILE__ );
+		// Don't allow more than one instance of the class
+		if ( isset( self::$_this ) ) {
+			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'Compi' ),
+					get_class( $this ) )
+			);
+		}
+
+		self::$_this = $this;
+
+		$this->plugin_name    = $plugin_name;
+		$this->version        = $version;
+		$this->compi_options  = static::get_options_array();
+		$this->public_dir     = plugin_dir_path( __FILE__ );
+		$this->template_dir   = $this->public_dir . 'templates';
+		$this->css_stylesheet = plugins_url( '/css/compi-style.css', __FILE__ );
+		$this->custom_script  = plugins_url( '/js/compi-custom.js', __FILE__ );
+
+		$this->maybe_activate_features( true );
 
 	}
 
@@ -66,9 +82,21 @@ class Compi_Public {
 	 * @since    1.0.0
 	 *
 	 */
-	private function get_options_array() {
+	private static function get_options_array() {
 
 		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
+	}
+
+	/**
+	 * Update options arrary in database.
+	 *
+	 * @param $update_array
+	 */
+	private function update_option( $update_array ) {
+
+		$options         = static::get_options_array();
+		$updated_options = array_merge( $options, $update_array );
+		update_option( 'dots_compi_options', $updated_options );
 	}
 
 	/**
@@ -79,7 +107,7 @@ class Compi_Public {
 	public function enqueue_styles() {
 
 
-		wp_enqueue_style( $this->plugin_name . 'style', $this->css_stylesheet, array('divi-style'), $this->version );
+		wp_enqueue_style( $this->plugin_name . 'style', $this->css_stylesheet, array( 'divi-style' ), $this->version );
 
 	}
 
@@ -90,7 +118,10 @@ class Compi_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array( 'jquery', 'divi-custom' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array(
+			'jquery',
+			'divi-custom'
+		), $this->version, false );
 
 	}
 
@@ -105,7 +136,7 @@ class Compi_Public {
 
 		$filter_name = $template_type . '_template';
 
-		add_filter( $filter_name, array($this, 'do_template_override' ) );
+		add_filter( $filter_name, array( $this, 'do_template_override' ) );
 
 	}
 
@@ -120,11 +151,11 @@ class Compi_Public {
 	public function write_log( $log ) {
 
 
-			if ( is_array( $log ) || is_object( $log ) ) {
-				error_log( print_r( $log, true ) );
-			} else {
-				error_log( $log );
-			}
+		if ( is_array( $log ) || is_object( $log ) ) {
+			error_log( print_r( $log, true ) );
+		} else {
+			error_log( $log );
+		}
 	}
 
 	/**
@@ -138,8 +169,12 @@ class Compi_Public {
 	 */
 	public function do_template_override( $template ) {
 
-		$current_filter =  current_filter();
-		$this->write_log($current_filter);
+		global $dots_compi_sidebar;
+
+		$this->maybe_activate_features( false );
+		$dots_compi_sidebar = ! $this->global_fullwidth;
+		$current_filter     = current_filter();
+
 		$template_name = str_replace( '_template', '', $current_filter );
 		$template_name = ( $current_filter !== $template_name ) ? $template_name : '';
 
@@ -151,19 +186,64 @@ class Compi_Public {
 
 	}
 
+
+	/**
+	 *
+	 */
+	public function archive_template_overrides() {
+		foreach ( array( 'category', 'tag', 'archive', 'search' ) as $tpl_type ) {
+			$this->add_template_override_filter( $tpl_type );
+		}
+	}
+
 	/**
 	 * Activate features that are enabled in our options array.
 	 *
 	 * @since    1.0.0
 	 *
 	 */
-	public function maybe_activate_features() {
+	public function maybe_activate_features( $first_run ) {
 
-		$options = $this->get_options_array();
+		$options = static::get_options_array();
 
-		if ( isset($options['tweaks_global_masonry']) && $options['tweaks_global_masonry'] == 1) {
-			$this->add_template_override_filter('category');
+		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
+			$this->global_masonry = true;
+			if ( $first_run ) $this->archive_template_overrides();
+		} else {
+			$this->global_masonry = false;
 		}
+
+		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
+			$this->global_fullwidth = true;
+			if ( false === $this->global_masonry ) {
+				add_filter( 'body_class', array( $this, 'add_body_classes' ) );
+			}
+		} else {
+			$this->global_fullwidth = false;
+		}
+
+	}
+
+	/**
+	 * Add classes to body.
+	 *
+	 * @param $classes
+	 *
+	 * @return array
+	 */
+	public function add_body_classes( $classes ) {
+
+		$this->maybe_activate_features( false );
+
+		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
+			$classes[] = 'et_full_width_page';
+
+		}
+		if ( true === $this->global_fullwidth ) {
+			$classes[] = 'dots_compi_archive_grid ';
+		}
+
+		return $classes;
 
 	}
 

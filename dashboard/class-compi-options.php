@@ -66,7 +66,19 @@ class Compi_Options_Table {
 										'type' => 'switch',
 										'name' => 'global_masonry'
 								),
-								'option_end'      => array(
+								'option1_end'      => array(
+										'type' => 'option_end'
+								),
+								'option2_heading' => array(
+										'type'     => 'option_heading',
+										'title'    => __( 'Global Fullwidth' ),
+										'subtitle' => __( 'Don\'t display the sidebar on category, archive, & index pages.' )
+								),
+								'option2_switch'  => array(
+										'type' => 'switch',
+										'name' => 'global_fullwidth'
+								),
+								'option2_end'      => array(
 										'type' => 'option_end'
 								),
 						),

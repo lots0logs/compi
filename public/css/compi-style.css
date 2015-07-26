@@ -2,3 +2,7 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+.dots_compi_archive_grid .et_full_width_page #left-area {
+	margin-right: 0px;
+}

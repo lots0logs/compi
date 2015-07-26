@@ -190,8 +190,6 @@ class Compi {
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
 
-		$plugin_public->maybe_activate_features();
-
 	}
 	
 	/**

@@ -1,77 +1,192 @@
-<?php get_header(); ?>
-<!-- COMPI WUZ HERE -->
-<div id="main-content">
-	<div class="container">
-		<div id="content-area" class="clearfix">
+<?php get_header();
+global $et_theme_options;
+
+if ( ! isset( $et_theme_options ) ) {
+	$et_theme_options = get_option( 'et_divi_options' );
+}
+
+$meta_date         = $et_theme_options['divi_date_format'];
+$show_thumbnail    = $et_theme_options['divi_thumbnails_index'];
+$show_content      = $et_theme_options['divi_blog_style'];
+$show_author       = in_array( 'author', $et_theme_options['divi_postinfo1'] );
+$show_date         = in_array( 'date', $et_theme_options['divi_postinfo1'] );
+$show_categories   = in_array( 'categories', $et_theme_options['divi_postinfo1'] );
+$show_comments     = in_array( 'comments', $et_theme_options['divi_postinfo1'] );
+$background_layout = 'light';
+
+
+?>
+
+	<div id="main-content">
+		<div id="content-area" class="<?php if ( false === $dots_compi_sidebar ) {
+			echo 'et_full_width_page ';
+		} ?>clearfix">
 			<div id="left-area">
-		<?php
-			if ( have_posts() ) :
-				while ( have_posts() ) : the_post();
-					$post_format = et_pb_post_format(); ?>
-
-					<article id="post-<?php the_ID(); ?>" <?php post_class( 'et_pb_post' ); ?>>
-
 				<?php
-					$thumb = '';
+				//$compi_pub->write_log( $et_theme_options );
 
-					$width = (int) apply_filters( 'et_pb_index_blog_image_width', 1080 );
+				$container_is_closed = false;
 
-					$height = (int) apply_filters( 'et_pb_index_blog_image_height', 675 );
-					$classtext = 'et_pb_post_main_image';
-					$titletext = get_the_title();
-					$thumbnail = get_thumbnail( $width, $height, $classtext, $titletext, $titletext, false, 'Blogimage' );
-					$thumb = $thumbnail["thumb"];
+				wp_enqueue_script( 'salvattore' );
 
-					et_divi_post_format_content();
+				ob_start();
 
-					if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) {
-						if ( 'video' === $post_format && false !== ( $first_video = et_get_first_video() ) ) :
-							printf(
-								'<div class="et_main_video_container">
-									%1$s
-								</div>',
-								$first_video
-							);
-						elseif ( 'on' == et_get_option( 'divi_thumbnails_index', 'on' ) && '' !== $thumb  ) : ?>
-							<a href="<?php the_permalink(); ?>">
-								<?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
-							</a>
-					<?php
-						endif;
-					} ?>
+				if ( have_posts() ) {
+					while ( have_posts() ) {
+						the_post();
+						$post_format    = et_pb_post_format();
+						$thumb          = '';
+						$width          = 400;
+						$width          = (int) apply_filters( 'dots_compi_et_pb_blog_image_width', 'category', $width );
+						$height         = 250;
+						$height         = (int) apply_filters( 'dots_compi_et_pb_blog_image_height', 'category', $height );
+						$titletext      = get_the_title();
+						$thumbnail      = get_thumbnail( $width, $height, '', $titletext, $titletext, false, 'Blogimage' );
+						$thumb          = $thumbnail["thumb"];
+						$no_thumb_class = '' === $thumb || 'off' === $show_thumbnail ? ' et_pb_no_thumb' : '';
+						if ( in_array( $post_format, array( 'video', 'gallery' ) ) ) {
+							$no_thumb_class = '';
+						} ?>
 
-				<?php if ( ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ) ) ) : ?>
-					<?php if ( ! in_array( $post_format, array( 'link', 'audio' ) ) ) : ?>
-						<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-					<?php endif; ?>
+						<article id="post-<?php the_ID(); ?>" <?php post_class( 'et_pb_post' . $no_thumb_class ); ?>>
 
-					<?php
-						et_divi_post_meta();
+							<?php
+							et_divi_post_format_content();
+							if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) {
+								if ( 'video' === $post_format && false !== ( $first_video = et_get_first_video() ) ) {
+									printf(
+										'<div class="et_main_video_container">
+												%1$s
+											</div>',
+										$first_video
+									);
+								} elseif ( 'gallery' === $post_format ) {
+									et_gallery_images();
+								} elseif ( '' !== $thumb && 'on' === $show_thumbnail ) { ?>
 
-						if ( 'on' !== et_get_option( 'divi_blog_style', 'false' ) || ( is_search() && ( 'on' === get_post_meta( get_the_ID(), '_et_pb_use_builder', true ) ) ) )
-							truncate_post( 270 );
-						else
-							the_content();
-					?>
-				<?php endif; ?>
+									<div class="et_pb_image_container">
 
-					</article> <!-- .et_pb_post -->
-			<?php
-					endwhile;
+										<a href="<?php the_permalink(); ?>">
+											<?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
+										</a>
+									</div> <!-- .et_pb_image_container -->
 
-					if ( function_exists( 'wp_pagenavi' ) )
+								<?php }
+							} ?>
+
+							<?php if ( ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ) ) ) {
+								if ( ! in_array( $post_format, array( 'link', 'audio' ) ) ) { ?>
+									<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+								<?php }
+
+
+								if ( 'on' === $show_author || 'on' === $show_date || 'on' === $show_categories ) {
+									printf( '<p class="post-meta">%1$s %2$s %3$s %4$s %5$s</p>',
+										(
+										'on' === $show_author
+											? sprintf( __( 'by %s', 'et_builder' ), et_pb_get_the_author_posts_link() )
+											: ''
+										),
+										(
+										( 'on' === $show_author && 'on' === $show_date )
+											? ' | '
+											: ''
+										),
+										(
+										'on' === $show_date
+											? sprintf( __( '%s', 'et_builder' ), get_the_date( $meta_date ) )
+											: ''
+										),
+										(
+										( ( 'on' === $show_author || 'on' === $show_date ) && 'on' === $show_categories )
+											? ' | '
+											: ''
+										),
+										(
+										'on' === $show_categories
+											? get_the_category_list( ', ' )
+											: ''
+										)
+									);
+								}
+								if ( ! has_shortcode( get_the_content(), 'et_pb_blog' ) ) {
+									if ( 'on' === $show_content ) {
+										global $more;
+										$more = null;
+										the_content( __( 'read more...', 'et_builder' ) );
+									} else {
+										if ( has_excerpt() ) {
+											the_excerpt();
+										} else {
+											truncate_post( 270 );
+										}
+										$more = sprintf( ' <a href="%1$s" class="more-link" >%2$s</a>', esc_url( get_permalink() ), __( 'read more', 'et_builder' ) );
+										echo $more;
+									}
+								} else if ( has_excerpt() ) {
+									the_excerpt();
+								}
+								?>
+							<?php } // 'off' === $fullwidth || ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ?>
+
+						</article> <!-- .et_pb_post -->
+						<?php
+					} // endwhile
+
+					echo '</div> <!-- .et_pb_posts -->';
+					$container_is_closed = true;
+					if ( function_exists( 'wp_pagenavi' ) ) {
 						wp_pagenavi();
-					else
+					} else {
 						get_template_part( 'includes/navigation', 'index' );
-				else :
+					}
+
+
+				} else {
 					get_template_part( 'includes/no-results', 'index' );
-				endif;
-			?>
+				}
+				?>
 			</div> <!-- #left-area -->
-
-			<?php get_sidebar(); ?>
 		</div> <!-- #content-area -->
-	</div> <!-- .container -->
-</div> <!-- #main-content -->
+	</div> <!-- #main-content -->
 
-<?php get_footer(); ?>
+<?php
+
+$posts = ob_get_contents();
+ob_end_clean();
+
+if ( true === $dots_compi_sidebar ) {
+	ob_start();
+	get_sidebar();
+	$sidebar_contents = ob_get_contents();
+	ob_end_clean();
+}
+
+$class  = " et_pb_module et_pb_bg_layout_{$background_layout}";
+$output = sprintf(
+	'<div class="et_pb_blog_grid clearfix %2$s et_pb_blog_grid_dropshadow"%4$s>
+				%1$s
+			%3$s',
+	$posts,
+	esc_attr( $class ),
+	( ! $container_is_closed ? '</div> <!-- .et_pb_posts -->' : '' ),
+	' data-columns'
+);
+
+$output = sprintf( '<div class="et_pb_section et_section_regular">
+						<div class="et_pb_row">
+							<div class="et_pb_column %2$s">
+								<div class="et_pb_blog_grid_wrapper">%1$s</div>
+							</div>
+							%3$s
+						</div>
+					</div>',
+	$output,
+	( false === $dots_compi_sidebar ) ? 'et_pb_column_4_4' : 'et_pb_column_3_4',
+	( true === $dots_compi_sidebar ) ? sprintf( '<div class="et_pb_column et_pb_column_1_4">%1$s</div>', $sidebar_contents ) : ''
+);
+
+echo $output;
+
+get_footer();
+

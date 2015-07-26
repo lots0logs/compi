@@ -345,4 +345,6 @@ class Compi_Dashboard {
 		return $compi_options_temp;
 
 	}
+
+
 }
