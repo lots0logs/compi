@@ -21,7 +21,6 @@ $background_layout = 'light';
 		<div id="content-area" class="<?php if ( false === $dots_compi_sidebar ) {
 			echo 'et_full_width_page ';
 		} ?>clearfix">
-			<div id="left-area">
 				<?php
 				//$compi_pub->write_log( $et_theme_options );
 
@@ -37,9 +36,9 @@ $background_layout = 'light';
 						$post_format    = et_pb_post_format();
 						$thumb          = '';
 						$width          = 400;
-						$width          = (int) apply_filters( 'dots_compi_et_pb_blog_image_width', 'category', $width );
+						$width          = (int) apply_filters( 'dots_compi_et_pb_blog_image_width', $width, 'category' );
 						$height         = 250;
-						$height         = (int) apply_filters( 'dots_compi_et_pb_blog_image_height', 'category', $height );
+						$height         = (int) apply_filters( 'dots_compi_et_pb_blog_image_height', $height, 'category' );
 						$titletext      = get_the_title();
 						$thumbnail      = get_thumbnail( $width, $height, '', $titletext, $titletext, false, 'Blogimage' );
 						$thumb          = $thumbnail["thumb"];
@@ -74,7 +73,7 @@ $background_layout = 'light';
 								<?php }
 							} ?>
 
-							<?php if ( ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ) ) ) {
+							<?php // if ( ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ) ) ) {
 								if ( ! in_array( $post_format, array( 'link', 'audio' ) ) ) { ?>
 									<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 								<?php }
@@ -127,7 +126,7 @@ $background_layout = 'light';
 									the_excerpt();
 								}
 								?>
-							<?php } // 'off' === $fullwidth || ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ?>
+							<?php // } // 'off' === $fullwidth || ! in_array( $post_format, array( 'link', 'audio', 'quote', 'gallery' ?>
 
 						</article> <!-- .et_pb_post -->
 						<?php
@@ -146,9 +145,6 @@ $background_layout = 'light';
 					get_template_part( 'includes/no-results', 'index' );
 				}
 				?>
-			</div> <!-- #left-area -->
-		</div> <!-- #content-area -->
-	</div> <!-- #main-content -->
 
 <?php
 
@@ -157,7 +153,7 @@ ob_end_clean();
 
 if ( true === $dots_compi_sidebar ) {
 	ob_start();
-	get_sidebar();
+	dynamic_sidebar();
 	$sidebar_contents = ob_get_contents();
 	ob_end_clean();
 }
@@ -179,6 +175,8 @@ $output = sprintf( '<div class="et_pb_section et_section_regular">
 								<div class="et_pb_blog_grid_wrapper">%1$s</div>
 							</div>
 							%3$s
+		</div> <!-- #content-area -->
+	</div> <!-- #main-content -->
 						</div>
 					</div>',
 	$output,
