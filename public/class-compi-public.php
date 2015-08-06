@@ -205,11 +205,11 @@ class Compi_Public {
 	 */
 	public function check_for_enabled_features() {
 
-		$options = static::get_options_array();
-		$this->global_masonry = false;
-		$this->global_fullwidth = false;
+		$options                   = static::get_options_array();
+		$this->global_masonry      = false;
+		$this->global_fullwidth    = false;
 		$this->module_enhancements = false;
-		$this->new_modules = false;
+		$this->new_modules         = false;
 
 		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
 			$this->global_masonry = true;
@@ -267,6 +267,25 @@ class Compi_Public {
 
 		return $classes;
 
+	}
+
+	public function activate_module_enhancements() {
+
+		include( $this->public_dir . '/enhanced-modules.php' );
+		$enhanced_modules = [
+			'Portfolio',
+			'Fullwidth_Portfolio',
+		];
+
+		foreach ( $enhanced_modules as $module_name ) {
+			$class_name     = 'Dots_ET_Builder_Module_' . $module_name;
+			$shortcode_name = 'et_pb_' . strtolower( $module_name );
+			$module         = new $class_name();
+
+			remove_shortcode( $shortcode_name );
+			add_shortcode( $shortcode_name, array( $module, '_shortcode_callback' ) );
+
+		}
 	}
 
 }
