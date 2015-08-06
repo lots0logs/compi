@@ -12,7 +12,7 @@
 
 
 /**
- * The public-facing functionality of the plugin.
+ * The main class for all public-facing functionality.
  *
  * Definition.
  *
@@ -72,7 +72,8 @@ class Compi_Public {
 		$this->css_stylesheet = plugins_url( '/css/compi-style.css', __FILE__ );
 		$this->custom_script  = plugins_url( '/js/compi-custom.js', __FILE__ );
 
-		$this->maybe_activate_features( true );
+		$this->check_for_enabled_features();
+		$this->maybe_activate_features();
 
 	}
 
@@ -88,7 +89,7 @@ class Compi_Public {
 	}
 
 	/**
-	 * Update options arrary in database.
+	 * Update options array in database.
 	 *
 	 * @param $update_array
 	 */
@@ -100,7 +101,7 @@ class Compi_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the stylesheets for the public-facing features.
 	 *
 	 * @since    1.0.0
 	 */
@@ -134,9 +135,9 @@ class Compi_Public {
 	 */
 	public function add_template_override_filter( $template_type ) {
 
-		$filter_name = $template_type . '_template';
+			$filter_name = $template_type . '_template';
 
-		add_filter( $filter_name, array( $this, 'do_template_override' ) );
+			add_filter( $filter_name, array( $this, 'do_template_override' ) );
 
 	}
 
@@ -159,7 +160,8 @@ class Compi_Public {
 	}
 
 	/**
-	 * Override a theme template with our own.
+	 * Override a theme template with our own. This is called by WordPress
+	 * during the "do_template_override" action.
 	 *
 	 * @since    1.0.0
 	 *
@@ -171,7 +173,7 @@ class Compi_Public {
 
 		global $dots_compi_sidebar;
 
-		$this->maybe_activate_features( false );
+		$this->check_for_enabled_features();
 		$dots_compi_sidebar = ! $this->global_fullwidth;
 		$current_filter     = current_filter();
 
@@ -188,12 +190,27 @@ class Compi_Public {
 
 
 	/**
+	 * Check features that are enabled in our options array.
+	 *
+	 * @since    1.0.0
 	 *
 	 */
-	public function archive_template_overrides() {
-		foreach ( array( 'category', 'tag', 'archive', 'search' ) as $tpl_type ) {
-			$this->add_template_override_filter( $tpl_type );
+	public function check_for_enabled_features() {
+
+		$options = static::get_options_array();
+
+		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
+			$this->global_masonry = true;
+		} else {
+			$this->global_masonry = false;
 		}
+
+		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
+			$this->global_fullwidth = true;
+		} else {
+			$this->global_fullwidth = false;
+		}
+
 	}
 
 	/**
@@ -202,24 +219,13 @@ class Compi_Public {
 	 * @since    1.0.0
 	 *
 	 */
-	public function maybe_activate_features( $first_run ) {
+	public function maybe_activate_features() {
 
-		$options = static::get_options_array();
-
-		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
-			$this->global_masonry = true;
-			if ( $first_run ) $this->archive_template_overrides();
-		} else {
-			$this->global_masonry = false;
-		}
-
-		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
-			$this->global_fullwidth = true;
-			if ( false === $this->global_masonry ) {
-				add_filter( 'body_class', array( $this, 'add_body_classes' ) );
+		if ( true === $this->global_masonry ) {
+			$this->add_template_override_filter( 'index' );
 			}
-		} else {
-			$this->global_fullwidth = false;
+		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
+			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
 
 	}
@@ -233,7 +239,7 @@ class Compi_Public {
 	 */
 	public function add_body_classes( $classes ) {
 
-		$this->maybe_activate_features( false );
+		$this->check_for_enabled_features();
 
 		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
 			$classes[] = 'et_full_width_page';
