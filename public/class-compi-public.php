@@ -42,8 +42,16 @@ class Compi_Public {
 	 */
 	private $version;
 
+	/**
+	 * Features that can be enabled/disabled by user.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
 	public $global_fullwidth;
 	public $global_masonry;
+	public $module_enhancements;
+	public $new_modules;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -135,9 +143,9 @@ class Compi_Public {
 	 */
 	public function add_template_override_filter( $template_type ) {
 
-			$filter_name = $template_type . '_template';
+		$filter_name = $template_type . '_template';
 
-			add_filter( $filter_name, array( $this, 'do_template_override' ) );
+		add_filter( $filter_name, array( $this, 'do_template_override' ) );
 
 	}
 
@@ -198,17 +206,25 @@ class Compi_Public {
 	public function check_for_enabled_features() {
 
 		$options = static::get_options_array();
+		$this->global_masonry = false;
+		$this->global_fullwidth = false;
+		$this->module_enhancements = false;
+		$this->new_modules = false;
 
 		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
 			$this->global_masonry = true;
-		} else {
-			$this->global_masonry = false;
 		}
 
 		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
 			$this->global_fullwidth = true;
-		} else {
-			$this->global_fullwidth = false;
+		}
+
+		if ( isset( $options['general_module_enhancements'] ) && $options['general_module_enhancements'] == 1 ) {
+			$this->module_enhancements = true;
+		}
+
+		if ( isset( $options['general_new_modules'] ) && $options['general_new_modules'] == 1 ) {
+			$this->new_modules = true;
 		}
 
 	}
@@ -223,7 +239,7 @@ class Compi_Public {
 
 		if ( true === $this->global_masonry ) {
 			$this->add_template_override_filter( 'index' );
-			}
+		}
 		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
 			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
