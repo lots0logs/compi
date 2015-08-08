@@ -20,7 +20,7 @@
  * @subpackage Compi/public
  * @author     wpdots <dev@wpdots.com>
  */
-class Compi_Public {
+class Dots_Compi_Public {
 
 	private static $_this;
 
@@ -48,10 +48,7 @@ class Compi_Public {
 	 * @since    1.0.0
 	 * @access   public
 	 */
-	public $global_fullwidth;
-	public $global_masonry;
-	public $module_enhancements;
-	public $new_modules;
+	public $features;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -76,9 +73,11 @@ class Compi_Public {
 		$this->version        = $version;
 		$this->compi_options  = static::get_options_array();
 		$this->public_dir     = plugin_dir_path( __FILE__ );
+		$this->includes_dir   = dirname( $this->public_dir ) . '/includes';
 		$this->template_dir   = $this->public_dir . 'templates';
 		$this->css_stylesheet = plugins_url( '/css/compi-style.css', __FILE__ );
 		$this->custom_script  = plugins_url( '/js/compi-custom.js', __FILE__ );
+		$this->features       = array();
 
 		$this->check_for_enabled_features();
 		$this->maybe_activate_features();
@@ -96,17 +95,6 @@ class Compi_Public {
 		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 	}
 
-	/**
-	 * Update options array in database.
-	 *
-	 * @param $update_array
-	 */
-	private function update_option( $update_array ) {
-
-		$options         = static::get_options_array();
-		$updated_options = array_merge( $options, $update_array );
-		update_option( 'dots_compi_options', $updated_options );
-	}
 
 	/**
 	 * Register the stylesheets for the public-facing features.
@@ -115,8 +103,10 @@ class Compi_Public {
 	 */
 	public function enqueue_styles() {
 
+		if ( in_array( true, $this->features, true ) ) {
 
-		wp_enqueue_style( $this->plugin_name . 'style', $this->css_stylesheet, array( 'divi-style' ), $this->version );
+			wp_enqueue_style( $this->plugin_name . 'style', $this->css_stylesheet, array( 'divi-style' ), $this->version );
+		}
 
 	}
 
@@ -127,11 +117,13 @@ class Compi_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array(
-			'jquery',
-			'divi-custom'
-		), $this->version, false );
+		if ( in_array( true, $this->features, true ) ) {
 
+			wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array(
+				'jquery',
+				'divi-custom'
+			), $this->version, false );
+		}
 	}
 
 	/**
@@ -182,7 +174,7 @@ class Compi_Public {
 		global $dots_compi_sidebar;
 
 		$this->check_for_enabled_features();
-		$dots_compi_sidebar = ! $this->global_fullwidth;
+		$dots_compi_sidebar = ! $this->features['global_fullwidth'];
 		$current_filter     = current_filter();
 
 		$template_name = str_replace( '_template', '', $current_filter );
@@ -205,26 +197,28 @@ class Compi_Public {
 	 */
 	public function check_for_enabled_features() {
 
-		$options                   = static::get_options_array();
-		$this->global_masonry      = false;
-		$this->global_fullwidth    = false;
-		$this->module_enhancements = false;
-		$this->new_modules         = false;
+		$options        = $this->compi_options;
+		$this->features = array(
+			'global_masonry'      => false,
+			'global_fullwidth'    => false,
+			'module_enhancements' => false,
+			'new_modules'         => false,
+		);
 
 		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
-			$this->global_masonry = true;
+			$this->features['global_masonry'] = true;
 		}
 
 		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
-			$this->global_fullwidth = true;
+			$this->features['global_fullwidth'] = true;
 		}
 
 		if ( isset( $options['general_module_enhancements'] ) && $options['general_module_enhancements'] == 1 ) {
-			$this->module_enhancements = true;
+			$this->features['module_enhancements'] = true;
 		}
 
 		if ( isset( $options['general_new_modules'] ) && $options['general_new_modules'] == 1 ) {
-			$this->new_modules = true;
+			$this->features['new_modules'] = true;
 		}
 
 	}
@@ -237,13 +231,13 @@ class Compi_Public {
 	 */
 	public function maybe_activate_features() {
 
-		if ( true === $this->global_masonry ) {
+		if ( true === $this->features['global_masonry'] ) {
 			$this->add_template_override_filter( 'index' );
 		}
-		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
+		if ( true === $this->features['global_fullwidth'] && false === $this->features['global_masonry'] ) {
 			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
-		if ( true === $this->module_enhancements ) {
+		if ( true === $this->features['module_enhancements'] ) {
 			$action_hook = is_admin() ? 'wp_loaded' : 'wp';
 			remove_action( $action_hook, 'et_builder_add_main_elements' );
 			add_action( $action_hook, array( $this, 'activate_module_enhancements' ) );
@@ -263,11 +257,11 @@ class Compi_Public {
 
 		$this->check_for_enabled_features();
 
-		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
+		if ( true === $this->features['global_fullwidth'] && false === $this->features['global_masonry'] ) {
 			$classes[] = 'et_full_width_page';
 
 		}
-		if ( true === $this->global_fullwidth ) {
+		if ( true === $this->features['global_fullwidth'] ) {
 			$classes[] = 'dots_compi_archive_grid ';
 		}
 
@@ -278,7 +272,7 @@ class Compi_Public {
 	public function activate_module_enhancements() {
 
 		require ET_BUILDER_DIR . 'main-structure-elements.php';
-		require $this->public_dir . '/main-modules.php';
+		require $this->includes_dir . '/main-modules.php';
 
 	}
 

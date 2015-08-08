@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-compi.php';
+require plugin_dir_path( __FILE__ ) . '/includes/class-dots-compi.php';
 
 /**
  * Begins execution of the plugin.
