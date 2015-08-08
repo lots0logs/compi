@@ -243,6 +243,12 @@ class Compi_Public {
 		if ( true === $this->global_fullwidth && false === $this->global_masonry ) {
 			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
+		if ( true === $this->module_enhancements ) {
+			$action_hook = is_admin() ? 'wp_loaded' : 'wp';
+			remove_action( $action_hook, 'et_builder_add_main_elements' );
+			add_action( $action_hook, array( $this, 'activate_module_enhancements' ) );
+
+		}
 
 	}
 
@@ -271,21 +277,9 @@ class Compi_Public {
 
 	public function activate_module_enhancements() {
 
-		include( $this->public_dir . '/enhanced-modules.php' );
-		$enhanced_modules = [
-			'Portfolio',
-			'Fullwidth_Portfolio',
-		];
+		require ET_BUILDER_DIR . 'main-structure-elements.php';
+		require $this->public_dir . '/main-modules.php';
 
-		foreach ( $enhanced_modules as $module_name ) {
-			$class_name     = 'Dots_ET_Builder_Module_' . $module_name;
-			$shortcode_name = 'et_pb_' . strtolower( $module_name );
-			$module         = new $class_name();
-
-			remove_shortcode( $shortcode_name );
-			add_shortcode( $shortcode_name, array( $module, '_shortcode_callback' ) );
-
-		}
 	}
 
 }

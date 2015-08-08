@@ -28,7 +28,7 @@
  * @subpackage Compi/includes
  * @author     wpdots <dev@wpdots.com>
  */
-class Compi {
+class Dots_Compi {
 
 	/**
 	 * The unique identifier of this plugin.
@@ -74,10 +74,10 @@ class Compi {
 		$this->compi_options = $this->get_options_array();
 
 		// Register activation hook.
-		register_activation_hook( __FILE__, array( 'Compi', 'activation_hook' ) );
+		register_activation_hook( __FILE__, array( 'Dots_Compi', 'activation_hook' ) );
 
 		// Register deactivation hook.
-		register_deactivation_hook( __FILE__, array( 'Compi', 'deactivation_hook' ) );
+		register_deactivation_hook( __FILE__, array( 'Dots_Compi', 'deactivation_hook' ) );
 
 		// Load all plugin dependencies.
 		$this->load_dependencies();
@@ -89,7 +89,7 @@ class Compi {
 		add_action( 'plugins_loaded', array( $this, 'define_dashboard_hooks') );
 
 		// Define public hooks.
-		$this->define_public_hooks();
+		add_action( 'plugins_loaded', array( $this, 'define_public_hooks') );
 
 	}
 
@@ -124,39 +124,31 @@ class Compi {
 	private function load_dependencies() {
 
 		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-compi-i18n.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'dashboard/class-compi-dashboard.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'dashboard/class-dots-compi-dashboard.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-compi-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-dots-compi-public.php';
 
 	}
 
 	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Compi_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
+	 * Load the plugin text domain for translation.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Compi_i18n();
-		$plugin_i18n->set_domain( $this->plugin_name );
-
-		$plugin_i18n->load_plugin_textdomain();
+		load_plugin_textdomain(
+			$this->plugin_name,
+			false,
+			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+		);
 
 	}
 

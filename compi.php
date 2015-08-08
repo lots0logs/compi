@@ -41,4 +41,4 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-compi.php';
  * 
  * @since    1.0.0
  */
-new Compi( '1.0.0' );
+new Dots_Compi( '1.0.0' );

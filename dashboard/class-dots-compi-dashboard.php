@@ -127,7 +127,7 @@ class Compi_Dashboard {
 	 */
 	public function include_options() {
 
-		require_once( $this->dashboard_dir . 'class-compi-options.php' );
+		require_once( $this->dashboard_dir . 'class-dots-compi-options.php' );
 
 		$this->dash_options_all = Compi_Options_Table::get_dash_options();
 
