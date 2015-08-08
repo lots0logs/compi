@@ -80,7 +80,7 @@ class Dots_Compi_Public {
 		$this->features       = array();
 
 		$this->check_for_enabled_features();
-		$this->maybe_activate_features();
+		add_action( 'init', array( $this, 'maybe_activate_features' ), 99 );
 
 	}
 

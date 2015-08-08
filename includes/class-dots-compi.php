@@ -126,13 +126,13 @@ class Dots_Compi {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'dashboard/class-dots-compi-dashboard.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/dashboard/class-dots-compi-dashboard.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-dots-compi-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/public/class-dots-compi-public.php';
 
 	}
 
@@ -161,7 +161,7 @@ class Dots_Compi {
 	 */
 	public function define_dashboard_hooks() {
 
-		$this->dashboard = new Compi_Dashboard( $this->plugin_name, $this->version );
+		$this->dashboard = new Dots_Compi_Dashboard( $this->plugin_name, $this->version );
 
 		add_action( 'admin_init', array( $this->dashboard, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
@@ -175,7 +175,7 @@ class Dots_Compi {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	public function define_public_hooks() {
 
 		$plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version );
 

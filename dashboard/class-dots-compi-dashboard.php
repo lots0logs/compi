@@ -19,7 +19,7 @@
  * @subpackage Compi/dashboard
  * @author     wpdots <dev@wpdots.com>
  */
-class Compi_Dashboard {
+class Dots_Compi_Dashboard {
 
 	/**
 	 * The ID of this plugin.
