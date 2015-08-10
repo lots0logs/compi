@@ -1,13 +1,29 @@
 <?php
-
-/**
- * The admin-specific functionality of the plugin.
+/*
+ * class-dots-compi-dashboard.php
  *
- * @link       http://wpdots.com
- * @since      1.0.0
+ * Copyright © 2015 wpdots
  *
- * @package    Compi
- * @subpackage Compi/dashboard
+ * This file is part of Compi.
+ *
+ * Compi is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * Compi is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * The following additional terms are in effect as per Section 7 of this license:
+ *
+ * The preservation of all legal notices and author attributions in
+ * the material or in the Appropriate Legal Notices displayed
+ * by works containing it is required.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -59,7 +75,7 @@ class Dots_Compi_Dashboard {
 		//$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
 		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
-		$this->admin_script     = plugins_url( '/js/compi-dashboard.js', __FILE__ );
+		$this->admin_script     = plugins_url( '/js/dashboard.js', __FILE__ );
 		$this->compi_options    = $this->get_options_array();
 		$this->protocol         = is_ssl() ? 'https' : 'http';
 		$this->dash_options_all = array();

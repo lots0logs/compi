@@ -1,4 +1,32 @@
 <?php
+/*
+ * main-modules.php
+ *
+ * Copyright © 2015 wpdots
+ * Copyright © 2015 Elegant Themes
+ *
+ * This file is part of Compi.
+ *
+ * Compi is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * Compi is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * The following additional terms are in effect as per Section 7 of this license:
+ *
+ * The preservation of all legal notices and author attributions in
+ * the material or in the Appropriate Legal Notices displayed
+ * by works containing it is required.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 class ET_Builder_Module_Image extends ET_Builder_Module {
 	function init() {
 		$this->name = __( 'Image', 'et_builder' );
@@ -5046,7 +5074,7 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 			'show_categories'   => array( 'on' ),
 			'show_pagination'   => array( 'on' ),
 			'background_layout' => array( 'light' ),
-			'use_regular_posts' => array( 'off' ),
+			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
 		);
 		$this->main_css_element   = '%%order_class%% .et_pb_portfolio_item';
 		$this->advanced_options   = array(
@@ -5379,7 +5407,7 @@ class ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 			'show_categories'   => array( 'on' ),
 			'show_pagination'   => array( 'on' ),
 			'background_layout' => array( 'light' ),
-			'use_regular_posts' => array( 'off' ),
+			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
 		);
 		$this->main_css_element   = '%%order_class%%.et_pb_filterable_portfolio';
 		$this->advanced_options   = array(
@@ -10971,7 +10999,7 @@ class ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 			'background_layout' => array( 'light' ),
 			'auto'              => array( 'off' ),
 			'auto_speed'        => array( '7000' ),
-			'use_regular_posts' => array( 'off' ),
+			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
 		);
 	}
 
