@@ -29,6 +29,14 @@
 
 	'use strict';
 
+	$(window).load(function () {
+
+		if ($('.dots_save_wrap button').length) {
+			initCompiSettingsPage();
+		}
+
+	});
+
 	function initCompiSettingsPage() {
 		$('.dots_save_wrap button').on('click', function (event) {
 			event.preventDefault();
@@ -70,40 +78,30 @@
 		});
 	}
 
-	$(window).load(function () {
-		console.log('window loaded!');
+	function display_warning($warn_window) {
+		if ('' == $warn_window) {
+			return;
+		}
 
-		initCompiSettingsPage();
+		$('#wpwrap').append($warn_window);
+	}
 
-
-
-
-		function display_warning($warn_window) {
-			if ('' == $warn_window) {
-				return;
+	function generate_warning($message, $link) {
+		var link = '' == $link ? '#' : $link;
+		$.ajax({
+			type: 'POST',
+			url: compiSettings.ajaxurl,
+			data: {
+				action: 'generate_modal_warning',
+				message: $message,
+				ok_link: link,
+				generate_warning_nonce: compiSettings.generate_warning
+			},
+			success: function (data) {
+				display_warning(data);
 			}
-
-			$('#wpwrap').append($warn_window);
-		}
-
-		function generate_warning($message, $link) {
-			var link = '' == $link ? '#' : $link;
-			$.ajax({
-				type: 'POST',
-				url: compiSettings.ajaxurl,
-				data: {
-					action: 'generate_modal_warning',
-					message: $message,
-					ok_link: link,
-					generate_warning_nonce: compiSettings.generate_warning
-				},
-				success: function (data) {
-					display_warning(data);
-				}
-			});
-		}
-
-	});
+		});
+	}
 
 
 })(jQuery);
