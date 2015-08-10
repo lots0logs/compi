@@ -39,7 +39,13 @@
 class Dots_Compi_Public {
 
 	private static $_this;
-
+	/**
+	 * Features that can be enabled/disabled by user.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public $features;
 	/**
 	 * The ID of this plugin.
 	 *
@@ -48,7 +54,6 @@ class Dots_Compi_Public {
 	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
-
 	/**
 	 * The version of this plugin.
 	 *
@@ -57,14 +62,6 @@ class Dots_Compi_Public {
 	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
-
-	/**
-	 * Features that can be enabled/disabled by user.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public $features;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -79,7 +76,7 @@ class Dots_Compi_Public {
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
 			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'Compi' ),
-					get_class( $this ) )
+			                 get_class( $this ) )
 			);
 		}
 
@@ -96,7 +93,7 @@ class Dots_Compi_Public {
 		$this->features       = array();
 
 		$this->check_for_enabled_features();
-		add_action( 'init', array( $this, 'maybe_activate_features' ), 99 );
+		add_action( 'init', array( $this, 'maybe_activate_features' ), 2 );
 
 	}
 
@@ -111,6 +108,39 @@ class Dots_Compi_Public {
 		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 	}
 
+	/**
+	 * Check features that are enabled in our options array.
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	public function check_for_enabled_features() {
+
+		$options        = $this->compi_options;
+		$this->features = array(
+			'global_masonry'      => false,
+			'global_fullwidth'    => false,
+			'module_enhancements' => false,
+			'new_modules'         => false,
+		);
+
+		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
+			$this->features['global_masonry'] = true;
+		}
+
+		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
+			$this->features['global_fullwidth'] = true;
+		}
+
+		if ( isset( $options['general_module_enhancements'] ) && $options['general_module_enhancements'] == 1 ) {
+			$this->features['module_enhancements'] = true;
+		}
+
+		if ( isset( $options['general_new_modules'] ) && $options['general_new_modules'] == 1 ) {
+			$this->features['new_modules'] = true;
+		}
+
+	}
 
 	/**
 	 * Register the stylesheets for the public-facing features.
@@ -137,24 +167,9 @@ class Dots_Compi_Public {
 
 			wp_enqueue_script( $this->plugin_name . 'custom', $this->custom_script, array(
 				'jquery',
-				'divi-custom'
+				'divi-custom',
 			), $this->version, false );
 		}
-	}
-
-	/**
-	 * Add filter to override a template file.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @param $template_type
-	 */
-	public function add_template_override_filter( $template_type ) {
-
-		$filter_name = $template_type . '_template';
-
-		add_filter( $filter_name, array( $this, 'do_template_override' ) );
-
 	}
 
 	/**
@@ -204,41 +219,6 @@ class Dots_Compi_Public {
 
 	}
 
-
-	/**
-	 * Check features that are enabled in our options array.
-	 *
-	 * @since    1.0.0
-	 *
-	 */
-	public function check_for_enabled_features() {
-
-		$options        = $this->compi_options;
-		$this->features = array(
-			'global_masonry'      => false,
-			'global_fullwidth'    => false,
-			'module_enhancements' => false,
-			'new_modules'         => false,
-		);
-
-		if ( isset( $options['tweaks_global_masonry'] ) && $options['tweaks_global_masonry'] == 1 ) {
-			$this->features['global_masonry'] = true;
-		}
-
-		if ( isset( $options['tweaks_global_fullwidth'] ) && $options['tweaks_global_fullwidth'] == 1 ) {
-			$this->features['global_fullwidth'] = true;
-		}
-
-		if ( isset( $options['general_module_enhancements'] ) && $options['general_module_enhancements'] == 1 ) {
-			$this->features['module_enhancements'] = true;
-		}
-
-		if ( isset( $options['general_new_modules'] ) && $options['general_new_modules'] == 1 ) {
-			$this->features['new_modules'] = true;
-		}
-
-	}
-
 	/**
 	 * Activate features that are enabled in our options array.
 	 *
@@ -255,10 +235,25 @@ class Dots_Compi_Public {
 		}
 		if ( true === $this->features['module_enhancements'] ) {
 			$action_hook = is_admin() ? 'wp_loaded' : 'wp';
-			remove_action( $action_hook, 'et_builder_add_main_elements' );
-			add_action( $action_hook, array( $this, 'activate_module_enhancements' ) );
+			//remove_action( $action_hook, 'et_builder_add_main_elements' );
+			add_action( $action_hook, array( $this, 'activate_module_enhancements' ), 2 );
 
 		}
+
+	}
+
+	/**
+	 * Add filter to override a template file.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $template_type
+	 */
+	public function add_template_override_filter( $template_type ) {
+
+		$filter_name = $template_type . '_template';
+
+		add_filter( $filter_name, array( $this, 'do_template_override' ) );
 
 	}
 
@@ -285,11 +280,50 @@ class Dots_Compi_Public {
 
 	}
 
+
 	public function activate_module_enhancements() {
 
-		require ET_BUILDER_DIR . 'main-structure-elements.php';
-		require $this->includes_dir . '/main-modules.php';
+		//require ET_BUILDER_DIR . 'main-structure-elements.php';
+		//require $this->includes_dir . '/main-modules.php';
+		add_filter( 'et_builder_module_fields_et_pb_portfolio', array( $this, 'module_fields_portfolio' ) );
 
+	}
+
+	public function module_fields_portfolio( $fields ) {
+
+		$extra_fields = [
+			'use_regular_posts'          => array(
+				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
+				'type'              => 'yes_no_button',
+				'options'           => array(
+					'on'  => __( 'Yes', 'et_builder' ),
+					'off' => __( 'No', 'et_builder' ),
+				),
+				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects'           => array(
+					'[for=et_pb_include_regular_categories]',
+					'[for=et_pb_include_categories]',
+				),
+				'default'           => 'off',
+				'shortcode_default' => 'off',
+			),
+			'include_regular_categories' => array(
+				'label'            => __( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_categories_option',
+				'renderer_options' => array(
+					'use_terms' => false,
+				),
+				'depends_show_if'  => 'on',
+				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+		];
+
+		$all_fields                                          = array_slice( $fields, 0, 2, true ) +
+		                                                       $extra_fields +
+		                                                       array_slice( $fields, 2, null, true );
+		$all_fields['include_categories']['depends_show_if'] = 'off';
+
+		return $all_fields;
 	}
 
 }

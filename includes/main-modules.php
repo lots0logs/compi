@@ -5055,6 +5055,7 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 			'fullwidth',
 			'posts_number',
 			'use_regular_posts',
+			'include_regular_categories',
 			'include_categories',
 			'show_title',
 			'show_categories',
@@ -5074,7 +5075,7 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 			'show_categories'   => array( 'on' ),
 			'show_pagination'   => array( 'on' ),
 			'background_layout' => array( 'light' ),
-			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
+			'use_regular_posts' => array( 'off', 'add_default_setting' ),
 		);
 		$this->main_css_element   = '%%order_class%% .et_pb_portfolio_item';
 		$this->advanced_options   = array(
@@ -5140,7 +5141,7 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 				'type'        => 'text',
 				'description' => __( 'Define the number of projects that should be displayed per page.', 'et_builder' ),
 			),
-			'use_regular_posts'   => array(
+			'use_regular_posts'          => array(
 				'label'       => __( 'Use Regular Posts', 'dots_compi' ),
 				'type'        => 'yes_no_button',
 				'options'     => array(
@@ -5148,11 +5149,25 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 					'off' => __( 'No', 'et_builder' ),
 				),
 				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects'     => array(
+					'[for=et_pb_include_regular_categories]',
+					'[for=et_pb_include_categories]',
+				),
 			),
-			'include_categories'  => array(
+			'include_regular_categories' => array(
+				'label'            => __( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_categories_option',
+				'renderer_options' => array(
+					'use_terms' => false,
+				),
+				'depends_show_if' => 'on',
+				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+			'include_categories'         => array(
 				'label'       => __( 'Include Categories', 'et_builder' ),
 				'renderer'    => 'et_builder_include_categories_option',
 				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'depends_show_if' => 'off',
 			),
 			'show_title'          => array(
 				'label'       => __( 'Show Title', 'et_builder' ),
@@ -5388,6 +5403,7 @@ class ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 			'fullwidth',
 			'posts_number',
 			'use_regular_posts',
+			'include_regular_categories',
 			'include_categories',
 			'show_title',
 			'show_categories',
@@ -5407,7 +5423,7 @@ class ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 			'show_categories'   => array( 'on' ),
 			'show_pagination'   => array( 'on' ),
 			'background_layout' => array( 'light' ),
-			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
+			'use_regular_posts' => array( 'off', 'add_default_setting' ),
 		);
 		$this->main_css_element   = '%%order_class%%.et_pb_filterable_portfolio';
 		$this->advanced_options   = array(
@@ -5487,7 +5503,7 @@ class ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 				'type'        => 'text',
 				'description' => __( 'Define the number of projects that should be displayed per page.', 'et_builder' ),
 			),
-			'use_regular_posts'   => array(
+			'use_regular_posts'          => array(
 				'label'       => __( 'Use Regular Posts', 'dots_compi' ),
 				'type'        => 'yes_no_button',
 				'options'     => array(
@@ -5495,11 +5511,25 @@ class ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 					'off' => __( 'No', 'et_builder' ),
 				),
 				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects'     => array(
+					'[for=et_pb_include_regular_categories]',
+					'[for=et_pb_include_categories]',
+				),
 			),
-			'include_categories'  => array(
-				'label'       => __( 'Include Categories', 'et_builder' ),
-				'renderer'    => 'et_builder_include_categories_option',
-				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			'include_regular_categories' => array(
+				'label'            => __( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_categories_option',
+				'renderer_options' => array(
+					'use_terms' => false,
+				),
+				'depends_show_if'  => 'on',
+				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+			'include_categories'         => array(
+				'label'           => __( 'Include Categories', 'et_builder' ),
+				'renderer'        => 'et_builder_include_categories_option',
+				'description'     => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'depends_show_if' => 'off',
 			),
 			'show_title'          => array(
 				'label'       => __( 'Show Title', 'et_builder' ),
@@ -10983,6 +11013,7 @@ class ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 			'include_categories',
 			'posts_number',
 			'use_regular_posts',
+			'include_regular_categories',
 			'show_title',
 			'show_date',
 			'background_layout',
@@ -10999,7 +11030,7 @@ class ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 			'background_layout' => array( 'light' ),
 			'auto'              => array( 'off' ),
 			'auto_speed'        => array( '7000' ),
-			'use_regular_posts' => array( 'off', 'add_default_setting'  ),
+			'use_regular_posts' => array( 'off', 'add_default_setting' ),
 		);
 	}
 
@@ -11020,17 +11051,7 @@ class ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 				),
 				'description' => __( 'Choose your desired portfolio layout style.', 'et_builder' ),
 			),
-			'include_categories' => array(
-				'label'       => __( 'Include Categories', 'et_builder' ),
-				'renderer'    => 'et_builder_include_categories_option',
-				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
-			),
-			'posts_number'       => array(
-				'label'       => __( 'Posts Number', 'et_builder' ),
-				'type'        => 'text',
-				'description' => __( 'Control how many projects are displayed. Leave blank or use 0 to not limit the amount.', 'et_builder' ),
-			),
-			'use_regular_posts'  => array(
+			'use_regular_posts'          => array(
 				'label'       => __( 'Use Regular Posts', 'dots_compi' ),
 				'type'        => 'yes_no_button',
 				'options'     => array(
@@ -11038,6 +11059,30 @@ class ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 					'off' => __( 'No', 'et_builder' ),
 				),
 				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects'     => array(
+					'[for=et_pb_include_regular_categories]',
+					'[for=et_pb_include_categories]',
+				),
+			),
+			'include_regular_categories' => array(
+				'label'            => __( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_categories_option',
+				'renderer_options' => array(
+					'use_terms' => false,
+				),
+				'depends_show_if'  => 'on',
+				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+			'include_categories'         => array(
+				'label'           => __( 'Include Categories', 'et_builder' ),
+				'renderer'        => 'et_builder_include_categories_option',
+				'description'     => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'depends_show_if' => 'off',
+			),
+			'posts_number'       => array(
+				'label'       => __( 'Posts Number', 'et_builder' ),
+				'type'        => 'text',
+				'description' => __( 'Control how many projects are displayed. Leave blank or use 0 to not limit the amount.', 'et_builder' ),
 			),
 			'show_title'         => array(
 				'label'       => __( 'Show Title', 'et_builder' ),

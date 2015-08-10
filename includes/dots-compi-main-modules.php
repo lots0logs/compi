@@ -28,7 +28,7 @@
  */
 
 
-class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module {
+class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	function init() {
 
 		$this->name               = __( 'Portfolio', 'et_builder' );
