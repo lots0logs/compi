@@ -235,7 +235,8 @@ class Dots_Compi_Public {
 		}
 		if ( true === $this->features['module_enhancements'] ) {
 
-			add_action( 'wp', array( $this, 'activate_module_enhancements' ), 99 );
+			//add_action( 'wp', array( $this, 'activate_module_enhancements' ), 99 );
+			$this->activate_module_enhancements();
 
 		}
 

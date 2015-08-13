@@ -78,11 +78,17 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	 * @param $features
 	 */
 	function __construct( $features ) {
+		parent::__construct();
 		$this->features = $features;
-		$this->helper   = new Dots_ET_Builder_Module_Helper( $features, $this );
+		$this->helper   = null;
 
+		$this->maybe_enable_overrides();
+
+	}
+
+	public function maybe_enable_overrides() {
+		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
-
 	}
 
 
@@ -292,12 +298,17 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 	 * @param $features
 	 */
 	function __construct( $features ) {
-		
+		parent::__construct();
 		$this->features = $features;
-		$this->helper   = new Dots_ET_Builder_Module_Helper( $features, $this );
+		$this->helper   = null;
 
+		$this->maybe_enable_overrides();
+
+	}
+
+	public function maybe_enable_overrides() {
+		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
-
 	}
 
 
@@ -539,12 +550,17 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 	 * @param $features
 	 */
 	function __construct( $features ) {
-		
+		parent::__construct();
 		$this->features = $features;
-		$this->helper   = new Dots_ET_Builder_Module_Helper( $features, $this );
+		$this->helper   = null;
 
+		$this->maybe_enable_overrides();
+
+	}
+
+	public function maybe_enable_overrides() {
+		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
-
 	}
 
 
