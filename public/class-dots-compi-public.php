@@ -71,12 +71,12 @@ class Dots_Compi_Public {
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version     The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $options ) {
 
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
-			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'Compi' ),
-			                 get_class( $this ) )
+			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'dots_compi' ),
+					get_class( $this ) )
 			);
 		}
 
@@ -84,7 +84,7 @@ class Dots_Compi_Public {
 
 		$this->plugin_name    = $plugin_name;
 		$this->version        = $version;
-		$this->compi_options  = static::get_options_array();
+		$this->compi_options  = $options;
 		$this->public_dir     = plugin_dir_path( __FILE__ );
 		$this->includes_dir   = dirname( $this->public_dir ) . '/includes';
 		$this->template_dir   = $this->public_dir . 'templates';
@@ -93,23 +93,14 @@ class Dots_Compi_Public {
 		$this->features       = array();
 
 		$this->check_for_enabled_features();
-		add_action( 'init', array( $this, 'maybe_activate_features' ), 2 );
+		$this->maybe_activate_features();
 
 	}
 
-	/**
-	 * Get options array from database.
-	 *
-	 * @since    1.0.0
-	 *
-	 */
-	private static function get_options_array() {
-
-		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
-	}
 
 	public function get_modules() {
-		$modules = [ 'Portfolio' ];
+
+		$modules = [ 'Portfolio', 'Fullwidth_Portfolio', 'Filterable_Portfolio' ];
 
 		return $modules;
 	}
@@ -210,7 +201,6 @@ class Dots_Compi_Public {
 
 		global $dots_compi_sidebar;
 
-		$this->check_for_enabled_features();
 		$dots_compi_sidebar = ! $this->features['global_fullwidth'];
 		$current_filter     = current_filter();
 
@@ -240,9 +230,8 @@ class Dots_Compi_Public {
 			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
 		if ( true === $this->features['module_enhancements'] ) {
-			$action_hook = is_admin() ? 'wp_loaded' : 'wp';
-			//remove_action( $action_hook, 'et_builder_add_main_elements' );
-			add_action( $action_hook, array( $this, 'activate_module_enhancements' ), 2 );
+
+			add_action( 'wp', array( $this, 'activate_module_enhancements' ), 99 );
 
 		}
 
@@ -293,8 +282,8 @@ class Dots_Compi_Public {
 		$modules = $this->get_modules();
 
 		foreach ( $modules as $module ) {
-			$module = 'Dots_ET_Builder_Module_' . $module;
-			new $module( $this->features );
+			$dots_module = 'Dots_ET_Builder_Module_' . $module;
+			new $dots_module( $this->features );
 		}
 
 	}

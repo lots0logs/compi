@@ -64,7 +64,7 @@ class Dots_Compi_Dashboard {
 	 * @param      string $version The version of this plugin.
 	 *
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $options ) {
 
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
@@ -76,7 +76,7 @@ class Dots_Compi_Dashboard {
 		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script     = plugins_url( '/js/dashboard.js', __FILE__ );
-		$this->compi_options    = $this->get_options_array();
+		$this->compi_options    = $options;
 		$this->protocol         = is_ssl() ? 'https' : 'http';
 		$this->dash_options_all = array();
 
@@ -91,16 +91,6 @@ class Dots_Compi_Dashboard {
 		add_action( 'wp_ajax_dots_compi_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
 	}
 
-	/**
-	 * Get options array from database.
-	 *
-	 * @since    1.0.0
-	 *
-	 */
-	public function get_options_array() {
-
-		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
-	}
 
 	/**
 	 * Update option in database.
@@ -111,10 +101,9 @@ class Dots_Compi_Dashboard {
 	 */
 	private function update_option( $update_array ) {
 
-		$compi_options   = $this->get_options_array();
-		$updated_options = array_merge( $compi_options, $update_array );
+		$updated_options = array_merge( $this->compi_options, $update_array );
 		update_option( 'dots_compi_options', $updated_options );
-		//$this->write_log( array( 'UPDATE OPTION', $compi_options, $updated_options ) );
+		$this->compi_options = $updated_options;
 	}
 
 	/**
@@ -212,7 +201,7 @@ class Dots_Compi_Dashboard {
 	public function options_page() {
 
 		$this->include_options();
-		$compi_options = $this->get_options_array();
+		$compi_options = $this->compi_options;
 		$dash_options_all = $this->dash_options_all;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
@@ -304,7 +293,7 @@ class Dots_Compi_Dashboard {
 	 */
 	private function process_and_update_options( $options ) {
 
-		$dash_options_all = Compi_Options_Table::get_dash_options();
+		$dash_options_all = $this->dash_options_all;
 
 		$error_message = '';
 

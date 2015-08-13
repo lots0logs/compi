@@ -63,9 +63,10 @@ class Dots_Compi {
 	 * The plugin's dashboard.
 	 *
 	 * @since    1.0.0
-	 * @var      string $dashboard The admin dashboard.
+	 * @var      Dots_Compi_Dashboard $plugin_dashboard The admin dashboard.
 	 */
-	public $dashboard;
+	protected $plugin_dashboard;
+	protected $plugin_public;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -84,7 +85,7 @@ class Dots_Compi {
 		// Set plugin's version.
 		$this->version     = $version;
 
-		$this->compi_options = $this->get_options_array();
+		$this->compi_options = static::get_options_array();
 
 		// Register activation hook.
 		register_activation_hook( __FILE__, array( 'Dots_Compi', 'activation_hook' ) );
@@ -92,17 +93,21 @@ class Dots_Compi {
 		// Register deactivation hook.
 		register_deactivation_hook( __FILE__, array( 'Dots_Compi', 'deactivation_hook' ) );
 
+		// Call activation hook in case we've been updated manually.
+		$this->activation_hook();
+
 		// Load all plugin dependencies.
 		$this->load_dependencies();
 
 		// Set localization.
 		$this->set_locale();
 
-		// Define dashboard hooks.
-		add_action( 'plugins_loaded', array( $this, 'define_dashboard_hooks') );
+		// Initialize dashboard.
+		add_action( 'plugins_loaded', array( $this, 'init_dashboard' ) );
 
-		// Define public hooks.
-		add_action( 'plugins_loaded', array( $this, 'define_public_hooks') );
+		// Initialize frontend features.
+		//$action_hook = is_admin() ? 'wp_loaded' : 'wp';
+		add_action( 'wp_loaded', array( $this, 'init_public_facing_features' ), 99 );
 
 	}
 
@@ -156,9 +161,10 @@ class Dots_Compi {
 	 * @access   private
 	 */
 	private function set_locale() {
+		$domain = 'dots_' . $this->plugin_name;
 
 		load_plugin_textdomain(
-			$this->plugin_name,
+			$domain,
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
@@ -172,12 +178,12 @@ class Dots_Compi {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	public function define_dashboard_hooks() {
+	public function init_dashboard() {
 
-		$this->dashboard = new Dots_Compi_Dashboard( $this->plugin_name, $this->version );
+		$this->plugin_dashboard = new Dots_Compi_Dashboard( $this->plugin_name, $this->version, $this->compi_options );
 
-		add_action( 'admin_init', array( $this->dashboard, 'register_settings' ) );
-		add_action( 'admin_menu', array( $this->dashboard, 'setup_dashboard' ), 90 );
+		add_action( 'admin_init', array( $this->plugin_dashboard, 'register_settings' ) );
+		add_action( 'admin_menu', array( $this->plugin_dashboard, 'setup_dashboard' ), 90 );
 
 	}
 
@@ -188,12 +194,12 @@ class Dots_Compi {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	public function define_public_hooks() {
+	public function init_public_facing_features() {
 
-		$plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version );
+		$this->plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version, $this->compi_options );
 
-		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this->plugin_public, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this->plugin_public, 'enqueue_scripts' ) );
 
 	}
 	
@@ -201,7 +207,7 @@ class Dots_Compi {
 	 * Runs on plugin activation.
 	 */
 	public function activation_hook() {
-		
+
 	}
 
 	/**
