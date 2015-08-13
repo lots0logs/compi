@@ -1,4 +1,5 @@
 <?php
+
 /*
  * dots-compi-main-modules.php
  *
@@ -29,190 +30,74 @@
 
 
 class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
-	function init() {
+	function __construct( $options ) {
 
-		$this->name               = __( 'Portfolio', 'et_builder' );
-		$this->slug               = 'et_pb_portfolio';
-		$this->whitelisted_fields = array(
-			'fullwidth',
-			'posts_number',
-			'use_regular_posts',
-			'include_categories',
-			'show_title',
-			'show_categories',
-			'show_pagination',
-			'background_layout',
-			'admin_label',
-			'module_id',
-			'module_class',
-			'zoom_icon_color',
-			'hover_overlay_color',
-			'hover_icon',
-		);
-		$this->fields_defaults    = array(
-			'fullwidth'         => array( 'on' ),
-			'posts_number'      => array( 10, 'add_default_setting' ),
-			'show_title'        => array( 'on' ),
-			'show_categories'   => array( 'on' ),
-			'show_pagination'   => array( 'on' ),
-			'background_layout' => array( 'light' ),
-			'use_regular_posts' => array( 'off' ),
-		);
-		$this->main_css_element   = '%%order_class%% .et_pb_portfolio_item';
-		$this->advanced_options   = array(
-			'fonts'      => array(
-				'title'   => array(
-					'label' => __( 'Title', 'et_builder' ),
-					'css'   => array(
-						'main' => "{$this->main_css_element} h2",
-					),
-				),
-				'caption' => array(
-					'label' => __( 'Caption', 'et_builder' ),
-					'css'   => array(
-						'main' => "{$this->main_css_element} .post-meta",
-					),
-				),
-			),
-			'background' => array(
-				'settings' => array(
-					'color' => 'alpha',
-				),
-			),
-			'border'     => array(),
-		);
-		$this->custom_css_options = array(
-			'portfolio_image'     => array(
-				'label'    => __( 'Portfolio Image', 'et_builder' ),
-				'selector' => '.et_portfolio_image',
-			),
-			'overlay'             => array(
-				'label'    => __( 'Overlay', 'et_builder' ),
-				'selector' => '.et_overlay',
-			),
-			'overlay_icon'        => array(
-				'label'    => __( 'Overlay Icon', 'et_builder' ),
-				'selector' => '.et_overlay:before',
-			),
-			'portfolio_title'     => array(
-				'label'    => __( 'Portfolio Title', 'et_builder' ),
-				'selector' => '.et_pb_portfolio_item h2',
-			),
-			'portfolio_post_meta' => array(
-				'label'    => __( 'Portfolio Post Meta', 'et_builder' ),
-				'selector' => '.et_pb_portfolio_item .post-meta',
-			),
-		);
+		//ET_Builder_Module::__construct();
+		$this->compi_options = $options;
+
+		$this->maybe_enable_overrides();
+
 	}
 
-	function get_fields() {
 
-		$fields = array(
-			'fullwidth'           => array(
-				'label'       => __( 'Layout', 'et_builder' ),
-				'type'        => 'select',
-				'options'     => array(
-					'on'  => __( 'Fullwidth', 'et_builder' ),
-					'off' => __( 'Grid', 'et_builder' ),
-				),
-				'description' => __( 'Choose your desired portfolio layout style.', 'et_builder' ),
-			),
-			'posts_number'        => array(
-				'label'       => __( 'Posts Number', 'et_builder' ),
-				'type'        => 'text',
-				'description' => __( 'Define the number of projects that should be displayed per page.', 'et_builder' ),
-			),
-			'use_regular_posts'   => array(
-				'label'       => __( 'Use Regular Posts', 'dots_compi' ),
-				'type'        => 'yes_no_button',
-				'options'     => array(
-					'on'  => __( 'Yes', 'et_builder' ),
-					'off' => __( 'No', 'et_builder' ),
-				),
-				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
-			),
-			'include_categories'  => array(
-				'label'       => __( 'Include Categories', 'et_builder' ),
-				'renderer'    => 'et_builder_include_categories_option',
-				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
-			),
-			'show_title'          => array(
-				'label'       => __( 'Show Title', 'et_builder' ),
-				'type'        => 'yes_no_button',
-				'options'     => array(
-					'on'  => __( 'Yes', 'et_builder' ),
-					'off' => __( 'No', 'et_builder' ),
-				),
-				'description' => __( 'Turn project titles on or off.', 'et_builder' ),
-			),
-			'show_categories'     => array(
-				'label'       => __( 'Show Categories', 'et_builder' ),
-				'type'        => 'yes_no_button',
-				'options'     => array(
-					'on'  => __( 'Yes', 'et_builder' ),
-					'off' => __( 'No', 'et_builder' ),
-				),
-				'description' => __( 'Turn the category links on or off.', 'et_builder' ),
-			),
-			'show_pagination'     => array(
-				'label'       => __( 'Show Pagination', 'et_builder' ),
-				'type'        => 'yes_no_button',
-				'options'     => array(
-					'on'  => __( 'Yes', 'et_builder' ),
-					'off' => __( 'No', 'et_builder' ),
-				),
-				'description' => __( 'Enable or disable pagination for this feed.', 'et_builder' ),
-			),
-			'background_layout'   => array(
-				'label'       => __( 'Text Color', 'et_builder' ),
-				'type'        => 'select',
-				'options'     => array(
-					'light' => __( 'Dark', 'et_builder' ),
-					'dark'  => __( 'Light', 'et_builder' ),
-				),
-				'description' => __( 'Here you can choose whether your text should be light or dark. If you are working with a dark background, then your text should be light. If your background is light, then your text should be set to dark.', 'et_builder' ),
-			),
-			'admin_label'         => array(
-				'label'       => __( 'Admin Label', 'et_builder' ),
-				'type'        => 'text',
-				'description' => __( 'This will change the label of the module in the builder for easy identification.', 'et_builder' ),
-			),
-			'module_id'           => array(
-				'label'       => __( 'CSS ID', 'et_builder' ),
-				'type'        => 'text',
-				'description' => __( 'Enter an optional CSS ID to be used for this module. An ID can be used to create custom CSS styling, or to create links to particular sections of your page.', 'et_builder' ),
-			),
-			'module_class'        => array(
-				'label'       => __( 'CSS Class', 'et_builder' ),
-				'type'        => 'text',
-				'description' => __( 'Enter optional CSS classes to be used for this module. A CSS class can be used to create custom CSS styling. You can add multiple classes, separated with a space.', 'et_builder' ),
-			),
-			'zoom_icon_color'     => array(
-				'label'        => __( 'Zoom Icon Color', 'et_builder' ),
-				'type'         => 'color',
-				'custom_color' => true,
-				'tab_slug'     => 'advanced',
-			),
-			'hover_overlay_color' => array(
-				'label'        => __( 'Hover Overlay Color', 'et_builder' ),
-				'type'         => 'color-alpha',
-				'custom_color' => true,
-				'tab_slug'     => 'advanced',
-			),
-			'hover_icon'          => array(
-				'label'               => __( 'Hover Icon Picker', 'et_builder' ),
-				'type'                => 'text',
-				'class'               => array( 'et-pb-font-icon' ),
-				'renderer'            => 'et_pb_get_font_icon_list',
-				'renderer_with_field' => true,
-				'tab_slug'            => 'advanced',
-			),
-		);
+	public function maybe_enable_overrides() {
 
-		return $fields;
+		if ( isset( $this->compi_options['module_enhancements'] ) && $this->compi_options['module_enhancements'] > 0 ) {
+			if ( ! is_admin() ) {
+				add_action( 'after_setup_theme', array( $this, 'do_override_shortcode' ) );
+			}
+			add_filter( 'et_builder_module_fields_' . $this->slug, array( $this, 'dots_extra_fields' ) );
+		}
+
 	}
 
-	function shortcode_callback( $atts, $content = null, $function_name ) {
+
+	public function do_override_shortcode() {
+
+		remove_shortcode( $this->slug );
+		add_shortcode( $this->slug, array( $this, '_shortcode_callback' ) );
+	}
+
+
+	public function dots_extra_fields( $fields ) {
+
+		$extra_fields = [
+			'use_regular_posts'          => array(
+				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
+				'type'              => 'yes_no_button',
+				'options'           => array(
+					'on'  => __( 'Yes', 'et_builder' ),
+					'off' => __( 'No', 'et_builder' ),
+				),
+				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects'           => array(
+					'[for=et_pb_include_regular_categories]',
+					'[for=et_pb_include_categories]',
+				),
+				'default'           => 'off',
+				'shortcode_default' => 'off',
+			),
+			'include_regular_categories' => array(
+				'label'            => __( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_categories_option',
+				'renderer_options' => array(
+					'use_terms' => false,
+				),
+				'depends_show_if'  => 'on',
+				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+		];
+
+		$all_fields = array_slice( $fields, 0, 2, true ) +
+		              $extra_fields +
+		              array_slice( $fields, 2, null, true );
+
+		$all_fields['include_categories']['depends_show_if'] = 'off';
+
+		return $all_fields;
+	}
+
+	public function shortcode_callback( $atts, $content = null, $function_name ) {
 
 		$module_id           = $this->shortcode_atts['module_id'];
 		$module_class        = $this->shortcode_atts['module_class'];
@@ -359,8 +244,6 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 		return $output;
 	}
 }
-
-new Dots_ET_Builder_Module_Portfolio;
 
 
 class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
@@ -616,14 +499,14 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module {
 			);
 		} elseif ( '' !== $include_categories && 'yes' === $use_regular_posts ) {
 			$dots_args['cat'] = explode( ',', $include_categories );
-			$dots_args = wp_parse_args( $args, $dots_args );
+			$dots_args        = wp_parse_args( $args, $dots_args );
 		}
 		if ( 'yes' === $use_regular_posts ) {
-			$projects = new WP_Query( $dots_args );
+			$projects  = new WP_Query( $dots_args );
 			$term_slug = 'category';
 			$cat_class = 'category_';
 		} else {
-			$projects = et_divi_get_projects( $args );
+			$projects  = et_divi_get_projects( $args );
 			$term_slug = 'project_category';
 			$cat_class = 'project_category_';
 		}
@@ -891,7 +774,7 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 		$auto               = $this->shortcode_atts['auto'];
 		$auto_speed         = $this->shortcode_atts['auto_speed'];
 		$args               = array();
-		$dots_args = array(
+		$dots_args          = array(
 			'post_type' => 'post',
 		);
 		if ( is_numeric( $posts_number ) && $posts_number > 0 ) {
@@ -910,7 +793,7 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module {
 			);
 		} elseif ( '' !== $include_categories && 'yes' === $use_regular_posts ) {
 			$dots_args['cat'] = explode( ',', $include_categories );
-			$dots_args = wp_parse_args( $args, $dots_args );
+			$dots_args        = wp_parse_args( $args, $dots_args );
 		}
 		if ( 'yes' === $use_regular_posts ) {
 			$projects = new WP_Query( $dots_args );

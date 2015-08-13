@@ -108,6 +108,12 @@ class Dots_Compi_Public {
 		return get_option( 'dots_compi_options' ) ? get_option( 'dots_compi_options' ) : array();
 	}
 
+	public function get_modules() {
+		$modules = [ 'Portfolio' ];
+
+		return $modules;
+	}
+
 	/**
 	 * Check features that are enabled in our options array.
 	 *
@@ -283,47 +289,15 @@ class Dots_Compi_Public {
 
 	public function activate_module_enhancements() {
 
-		//require ET_BUILDER_DIR . 'main-structure-elements.php';
-		//require $this->includes_dir . '/main-modules.php';
-		add_filter( 'et_builder_module_fields_et_pb_portfolio', array( $this, 'module_fields_portfolio' ) );
+		require $this->includes_dir . '/dots-compi-main-modules.php';
+		$modules = $this->get_modules();
+
+		foreach ( $modules as $module ) {
+			$module = 'Dots_ET_Builder_Module_' . $module;
+			new $module( $this->features );
+		}
 
 	}
 
-	public function module_fields_portfolio( $fields ) {
-
-		$extra_fields = [
-			'use_regular_posts'          => array(
-				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
-				'type'              => 'yes_no_button',
-				'options'           => array(
-					'on'  => __( 'Yes', 'et_builder' ),
-					'off' => __( 'No', 'et_builder' ),
-				),
-				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
-				'affects'           => array(
-					'[for=et_pb_include_regular_categories]',
-					'[for=et_pb_include_categories]',
-				),
-				'default'           => 'off',
-				'shortcode_default' => 'off',
-			),
-			'include_regular_categories' => array(
-				'label'            => __( 'Include Categories', 'et_builder' ),
-				'renderer'         => 'et_builder_include_categories_option',
-				'renderer_options' => array(
-					'use_terms' => false,
-				),
-				'depends_show_if'  => 'on',
-				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
-			),
-		];
-
-		$all_fields                                          = array_slice( $fields, 0, 2, true ) +
-		                                                       $extra_fields +
-		                                                       array_slice( $fields, 2, null, true );
-		$all_fields['include_categories']['depends_show_if'] = 'off';
-
-		return $all_fields;
-	}
 
 }

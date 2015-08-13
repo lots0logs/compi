@@ -5368,6 +5368,7 @@ class ET_Builder_Module_Portfolio extends ET_Builder_Module {
 					wp_pagenavi();
 				} else {
 					get_template_part( 'includes/navigation', 'index' );
+					get_template_part( 'includes/navigation', 'index' );
 				}
 			}
 			wp_reset_query();
