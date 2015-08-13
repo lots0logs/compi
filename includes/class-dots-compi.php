@@ -76,6 +76,8 @@ class Dots_Compi {
 	 * the public-facing side of the site.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $version
 	 */
 	public function __construct( $version ) {
 

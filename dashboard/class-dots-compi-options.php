@@ -50,6 +50,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Compi_Options_Table {
 
+	/**
+	 * @return array
+	 */
 	public static function get_dash_options() {
 
 		return array(

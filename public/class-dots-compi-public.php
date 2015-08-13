@@ -70,6 +70,7 @@ class Dots_Compi_Public {
 	 *
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version     The version of this plugin.
+	 * @param $options
 	 */
 	public function __construct( $plugin_name, $version, $options ) {
 
@@ -98,6 +99,9 @@ class Dots_Compi_Public {
 	}
 
 
+	/**
+	 * @return array
+	 */
 	public function get_modules() {
 
 		$modules = [ 'Portfolio', 'Fullwidth_Portfolio', 'Filterable_Portfolio' ];

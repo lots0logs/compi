@@ -29,8 +29,15 @@
  */
 
 
+/**
+ * Class Dots_ET_Builder_Module_Helper
+ */
 class Dots_ET_Builder_Module_Helper {
 
+	/**
+	 * @param $features
+	 * @param $caller
+	 */
 	function __construct( $features, $caller ) {
 
 		$this->features = $features;
@@ -63,7 +70,13 @@ class Dots_ET_Builder_Module_Helper {
 }
 
 
+/**
+ * Class Dots_ET_Builder_Module_Portfolio
+ */
 class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
+	/**
+	 * @param $features
+	 */
 	function __construct( $features ) {
 		$this->features = $features;
 		$this->helper   = new Dots_ET_Builder_Module_Helper( $features, $this );
@@ -73,6 +86,11 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	}
 
 
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
 	public function dots_extra_fields( $fields ) {
 
 		$extra_fields = [
@@ -111,6 +129,13 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 		return $all_fields;
 	}
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 * @param $function_name
+	 *
+	 * @return string
+	 */
 	function shortcode_callback( $atts, $content = null, $function_name ) {
 
 		$module_id           = $this->shortcode_atts['module_id'];
@@ -259,7 +284,13 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	}
 }
 
+/**
+ * Class Dots_ET_Builder_Module_Filterable_Portfolio
+ */
 class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filterable_Portfolio {
+	/**
+	 * @param $features
+	 */
 	function __construct( $features ) {
 		
 		$this->features = $features;
@@ -270,6 +301,11 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 	}
 
 
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
 	public function dots_extra_fields( $fields ) {
 
 		$extra_fields = [
@@ -308,6 +344,13 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 		return $all_fields;
 	}
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 * @param $function_name
+	 *
+	 * @return string
+	 */
 	function shortcode_callback( $atts, $content = null, $function_name ) {
 
 		$module_id           = $this->shortcode_atts['module_id'];
@@ -488,7 +531,13 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 	}
 }
 
+/**
+ * Class Dots_ET_Builder_Module_Fullwidth_Portfolio
+ */
 class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullwidth_Portfolio {
+	/**
+	 * @param $features
+	 */
 	function __construct( $features ) {
 		
 		$this->features = $features;
@@ -499,6 +548,11 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 	}
 
 
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
 	public function dots_extra_fields( $fields ) {
 
 		$extra_fields = [
@@ -537,6 +591,13 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 		return $all_fields;
 	}
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 * @param $function_name
+	 *
+	 * @return string
+	 */
 	function shortcode_callback( $atts, $content = null, $function_name ) {
 
 		$title              = $this->shortcode_atts['title'];

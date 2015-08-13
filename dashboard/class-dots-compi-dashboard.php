@@ -61,8 +61,8 @@ class Dots_Compi_Dashboard {
 	 * @since    1.0.0
 	 *
 	 * @param      string $plugin_name The name of this plugin.
-	 * @param      string $version The version of this plugin.
-	 *
+	 * @param      string $version     The version of this plugin.
+	 * @param $options
 	 */
 	public function __construct( $plugin_name, $version, $options ) {
 
