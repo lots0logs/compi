@@ -40,8 +40,8 @@ class Dots_ET_Builder_Module_Helper {
 	 */
 	function __construct( $features, $caller ) {
 
-		$this->features = $features;
-		$this->caller   = $caller;
+		$this->features    = $features;
+		$this->caller      = $caller;
 		$this->action_hook = 'et_builder_module_fields_' . $caller->slug;
 
 	}
@@ -50,13 +50,9 @@ class Dots_ET_Builder_Module_Helper {
 	public function maybe_enable_overrides() {
 
 		if ( isset( $this->features['module_enhancements'] ) && $this->features['module_enhancements'] > 0 ) {
-			if ( ! is_admin() ) {
-				add_action( 'wp', array( $this, 'do_override_shortcode' ), 99 );
-			}
-			add_filter( $this->action_hook, array(
-				$this->caller,
-				'dots_extra_fields'
-			) );
+
+			add_action( 'wp_loaded', array( $this, 'do_override_shortcode' ), 99 );
+			add_filter( $this->action_hook, array( $this->caller, 'dots_extra_fields', ) );
 		}
 
 	}
@@ -78,15 +74,19 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	 * @param $features
 	 */
 	function __construct( $features ) {
+
 		parent::__construct();
-		$this->features = $features;
-		$this->helper   = null;
+		$this->features                             = $features;
+		$this->helper                               = null;
+		$this->whitelisted_fields[]                 = 'use_regular_posts';
+		$this->fields_defaults['use_regular_posts'] = array( 'off', 'add_default_setting' );
 
 		$this->maybe_enable_overrides();
 
 	}
 
 	public function maybe_enable_overrides() {
+
 		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
 	}
@@ -99,40 +99,53 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 	 */
 	public function dots_extra_fields( $fields ) {
 
-		$extra_fields = [
-			'use_regular_posts'          => array(
-				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
-				'type'              => 'yes_no_button',
-				'options'           => array(
-					'on'  => __( 'Yes', 'et_builder' ),
+		$extra_fields = array(
+			'use_regular_posts' => array(
+				'label' => __( 'Use Regular Posts', 'dots_compi' ),
+				'type' => 'yes_no_button',
+				'options' => array(
 					'off' => __( 'No', 'et_builder' ),
+					'on' => __( 'Yes', 'et_builder' ),
 				),
-				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
-				'affects'           => array(
+				'option_category' => 'configuration',
+				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects' => array(
 					'[for=et_pb_include_regular_categories]',
 					'[for=et_pb_include_categories]',
 				),
-				'default'           => 'off',
+				'default' => 'off',
 				'shortcode_default' => 'off',
 			),
 			'include_regular_categories' => array(
-				'label'            => __( 'Include Categories', 'et_builder' ),
-				'renderer'         => 'et_builder_include_categories_option',
+				'label' => __( 'Include Categories', 'et_builder' ),
+				'renderer' => 'et_builder_include_categories_option',
 				'renderer_options' => array(
 					'use_terms' => false,
 				),
-				'depends_show_if'  => 'on',
-				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'option_category' => 'configuration',
+				'depends_show_if' => 'on',
+				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
 			),
-		];
+		);
 
 		$all_fields = array_slice( $fields, 0, 2, true ) +
-		              $extra_fields +
-		              array_slice( $fields, 2, null, true );
+					  $extra_fields +
+					  array_slice( $fields, 2, null, true );
 
 		$all_fields['include_categories']['depends_show_if'] = 'off';
 
 		return $all_fields;
+	}
+
+
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	function process_fields( $fields ) {
+
+		return $fields = $extra_fields = $this->dots_extra_fields( $fields );
 	}
 
 	/**
@@ -161,7 +174,7 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 		$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
 		if ( '' !== $zoom_icon_color ) {
 			ET_Builder_Element::set_style( $function_name, array(
-				'selector'    => '%%order_class%% .et_overlay:before',
+				'selector' => '%%order_class%% .et_overlay:before',
 				'declaration' => sprintf(
 					'color: %1$s !important;',
 					esc_html( $zoom_icon_color )
@@ -170,7 +183,7 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 		}
 		if ( '' !== $hover_overlay_color ) {
 			ET_Builder_Element::set_style( $function_name, array(
-				'selector'    => '%%order_class%% .et_overlay',
+				'selector' => '%%order_class%% .et_overlay',
 				'declaration' => sprintf(
 					'background-color: %1$s;',
 					esc_html( $hover_overlay_color )
@@ -180,22 +193,22 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 		$container_is_closed = false;
 		$args                = array(
 			'posts_per_page' => (int) $posts_number,
-			'post_type'      => 'yes' === $use_regular_posts ? 'post' : 'project',
+			'post_type' => 'on' === $use_regular_posts ? 'post' : 'project',
 		);
 		$et_paged            = is_front_page() ? get_query_var( 'page' ) : get_query_var( 'paged' );
 		if ( is_front_page() ) {
 			$paged = $et_paged;
 		}
-		if ( '' !== $include_categories && 'no' === $use_regular_posts ) {
+		if ( '' !== $include_categories && 'off' === $use_regular_posts ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => 'project_category',
-					'field'    => 'id',
-					'terms'    => explode( ',', $include_categories ),
+					'field' => 'id',
+					'terms' => explode( ',', $include_categories ),
 					'operator' => 'IN',
-				)
+				),
 			);
-		} elseif ( '' !== $include_categories && 'yes' === $use_regular_posts ) {
+		} elseif ( '' !== $include_categories && 'on' === $use_regular_posts ) {
 			$args['cat'] = explode( ',', $include_categories );
 		}
 		if ( ! is_search() ) {
@@ -206,7 +219,7 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 			( 'on' !== $fullwidth ? ' et_pb_grid_item' : '' )
 		);
 		ob_start();
-		query_posts( $args );
+		query_posts( implode( ',', $args ) );
 		if ( have_posts() ) {
 			while ( have_posts() ) {
 				the_post(); ?>
@@ -223,6 +236,7 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 					$titletext = get_the_title();
 					$thumbnail = get_thumbnail( $width, $height, $classtext, $titletext, $titletext, false, 'Blogimage' );
 					$thumb     = $thumbnail["thumb"];
+					$term_name = 'on' === $use_regular_posts ? 'category' : 'project_category';
 					if ( '' !== $thumb ) : ?>
 						<a href="<?php the_permalink(); ?>">
 							<?php if ( 'on' !== $fullwidth ) : ?>
@@ -253,7 +267,7 @@ class Dots_ET_Builder_Module_Portfolio extends ET_Builder_Module_Portfolio {
 					<?php endif; ?>
 
 					<?php if ( 'on' === $show_categories ) : ?>
-						<p class="post-meta"><?php echo get_the_term_list( get_the_ID(), 'project_category', '', ', ' ); ?></p>
+						<p class="post-meta"><?php echo get_the_term_list( get_the_ID(), $term_name, '', ', ' ); ?></p>
 					<?php endif; ?>
 
 				</div> <!-- .et_pb_portfolio_item -->
@@ -298,15 +312,18 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 	 * @param $features
 	 */
 	function __construct( $features ) {
-		parent::__construct();
-		$this->features = $features;
-		$this->helper   = null;
 
+		parent::__construct();
+		$this->features                             = $features;
+		$this->helper                               = null;
+		$this->whitelisted_fields[]                 = 'use_regular_posts';
+		$this->fields_defaults['use_regular_posts'] = array( 'off', 'add_default_setting' );
 		$this->maybe_enable_overrides();
 
 	}
 
 	public function maybe_enable_overrides() {
+
 		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
 	}
@@ -319,40 +336,52 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 	 */
 	public function dots_extra_fields( $fields ) {
 
-		$extra_fields = [
-			'use_regular_posts'          => array(
-				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
-				'type'              => 'yes_no_button',
-				'options'           => array(
-					'on'  => __( 'Yes', 'et_builder' ),
+		$extra_fields = array(
+			'use_regular_posts' => array(
+				'label' => __( 'Use Regular Posts', 'dots_compi' ),
+				'type' => 'yes_no_button',
+				'options' => array(
 					'off' => __( 'No', 'et_builder' ),
+					'on' => __( 'Yes', 'et_builder' ),
 				),
-				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
-				'affects'           => array(
+				'option_category' => 'configuration',
+				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects' => array(
 					'[for=et_pb_include_regular_categories]',
 					'[for=et_pb_include_categories]',
 				),
-				'default'           => 'off',
+				'default' => 'off',
 				'shortcode_default' => 'off',
 			),
 			'include_regular_categories' => array(
-				'label'            => __( 'Include Categories', 'et_builder' ),
-				'renderer'         => 'et_builder_include_categories_option',
+				'label' => __( 'Include Categories', 'et_builder' ),
+				'renderer' => 'et_builder_include_categories_option',
 				'renderer_options' => array(
 					'use_terms' => false,
 				),
-				'depends_show_if'  => 'on',
-				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'option_category' => 'configuration',
+				'depends_show_if' => 'on',
+				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
 			),
-		];
+		);
 
 		$all_fields = array_slice( $fields, 0, 2, true ) +
-		              $extra_fields +
-		              array_slice( $fields, 2, null, true );
+					  $extra_fields +
+					  array_slice( $fields, 2, null, true );
 
 		$all_fields['include_categories']['depends_show_if'] = 'off';
 
 		return $all_fields;
+	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	function process_fields( $fields ) {
+
+		return $fields = $extra_fields = $this->dots_extra_fields( $fields );
 	}
 
 	/**
@@ -380,12 +409,9 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 		$module_class        = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
 		wp_enqueue_script( 'hashchange' );
 		$args      = array();
-		$dots_args = array(
-			'post_type' => 'post',
-		);
 		if ( '' !== $zoom_icon_color ) {
 			ET_Builder_Element::set_style( $function_name, array(
-				'selector'    => '%%order_class%% .et_overlay:before',
+				'selector' => '%%order_class%% .et_overlay:before',
 				'declaration' => sprintf(
 					'color: %1$s !important;',
 					esc_html( $zoom_icon_color )
@@ -394,7 +420,7 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 		}
 		if ( '' !== $hover_overlay_color ) {
 			ET_Builder_Element::set_style( $function_name, array(
-				'selector'    => '%%order_class%% .et_overlay',
+				'selector' => '%%order_class%% .et_overlay',
 				'declaration' => sprintf(
 					'background-color: %1$s;',
 					esc_html( $hover_overlay_color )
@@ -406,21 +432,20 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 		} else {
 			$args['posts_per_page'] = (int) $posts_number;
 		}
-		if ( '' !== $include_categories && 'no' === $use_regular_posts ) {
+		if ( '' !== $include_categories && 'off' === $use_regular_posts ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => 'project_category',
-					'field'    => 'id',
-					'terms'    => explode( ',', $include_categories ),
+					'field' => 'id',
+					'terms' => explode( ',', $include_categories ),
 					'operator' => 'IN',
-				)
+				),
 			);
-		} elseif ( '' !== $include_categories && 'yes' === $use_regular_posts ) {
-			$dots_args['cat'] = explode( ',', $include_categories );
-			$dots_args        = wp_parse_args( $args, $dots_args );
+		} elseif ( '' !== $include_categories && 'on' === $use_regular_posts ) {
+			$args['cat'] = explode( ',', $include_categories );
 		}
-		if ( 'yes' === $use_regular_posts ) {
-			$projects  = new WP_Query( $dots_args );
+		if ( 'on' === $use_regular_posts ) {
+			$projects  = new WP_Query( $args );
 			$term_slug = 'category';
 			$cat_class = 'category_';
 		} else {
@@ -490,7 +515,7 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 					<?php endif; ?>
 
 					<?php if ( 'on' === $show_categories ) : ?>
-						<p class="post-meta"><?php echo get_the_term_list( get_the_ID(), 'project_category', '', ', ' ); ?></p>
+						<p class="post-meta"><?php echo get_the_term_list( get_the_ID(), $term_slug, '', ', ' ); ?></p>
 					<?php endif; ?>
 
 				</div><!-- .et_pb_portfolio_item -->
@@ -503,9 +528,9 @@ class Dots_ET_Builder_Module_Filterable_Portfolio extends ET_Builder_Module_Filt
 		$terms_args          = array(
 			'include' => $categories_included,
 			'orderby' => 'name',
-			'order'   => 'ASC',
+			'order' => 'ASC',
 		);
-		$terms               = get_terms( 'project_category', $terms_args );
+		$terms               = get_terms( $term_slug, $terms_args );
 		$category_filters    = '<ul class="clearfix">';
 		$category_filters .= sprintf( '<li class="et_pb_portfolio_filter et_pb_portfolio_filter_all"><a href="#" class="active" data-category-slug="all">%1$s</a></li>',
 			esc_html__( 'All', 'et_builder' )
@@ -550,15 +575,18 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 	 * @param $features
 	 */
 	function __construct( $features ) {
+
 		parent::__construct();
 		$this->features = $features;
 		$this->helper   = null;
-
 		$this->maybe_enable_overrides();
+		$this->whitelisted_fields[]                 = 'use_regular_posts';
+		$this->fields_defaults['use_regular_posts'] = array( 'off', 'add_default_setting' );
 
 	}
 
 	public function maybe_enable_overrides() {
+
 		$this->helper = new Dots_ET_Builder_Module_Helper( $this->features, $this );
 		$this->helper->maybe_enable_overrides();
 	}
@@ -571,40 +599,52 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 	 */
 	public function dots_extra_fields( $fields ) {
 
-		$extra_fields = [
-			'use_regular_posts'          => array(
-				'label'             => __( 'Use Regular Posts', 'dots_compi' ),
-				'type'              => 'yes_no_button',
-				'options'           => array(
-					'on'  => __( 'Yes', 'et_builder' ),
+		$extra_fields = array(
+			'use_regular_posts' => array(
+				'label' => __( 'Use Regular Posts', 'dots_compi' ),
+				'type' => 'yes_no_button',
+				'options' => array(
 					'off' => __( 'No', 'et_builder' ),
+					'on' => __( 'Yes', 'et_builder' ),
 				),
-				'description'       => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
-				'affects'           => array(
+				'option_category' => 'configuration',
+				'description' => __( 'Display regular posts instead of project posts.', 'dots_compi' ),
+				'affects' => array(
 					'[for=et_pb_include_regular_categories]',
 					'[for=et_pb_include_categories]',
 				),
-				'default'           => 'off',
+				'default' => 'off',
 				'shortcode_default' => 'off',
 			),
 			'include_regular_categories' => array(
-				'label'            => __( 'Include Categories', 'et_builder' ),
-				'renderer'         => 'et_builder_include_categories_option',
+				'label' => __( 'Include Categories', 'et_builder' ),
+				'renderer' => 'et_builder_include_categories_option',
 				'renderer_options' => array(
 					'use_terms' => false,
 				),
-				'depends_show_if'  => 'on',
-				'description'      => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+				'option_category' => 'configuration',
+				'depends_show_if' => 'on',
+				'description' => __( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
 			),
-		];
+		);
 
 		$all_fields = array_slice( $fields, 0, 2, true ) +
-		              $extra_fields +
-		              array_slice( $fields, 2, null, true );
+					  $extra_fields +
+					  array_slice( $fields, 2, null, true );
 
 		$all_fields['include_categories']['depends_show_if'] = 'off';
 
 		return $all_fields;
+	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	function process_fields( $fields ) {
+
+		return $fields = $extra_fields = $this->dots_extra_fields( $fields );
 	}
 
 	/**
@@ -629,29 +669,25 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 		$auto               = $this->shortcode_atts['auto'];
 		$auto_speed         = $this->shortcode_atts['auto_speed'];
 		$args               = array();
-		$dots_args          = array(
-			'post_type' => 'post',
-		);
 		if ( is_numeric( $posts_number ) && $posts_number > 0 ) {
 			$args['posts_per_page'] = $posts_number;
 		} else {
 			$args['nopaging'] = true;
 		}
-		if ( '' !== $include_categories && 'no' === $use_regular_posts ) {
+		if ( '' !== $include_categories && 'off' === $use_regular_posts ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => 'project_category',
-					'field'    => 'id',
-					'terms'    => explode( ',', $include_categories ),
+					'field' => 'id',
+					'terms' => explode( ',', $include_categories ),
 					'operator' => 'IN',
-				)
+				),
 			);
-		} elseif ( '' !== $include_categories && 'yes' === $use_regular_posts ) {
-			$dots_args['cat'] = explode( ',', $include_categories );
-			$dots_args        = wp_parse_args( $args, $dots_args );
+		} elseif ( '' !== $include_categories && 'on' === $use_regular_posts ) {
+			$args['cat'] = explode( ',', $include_categories );
 		}
-		if ( 'yes' === $use_regular_posts ) {
-			$projects = new WP_Query( $dots_args );
+		if ( 'on' === $use_regular_posts ) {
+			$projects = new WP_Query( $args );
 		} else {
 			$projects = et_divi_get_projects( $args );
 		}
@@ -669,7 +705,7 @@ class Dots_ET_Builder_Module_Fullwidth_Portfolio extends ET_Builder_Module_Fullw
 					$height = (int) apply_filters( 'et_pb_portfolio_image_height', $height );
 					list( $thumb_src, $thumb_width, $thumb_height ) = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), array(
 						$width,
-						$height
+						$height,
 					) );
 					$orientation = ( $thumb_height > $thumb_width ) ? 'portrait' : 'landscape';
 					if ( '' !== $thumb_src ) : ?>
