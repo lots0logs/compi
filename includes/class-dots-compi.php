@@ -109,7 +109,7 @@ class Dots_Compi {
 
 		// Initialize frontend features.
 		$action_hook = is_admin() ? 'wp_loaded' : 'wp';
-		add_action( $action_hook, array( $this, 'init_public_facing_features' ), 99 );
+		add_action( $action_hook, array( $this, 'init_public_facing_features' ), 12 );
 
 	}
 

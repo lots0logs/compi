@@ -86,7 +86,7 @@ class Dots_Compi_Dashboard {
 		 * ------------
 		 * AJAX ACTIONS
 		 * ------------
-		 */		
+		 */
 		add_action( 'wp_ajax_dots_compi_save_settings', array( $this, 'dots_compi_save_settings' ) );
 		add_action( 'wp_ajax_dots_compi_generate_modal_warning', array( $this, 'generate_modal_warning' ) );
 	}
@@ -117,11 +117,11 @@ class Dots_Compi_Dashboard {
 	public function write_log( $log ) {
 
 
-			if ( is_array( $log ) || is_object( $log ) ) {
-				error_log( print_r( $log, true ) );
-			} else {
-				error_log( $log );
-			}
+		if ( is_array( $log ) || is_object( $log ) ) {
+			error_log( print_r( $log, true ) );
+		} else {
+			error_log( $log );
+		}
 	}
 
 
@@ -147,11 +147,11 @@ class Dots_Compi_Dashboard {
 	public function setup_dashboard() {
 
 		$menu_page = add_submenu_page( 'et_divi_options',
-				__( 'Compi Settings', 'Compi' ),
-				__( 'Compi Settings', 'Compi' ),
-				'manage_options',
-				'dots_compi_options',
-				array( $this, 'options_page' )
+			__( 'Compi Settings', 'Compi' ),
+			__( 'Compi Settings', 'Compi' ),
+			'manage_options',
+			'dots_compi_options',
+			array( $this, 'options_page' )
 		);
 
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
@@ -181,7 +181,10 @@ class Dots_Compi_Dashboard {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( 'compi-mdl-js', $this->admin_mdl_script, array(), $this->version, false );
-		wp_enqueue_script( 'compi-dashboard', $this->admin_script, array( 'jquery', 'compi-mdl-js' ), $this->version, true );
+		wp_enqueue_script( 'compi-dashboard', $this->admin_script, array(
+			'jquery',
+			'compi-mdl-js',
+		), $this->version, true );
 
 		wp_localize_script( 'compi-dashboard', 'compiSettings', array(
 			'compi_nonce'      => wp_create_nonce( 'dots_compi_nonce' ),
@@ -201,7 +204,7 @@ class Dots_Compi_Dashboard {
 	public function options_page() {
 
 		$this->include_options();
-		$compi_options = $this->compi_options;
+		$compi_options    = $this->compi_options;
 		$dash_options_all = $this->dash_options_all;
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
@@ -230,7 +233,7 @@ class Dots_Compi_Dashboard {
 
 		$ajax_request = isset( $_REQUEST['options'] ) ? true : false;
 
-		if( wp_verify_nonce( $_REQUEST['save_settings_nonce'], 'dots_compi_save_settings' ) && $ajax_request ) {
+		if ( wp_verify_nonce( $_REQUEST['save_settings_nonce'], 'dots_compi_save_settings' ) && $ajax_request ) {
 			parse_str( $_REQUEST['options'], $options );
 			$this->process_and_update_options( $options );
 		}
@@ -326,11 +329,11 @@ class Dots_Compi_Dashboard {
 								case 'switch':
 									if ( isset( $options['dots_compi'][ $current_option_name ] ) ) {
 										$compi_options_temp[ $current_option_name ] = in_array( $options['dots_compi'][ $current_option_name ], array(
-												'1',
-												false
+											'1',
+											false,
 										) )
-												? sanitize_text_field( $options['dots_compi'][ $current_option_name ] )
-												: false;
+											? sanitize_text_field( $options['dots_compi'][ $current_option_name ] )
+											: false;
 									} else {
 										$compi_options_temp[ $current_option_name ] = false;
 									}
@@ -345,10 +348,45 @@ class Dots_Compi_Dashboard {
 
 		$this->update_option( $compi_options_temp );
 
-		$this->write_log($compi_options_temp);
+		$this->write_log( $compi_options_temp );
 
 		return $compi_options_temp;
 
+	}
+
+
+	function get_lb_to_divi_builder_mapping() {
+
+		return array(
+			'et_lb_logo'        => array(
+				'new_slug' => 'et_pb_image',
+				'attrs'    => array(
+					'align'   => 'align',
+					'content' => 'url',
+				),
+			),
+			'et_lb_paper'       => array(
+				'new_slug' => 'et_pb_text',
+				'attrs'    => array(),
+			),
+			'et_lb_video'       => array(
+				'new_slug' => 'et_pb_video',
+				'attrs'    => array(
+					'video_url' => 'src',
+					'class'     => 'module_class',
+				),
+			),
+			'et_lb_testimonial' => array(
+				'new_slug' => 'et_pb_testimonial',
+				'attrs'    => array(
+					'image_url'       => 'portrait_url',
+					'author_name'     => 'author',
+					'author_position' => 'job_title',
+					'author_site'     => 'url',
+					'content' => 'content_new',
+				),
+			),
+		);
 	}
 
 

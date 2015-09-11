@@ -289,6 +289,7 @@ class Dots_Compi_Public {
 		foreach ( $modules as $module ) {
 			$dots_module = 'Dots_ET_Builder_Module_' . $module;
 			new $dots_module( $this->features );
+			break;
 		}
 
 	}
