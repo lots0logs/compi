@@ -355,39 +355,4 @@ class Dots_Compi_Dashboard {
 	}
 
 
-	function get_lb_to_divi_builder_mapping() {
-
-		return array(
-			'et_lb_logo'        => array(
-				'new_slug' => 'et_pb_image',
-				'attrs'    => array(
-					'align'   => 'align',
-					'content' => 'url',
-				),
-			),
-			'et_lb_paper'       => array(
-				'new_slug' => 'et_pb_text',
-				'attrs'    => array(),
-			),
-			'et_lb_video'       => array(
-				'new_slug' => 'et_pb_video',
-				'attrs'    => array(
-					'video_url' => 'src',
-					'class'     => 'module_class',
-				),
-			),
-			'et_lb_testimonial' => array(
-				'new_slug' => 'et_pb_testimonial',
-				'attrs'    => array(
-					'image_url'       => 'portrait_url',
-					'author_name'     => 'author',
-					'author_position' => 'job_title',
-					'author_site'     => 'url',
-					'content' => 'content_new',
-				),
-			),
-		);
-	}
-
-
 }

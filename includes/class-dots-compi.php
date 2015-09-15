@@ -67,6 +67,7 @@ class Dots_Compi {
 	 */
 	protected $plugin_dashboard;
 	protected $plugin_public;
+	public $conversion_util;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -153,6 +154,7 @@ class Dots_Compi {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/public/class-dots-compi-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'class-dots-compi-builder-conversion.php';
 
 	}
 
@@ -198,7 +200,9 @@ class Dots_Compi {
 	 */
 	public function init_public_facing_features() {
 
-		$this->plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version, $this->compi_options );
+		$this->conversion_util = new Dots_Compi_Conversion_Util();
+
+		$this->plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version, $this->compi_options, $this->conversion_util );
 
 		add_action( 'wp_enqueue_scripts', array( $this->plugin_public, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this->plugin_public, 'enqueue_scripts' ) );

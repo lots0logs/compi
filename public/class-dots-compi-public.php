@@ -71,8 +71,9 @@ class Dots_Compi_Public {
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version     The version of this plugin.
 	 * @param $options
+	 * @param $util
 	 */
-	public function __construct( $plugin_name, $version, $options ) {
+	public function __construct( $plugin_name, $version, $options, $util ) {
 
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
@@ -92,9 +93,11 @@ class Dots_Compi_Public {
 		$this->css_stylesheet = plugins_url( '/css/compi-style.css', __FILE__ );
 		$this->custom_script  = plugins_url( '/js/compi-custom.js', __FILE__ );
 		$this->features       = array();
+		$this->conversion_util = $util;
 
 		$this->check_for_enabled_features();
 		$this->maybe_activate_features();
+		add_filter( 'the_content', array($this, 'shortcode_test' ), 99 );
 
 	}
 
@@ -292,6 +295,39 @@ class Dots_Compi_Public {
 			break;
 		}
 
+	}
+
+	public function shortcode_test($content) {
+		if ( is_page( 768 ) ) {
+			$builder_layout = get_post_meta( get_the_ID(), '_et_builder_settings', true );
+			$shortcodes = '' !== $builder_layout['layout_shortcode'] ? $builder_layout['layout_shortcode'] : false;
+			if ( $shortcodes ) {
+				$map = $this->conversion_util->map;
+				$tags = $this->conversion_util->extract_shortcode_opening_tags($shortcodes);
+
+				if ( is_array($tags) ) {
+					foreach ( $tags as $tag ) {
+						$old_slug = $tag[1];
+						$new_slug = $map[$old_slug]['new_slug'];
+						$attrs = $this->conversion_util->get_shortcode_attrs_from_opening_tag($tag[0]);
+						$new_attrs = array();
+
+						if ( is_array( $attrs ) ) {
+							foreach ( $attrs as $attr ) {
+								$old_attr = $attr[2];
+								$new_attr = $map[$old_slug]['attrs'][$old_attr];
+								$value = $attr[3];
+								$new_attrs[$new_attr] = $value;
+
+							}
+						}
+					}
+				}
+			}
+
+			$content = $content . '<div>' . $shortcodes . '</div>';
+		}
+		return $content;
 	}
 
 
