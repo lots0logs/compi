@@ -37,10 +37,65 @@
 class Dots_Compi_Conversion_Util {
 
 	public function __construct() {
-		$this->map = $this->get_lb_to_divi_builder_mapping();
+
+		$this->map              = $this->get_eb_to_divi_builder_mapping();
+		$this->eb_settings      = get_option( 'et_lb_main_settings' );
+		$this->eb_post_types    = isset( $this->eb_settings['post_types'] )
+			? (array) $this->eb_settings['post_types']
+			: apply_filters( 'et_builder_default_post_types', array( 'post', 'page' ) );
+		$this->eb_posts_objects = array();
 	}
 
-	function get_lb_to_divi_builder_mapping() {
+	/**
+	 * Write to the debug log.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $log
+	 *
+	 */
+	public function write_log( $log ) {
+
+
+		if ( is_array( $log ) || is_object( $log ) ) {
+			error_log( print_r( $log, true ) );
+		} else {
+			error_log( $log );
+		}
+	}
+
+
+	function get_all_eb_posts_objects() {
+
+		$post_objects = array();
+		foreach ( $this->eb_post_types as $post_type ) {
+			$args  = array(
+				'post_type'  => $post_type,
+				'meta_query' => array(
+					'relation' => 'AND',
+					array(
+						'key' => '_et_builder_settings',
+					),
+					array(
+						'key'     => '_et_disable_builder',
+						'value'   => 1,
+						'compare' => 'NOT LIKE',
+					),
+				),
+			);
+			$query = new WP_Query( $args );
+			$posts = $query->get_posts();
+			foreach ( $posts as $post ) {
+				$post_objects[] = $post;
+			}
+
+		}
+		$this->write_log( $post_objects );
+
+		return $post_objects;
+	}
+
+	function get_eb_to_divi_builder_mapping() {
 
 		return array(
 			'et_lb_logo'        => array(
@@ -68,61 +123,65 @@ class Dots_Compi_Conversion_Util {
 					'author_name'     => 'author',
 					'author_position' => 'job_title',
 					'author_site'     => 'url',
-					'content' => 'content_new',
+					'content'         => 'content_new',
 				),
 			),
-			'et_lb_1_2' => array(
-				'new_slug' => 'et_pb_column',
+			'et_lb_1_2'         => array(
+				'new_slug'  => 'et_pb_column',
 				'attrs_new' => array(
 					'type' => '1_2',
-				)
+				),
 			),
-			'et_lb_1_3' => array(
-				'new_slug' => 'et_pb_column',
+			'et_lb_1_3'         => array(
+				'new_slug'  => 'et_pb_column',
 				'attrs_new' => array(
 					'type' => '1_3',
-				)
+				),
 			),
-			'et_lb_1_4' => array(
-				'new_slug' => 'et_pb_column',
+			'et_lb_1_4'         => array(
+				'new_slug'  => 'et_pb_column',
 				'attrs_new' => array(
 					'type' => '1_4',
-				)
+				),
 			),
-			'et_lb_2_3' => array(
-				'new_slug' => 'et_pb_column',
+			'et_lb_2_3'         => array(
+				'new_slug'  => 'et_pb_column',
 				'attrs_new' => array(
 					'type' => '2_3',
-				)
+				),
 			),
-			'et_lb_3_4' => array(
-				'new_slug' => 'et_pb_column',
+			'et_lb_3_4'         => array(
+				'new_slug'  => 'et_pb_column',
 				'attrs_new' => array(
 					'type' => '3_4',
-				)
+				),
 			),
-			'et_lb_resizable' => array(
-				'new_slug' => 'et_pb_row',
-				'attrs' => array(
+			'et_lb_resizable'   => array(
+				'new_slug'  => 'et_pb_row',
+				'attrs'     => array(
 					'width' => 'custom_width_percent',
 				),
 				'attrs_new' => array(
-					'make_fullwidth' => 'off',
-					'use_custom_width' => 'on',
-					'width_unit' => 'off',
+					'make_fullwidth'    => 'off',
+					'use_custom_width'  => 'on',
+					'width_unit'        => 'off',
 					'use_custom_gutter' => 'off',
-				)
+				),
 			),
 		);
 	}
 
-	public function extract_shortcode_opening_tags($layout) {
-		preg_match('@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@gm', $layout, $matches);
+	public function extract_shortcode_opening_tags( $layout ) {
+
+		preg_match( '@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@gm', $layout, $matches );
+
 		return $matches;
 	}
 
-	public function get_shortcode_attrs_from_opening_tag($tag) {
-		preg_match('@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@gm', $tag, $matches);
+	public function get_shortcode_attrs_from_opening_tag( $tag ) {
+
+		preg_match( '@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@gm', $tag, $matches );
+
 		return $matches;
 	}
 }

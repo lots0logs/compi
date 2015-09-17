@@ -609,3 +609,6 @@ h4 {
 	right: 37px;
   	top: 10px;
 }
+.dots table.mdl-data-table {
+	margin: 0 auto;
+}

@@ -64,7 +64,7 @@ class Dots_Compi_Dashboard {
 	 * @param      string $version     The version of this plugin.
 	 * @param $options
 	 */
-	public function __construct( $plugin_name, $version, $options ) {
+	public function __construct( $plugin_name, $version, $options, $util ) {
 
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
@@ -79,6 +79,7 @@ class Dots_Compi_Dashboard {
 		$this->compi_options    = $options;
 		$this->protocol         = is_ssl() ? 'https' : 'http';
 		$this->dash_options_all = array();
+		$this->conversion_util = $util;
 
 		$this->include_options();
 
@@ -202,10 +203,11 @@ class Dots_Compi_Dashboard {
 	 * @since    1.0.0
 	 */
 	public function options_page() {
-
 		$this->include_options();
 		$compi_options    = $this->compi_options;
 		$dash_options_all = $this->dash_options_all;
+		$eb_posts = $this->conversion_util->get_all_eb_posts_objects();
+		$this->write_log($eb_posts);
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 

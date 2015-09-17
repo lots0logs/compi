@@ -98,9 +98,9 @@ if ( isset( $dash_options_all ) ) {
 		);
 		$first = false;
 		foreach ( $tab['contents'] as $option_item => $item_properties ) {
-			$options_prefix   = $current_section;
-			$option           = $item_properties;
 
+			$options_prefix = $current_section;
+			$option         = $item_properties;
 
 			$current_option_name = '';
 			if ( isset( $option['name'] ) ) {
@@ -113,7 +113,7 @@ if ( isset( $dash_options_all ) ) {
 			switch ( $option['type'] ) {
 
 				case 'switch' :
-					printf( '<div class="unit-10 unit-push-right dots_switch"><label for="dots_compi[%1$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect"><input type="checkbox" id="dots_compi[%1$s]" name="dots_compi[%1$s]" value="1" class="mdl-switch__input" %2$s><span class="mdl-switch__label"></span></label></div>',
+					printf( '<div class="unit-10 unit-push-right dots_switch dots_compi_%1$s"><label for="dots_compi[%1$s]" class="mdl-switch mdl-js-switch mdl-js-ripple-effect"><input type="checkbox" id="dots_compi[%1$s]" name="dots_compi[%1$s]" value="1" class="mdl-switch__input" %2$s><span class="mdl-switch__label"></span></label></div>',
 						esc_attr( $current_option_name ),
 						checked( $current_option_value, 1, false )
 					);
@@ -136,6 +136,47 @@ if ( isset( $dash_options_all ) ) {
 						( isset( $option['sub_section'] ) && true == $option['sub_section'] ) ? '</li>' : ''
 					);
 					echo '</div>';
+					break;
+
+				case 'table_start' :
+					printf(
+						'<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="display:%1$s;">
+							<thead>
+								<tr>
+									<th>Post ID</th>
+									<th class="mdl-data-table__cell--non-numeric">Post Title</th>
+									<th class="mdl-data-table__cell--non-numeric">Post Type</th>
+								</tr>
+							</thead>
+							<tbody>',
+						1 == $compi_options[$options_prefix . '_builder_conversion'] ? 'table' : 'none'
+					);
+					break;
+
+				case 'table_row' :
+					if ( is_array( $eb_posts ) && ! empty( $eb_posts ) ) {
+						foreach ( $eb_posts as $eb_post ) {
+
+							$post_type = get_post_type_object( $eb_post->post_type );
+							printf(
+								'<tr>
+									<td>%1$s</td>
+									<td class="mdl-data-table__cell--non-numeric">%2$s</td>
+									<td class="mdl-data-table__cell--non-numeric">%3$s</td>
+								</tr>',
+								$eb_post->ID,
+								$eb_post->post_title,
+								$post_type->labels->singular_name
+							);
+
+						}
+					}
+					break;
+
+				case
+				'table_end' :
+					echo '	</tbody>
+						</table>';
 					break;
 
 				case 'card_start' :

@@ -105,6 +105,8 @@ class Dots_Compi {
 		// Set localization.
 		$this->set_locale();
 
+		$this->conversion_util = new Dots_Compi_Conversion_Util();
+
 		// Initialize dashboard.
 		add_action( 'plugins_loaded', array( $this, 'init_dashboard' ) );
 
@@ -154,7 +156,7 @@ class Dots_Compi {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/public/class-dots-compi-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'class-dots-compi-builder-conversion.php';
+		require plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-dots-compi-builder-conversion.php';
 
 	}
 
@@ -184,7 +186,7 @@ class Dots_Compi {
 	 */
 	public function init_dashboard() {
 
-		$this->plugin_dashboard = new Dots_Compi_Dashboard( $this->plugin_name, $this->version, $this->compi_options );
+		$this->plugin_dashboard = new Dots_Compi_Dashboard( $this->plugin_name, $this->version, $this->compi_options, $this->conversion_util );
 
 		add_action( 'admin_init', array( $this->plugin_dashboard, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this->plugin_dashboard, 'setup_dashboard' ), 90 );
@@ -199,8 +201,6 @@ class Dots_Compi {
 	 * @access   private
 	 */
 	public function init_public_facing_features() {
-
-		$this->conversion_util = new Dots_Compi_Conversion_Util();
 
 		$this->plugin_public = new Dots_Compi_Public( $this->plugin_name, $this->version, $this->compi_options, $this->conversion_util );
 
