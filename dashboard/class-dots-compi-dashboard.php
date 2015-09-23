@@ -79,9 +79,12 @@ class Dots_Compi_Dashboard {
 		$this->compi_options    = $options;
 		$this->protocol         = is_ssl() ? 'https' : 'http';
 		$this->dash_options_all = array();
+		$this->features = array();
 		$this->conversion_util = $util;
 
-		$this->include_options();
+
+		$this->include_dash_options();
+		$this->maybe_activate_features();
 
 		/**
 		 * ------------
@@ -127,16 +130,53 @@ class Dots_Compi_Dashboard {
 
 
 	/**
-	 * Include options from options file.
+	 * Include options from options file. (Used to render dashboard).
 	 *
 	 * @since    1.0.0
 	 */
-	public function include_options() {
+	public function include_dash_options() {
 
 		require_once( $this->dashboard_dir . 'class-dots-compi-options.php' );
 
 		$this->dash_options_all = Compi_Options_Table::get_dash_options();
 
+	}
+
+	/**
+	 * Check features that are enabled in our options array. (stored in database)
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	public function check_for_enabled_features() {
+
+		$options        = $this->compi_options;
+		$this->features = array(
+				'builder_conversion' => false,
+		);
+
+		if ( isset( $options['tools_builder_conversion'] ) && $options['tools_builder_conversion'] == 1 ) {
+			$this->features['builder_conversion'] = true;
+		}
+	}
+
+	/**
+	 * Activate features that are enabled in our features array.
+	 *
+	 * @since    1.0.0
+	 *
+	 */
+	public function maybe_activate_features() {
+		$this->check_for_enabled_features();
+
+		if ( true === $this->features['builder_conversion'] ) {
+
+			add_filter( 'manage_post_posts_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
+			add_filter( 'manage_pages_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
+			add_action( 'manage_post_posts_custom_columns', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
+			add_action( 'manage_page_posts_custom_columns', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
+
+		}
 	}
 
 	/**
@@ -203,11 +243,9 @@ class Dots_Compi_Dashboard {
 	 * @since    1.0.0
 	 */
 	public function options_page() {
-		$this->include_options();
+		$this->include_dash_options();
 		$compi_options    = $this->compi_options;
 		$dash_options_all = $this->dash_options_all;
-		$eb_posts = $this->conversion_util->get_all_eb_posts_objects();
-		$this->write_log($eb_posts);
 
 		require_once( $this->template_dir . '/compi-dashboard-view.php' );
 

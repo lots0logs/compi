@@ -79,7 +79,7 @@
 
 		$(window).load(function () {
 			$('.dots_compi_tools_builder_conversion').on('click', '*', function () {
-				$_this = $('.dots_compi_tools_builder_conversion').find('input');
+				var $_this = $('.dots_compi_tools_builder_conversion').find('input');
 				setTimeout(function () {
 					if ($_this.val() === '1') {
 						$_this.parents('.dots_option_row').find('table').css('display', 'table');

@@ -46,6 +46,7 @@ echo '<form id="dots_compi_options" enctype="multipart/form-data">
 				<div class="unit-centered unit-70" style="position: relative;min-height:700px;">
 			';
 $menu_count = 0;
+$eb_post = array();
 settings_fields( 'dots_compi_settings_group' );
 echo '				<h4>Compi Settings</h4>';
 

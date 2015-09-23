@@ -71,9 +71,9 @@ class Dots_Compi_Public {
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version     The version of this plugin.
 	 * @param $options
-	 * @param $util
+	 *
 	 */
-	public function __construct( $plugin_name, $version, $options, $util ) {
+	public function __construct( $plugin_name, $version, $options ) {
 
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
@@ -93,11 +93,9 @@ class Dots_Compi_Public {
 		$this->css_stylesheet = plugins_url( '/css/compi-style.css', __FILE__ );
 		$this->custom_script  = plugins_url( '/js/compi-custom.js', __FILE__ );
 		$this->features       = array();
-		$this->conversion_util = $util;
 
 		$this->check_for_enabled_features();
 		$this->maybe_activate_features();
-		add_filter( 'the_content', array($this, 'shortcode_test' ), 99 );
 
 	}
 
@@ -237,8 +235,6 @@ class Dots_Compi_Public {
 			add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 		}
 		if ( true === $this->features['module_enhancements'] ) {
-
-			//add_action( 'wp', array( $this, 'activate_module_enhancements' ), 99 );
 			$this->activate_module_enhancements();
 
 		}

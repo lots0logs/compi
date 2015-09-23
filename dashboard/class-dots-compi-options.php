@@ -121,21 +121,15 @@ class Compi_Options_Table {
 				'contents' => array(
 					'option1_heading'     => array(
 						'type'     => 'option_heading',
-						'title'    => __( 'Elegant Builder -> Divi Builder' ),
-						'subtitle' => __( 'Utility that allows you to convert post and page layouts from Elegant Builder to the Divi Builder' ),
+						'title'    => __( 'Builder Conversion Utility' ),
+						'subtitle' => __( 'Allows you to convert post and page layouts from Elegant Builder to the Divi Builder' ),
 					),
 					'option1_switch'      => array(
 						'type' => 'switch',
 						'name' => 'builder_conversion',
 					),
-					'option1_table_start' => array(
-						'type' => 'table_start',
-					),
-					'option1_table_row'   => array(
-						'type' => 'table_row',
-					),
-					'option1_table_end'   => array(
-						'type' => 'table_end',
+					'option1_end'     => array(
+						'type' => 'option_end',
 					),
 				),
 			),

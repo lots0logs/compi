@@ -64,38 +64,25 @@ class Dots_Compi_Conversion_Util {
 		}
 	}
 
+	public function add_conversion_utility_post_columns( $columns ) {
+		return array_merge( $columns, array(
+			'dots_compi_builder_status' => __( 'Builder Status' )
+		));
 
-	function get_all_eb_posts_objects() {
-
-		$post_objects = array();
-		foreach ( $this->eb_post_types as $post_type ) {
-			$args  = array(
-				'post_type'  => $post_type,
-				'meta_query' => array(
-					'relation' => 'AND',
-					array(
-						'key' => '_et_builder_settings',
-					),
-					array(
-						'key'     => '_et_disable_builder',
-						'value'   => 1,
-						'compare' => 'NOT LIKE',
-					),
-				),
-			);
-			$query = new WP_Query( $args );
-			$posts = $query->get_posts();
-			foreach ( $posts as $post ) {
-				$post_objects[] = $post;
-			}
-
-		}
-		$this->write_log( $post_objects );
-
-		return $post_objects;
 	}
 
-	function get_eb_to_divi_builder_mapping() {
+
+	public function maybe_display_et_builder_status( $column, $post_id ) {
+		$builder_meta = get_post_meta( $post_id, '_et_builder_settings', true);
+		$builder_disabled = get_post_meta( $post_id, '_et_builder_disabled', true);
+		$this->write_log(array('builder_meta' => $builder_meta, 'builder_disabled' => $builder_disabled));
+
+		if ( 'dots_compi_builder_status' === $column && '' !== $builder_meta && 0 === $builder_disabled ) {
+			echo "EB";
+		}
+	}
+
+	public function get_eb_to_divi_builder_mapping() {
 
 		return array(
 			'et_lb_logo'        => array(
