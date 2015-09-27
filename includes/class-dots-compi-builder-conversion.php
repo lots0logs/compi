@@ -73,12 +73,26 @@ class Dots_Compi_Conversion_Util {
 
 
 	public function maybe_display_et_builder_status( $column, $post_id ) {
-		$builder_meta = get_post_meta( $post_id, '_et_builder_settings', true);
-		$builder_disabled = get_post_meta( $post_id, '_et_builder_disabled', true);
-		$this->write_log(array('builder_meta' => $builder_meta, 'builder_disabled' => $builder_disabled));
+		if ( 'dots_compi_builder_status' === $column ) {
+			$layout_builder_disabled = get_post_meta( $post_id, '_et_builder_disabled', true);
+			$_et_builder_use_builder = get_post_meta( $post_id, '_et_pb_use_builder', true );
+			$divi_builder_disabled = 'on' === $_et_builder_use_builder ? false : true;
+			$container_opened = false;
 
-		if ( 'dots_compi_builder_status' === $column && '' !== $builder_meta && 0 === $builder_disabled ) {
-			echo "EB";
+			if ( ! $layout_builder_disabled ) {
+				$layout_builder_meta = get_post_meta( $post_id, '_et_builder_settings', true );
+				if ( '' !== $layout_builder_meta && '' !== $layout_builder_meta['layout_shortcode'] ) {
+					echo '<div class="dots_post_table_column"><span class="layout_builder_icon">E</span>';
+					$container_opened = true;
+				}
+			}
+
+			if ( ! $divi_builder_disabled ) {
+				if ( ! $container_opened ) {
+					echo '<div class="dots_post_table_column">';
+				}
+				echo '<span class="divi_builder_icon"></span></div>';
+			}
 		}
 	}
 

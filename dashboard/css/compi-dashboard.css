@@ -449,7 +449,7 @@
 }
 
 /*noinspection ALL*/
-#wpcontent {
+.divi_page_dots_compi_options #wpcontent {
 	padding-left: 0px !important;
 }
 
@@ -611,4 +611,50 @@ h4 {
 }
 .dots table.mdl-data-table {
 	margin: 0 auto;
+}
+td.column-dots_compi_builder_status {
+	vertical-align: middle;
+}
+
+.dots_post_table_column {
+	margin: 0 auto;
+	padding-left: 4px;
+	overflow: hidden;
+	height: 100%;
+	min-height: 27px;
+}
+
+.dots_post_table_column .divi_builder_icon:before {
+	font-family: 'ETmodules';
+    content: '\e625';
+    font-size: 38.5px;
+	color: #6C2EB9;
+	display: block;
+	float: left;
+	background-color: #fff;
+	clear: right;
+	position: relative;
+	top: 3px;
+}
+
+.dots_post_table_column .layout_builder_icon {
+	font-family: Georgia, serif;
+    font-style: italic;
+	text-align: center;
+	font-size: 16px;
+    font-weight: 600;
+	border-radius: 50%;
+	padding: 3px 6px;
+	background: #34a7e6;
+    margin: 0 7px;
+    float: left;
+    color: #fff;
+	clear: left;
+    position: relative;
+    background: -moz-linear-gradient(top, rgba(56,177,244,1) 0%, rgba(47,155,214,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(56,177,244,1)), color-stop(100%,rgba(47,155,214,1)));
+    background: -webkit-linear-gradient(top, rgba(56,177,244,1) 0%,rgba(47,155,214,1) 100%);
+    background: -o-linear-gradient(top, rgba(56,177,244,1) 0%,rgba(47,155,214,1) 100%);
+    background: -ms-linear-gradient(top, rgba(56,177,244,1) 0%,rgba(47,155,214,1) 100%);
+    background: linear-gradient(top, rgba(56,177,244,1) 0%,rgba(47,155,214,1) 100%);
 }

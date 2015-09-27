@@ -37,6 +37,7 @@
  */
 class Dots_Compi_Dashboard {
 
+	private static $_this;
 	/**
 	 * The ID of this plugin.
 	 *
@@ -65,6 +66,14 @@ class Dots_Compi_Dashboard {
 	 * @param $options
 	 */
 	public function __construct( $plugin_name, $version, $options, $util ) {
+		// Don't allow more than one instance of the class
+		if ( isset( self::$_this ) ) {
+			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'dots_compi' ),
+					get_class( $this ) )
+			);
+		}
+
+		self::$_this = $this;
 
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
@@ -76,11 +85,13 @@ class Dots_Compi_Dashboard {
 		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
 		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
 		$this->admin_script     = plugins_url( '/js/dashboard.js', __FILE__ );
+		$this->post_actions_script = plugins_url( '/js/post-actions.js', __FILE__ );
 		$this->compi_options    = $options;
 		$this->protocol         = is_ssl() ? 'https' : 'http';
 		$this->dash_options_all = array();
 		$this->features = array();
 		$this->conversion_util = $util;
+		$this->post_column_script = false;
 
 
 		$this->include_dash_options();
@@ -173,8 +184,9 @@ class Dots_Compi_Dashboard {
 
 			add_filter( 'manage_post_posts_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
 			add_filter( 'manage_pages_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
-			add_action( 'manage_post_posts_custom_columns', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
-			add_action( 'manage_page_posts_custom_columns', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
+			add_action( 'manage_post_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
+			add_action( 'manage_page_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_post_column_styles_and_script' ) );
 
 		}
 	}
@@ -198,6 +210,21 @@ class Dots_Compi_Dashboard {
 		add_action( "admin_print_scripts-{$menu_page}", array( $this, 'enqueue_scripts' ) );
 		add_action( "admin_print_styles-{$menu_page}", array( $this, 'enqueue_styles' ) );
 
+	}
+
+	/**
+	 * Register the stylesheets for post columns.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_post_column_styles_and_script( $hook ) {
+		if ( 'edit.php' === $hook ) {
+			wp_enqueue_style( 'compi-styles', $this->css_stylesheet, '', $this->version, 'all' );
+			if ( function_exists( 'et_pb_is_allowed' ) && ! $this->post_column_script && et_pb_is_allowed( 'divi_builder_control' ) ) {
+				wp_enqueue_script( 'compi-post-actions', $this->post_actions_script, array(), $this->version, false );
+				add_action( 'admin_action_compi_post_actions', array( $this->conversion_util, 'do_builder_conversion' ) );
+			}
+		}
 	}
 
 
