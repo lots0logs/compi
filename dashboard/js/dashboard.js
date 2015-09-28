@@ -29,6 +29,8 @@
 
 	'use strict';
 
+
+
 	$(window).load(function () {
 
 		if ($('.dots_save_wrap button').length) {

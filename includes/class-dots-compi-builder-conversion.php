@@ -65,19 +65,21 @@ class Dots_Compi_Conversion_Util {
 	}
 
 	public function add_conversion_utility_post_columns( $columns ) {
+
 		return array_merge( $columns, array(
-			'dots_compi_builder_status' => __( 'Builder Status' )
-		));
+			'dots_compi_builder_status' => __( 'Builder Status' ),
+		) );
 
 	}
 
 
 	public function maybe_display_et_builder_status( $column, $post_id ) {
+
 		if ( 'dots_compi_builder_status' === $column ) {
-			$layout_builder_disabled = get_post_meta( $post_id, '_et_builder_disabled', true);
+			$layout_builder_disabled = get_post_meta( $post_id, '_et_builder_disabled', true );
 			$_et_builder_use_builder = get_post_meta( $post_id, '_et_pb_use_builder', true );
-			$divi_builder_disabled = 'on' === $_et_builder_use_builder ? false : true;
-			$container_opened = false;
+			$divi_builder_disabled   = 'on' === $_et_builder_use_builder ? false : true;
+			$container_opened        = false;
 
 			if ( ! $layout_builder_disabled ) {
 				$layout_builder_meta = get_post_meta( $post_id, '_et_builder_settings', true );
@@ -93,6 +95,59 @@ class Dots_Compi_Conversion_Util {
 				}
 				echo '<span class="divi_builder_icon"></span></div>';
 			}
+		}
+	}
+
+	public function do_builder_conversion() {
+
+		if ( empty( $_REQUEST['action'] ) || 'dots_compi_do_builder_conversion' != $_REQUEST['action'] ) {
+			return;
+		}
+		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'dots_compi_do_builder_conversion-nonce' ) ) {
+			return;
+		}
+
+		ignore_user_abort( true );
+		if ( ! ini_get( 'safe_mode' ) ) {
+			@set_time_limit( 0 );
+		}
+
+		parse_str( $_POST['form'], $form );
+		$_REQUEST   = $form = (array) $form;
+		$step       = absint( $_POST['step'] );
+		$queue      = isset( $_REQUEST['post'] ) ? (array) sanitize_text_field( $_REQUEST['post'] ) : array();
+		$successful = isset( $_REQUEST['success'] ) ? sanitize_text_field( $_REQUEST['success'] ) : '';
+		$failed     = isset( $_REQUEST['failed'] ) ? sanitize_text_field( $_REQUEST['failed'] ) : 'complete';
+
+		$ret = $this->process_step( $step, $queue, $successful, $failed );
+
+		$percentage = $this->get_percentage_complete( $step, $queue, $successful, $failed );
+
+		if ( $ret ) {
+
+			$step += 1;
+			echo json_encode( array(
+				'step'       => $step,
+				'percentage' => $percentage,
+				'queue'      => $queue,
+				'successful' => $successful,
+				'failed'     => $failed,
+			) );
+			wp_die();
+
+		} else {
+
+			$args = array_merge( $_REQUEST, array(
+				'step'       => $step,
+				'nonce'      => wp_create_nonce( 'edd-batch-export' ),
+				'edd_action' => 'download_batch_export',
+			) );
+
+			$download_url = add_query_arg( $args, admin_url() );
+
+			echo json_encode( array( 'step' => 'done', 'url' => $download_url ) );
+			exit;
+
 		}
 	}
 

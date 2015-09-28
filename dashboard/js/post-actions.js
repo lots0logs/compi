@@ -24,8 +24,126 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function($) {
-	$(document).ready(function(){
-		$('<option>').val('black_list').text('Convert to Divi Builder').appendTo("select[name='action'], select[name='action2']");
-	})
+(function ($) {
+	/**
+	 * Export screen JS
+	 */
+	var Dots_Builder_Conversion = {
+
+		progress_bar: false,
+
+		init: function () {
+			this.add_action();
+			this.submit();
+		},
+
+		add_action: function () {
+			$('<option>').val('dots_builder_conversion')
+			.text('Convert to Divi Builder')
+			.appendTo("select[name='action'], select[name='action2']");
+		},
+
+		submit: function () {
+
+			var self = this;
+
+			$(document.body).on('submit', '#posts-filter', function (e) {
+
+				var submitButtonTop = $(this).find('#doaction[type="submit"]'),
+					submitButtonBottom = $(this).find('#doaction2[type="submit"]'),
+					data = $(this).serialize(),
+					data_obj = {},
+					dots_action = 'dots_builder_conversion';
+
+				$.each($(this).serializeArray(), function (i, obj) {
+					data[obj.name] = obj.value
+				});
+
+				var action = !!(dots_action === data_obj.action || dots_action === data_obj.action2);
+
+				if (action && !submitButtonTop.hasClass('button-disabled') && !submitButtonBottom.hasClass('button-disabled')) {
+					e.preventDefault();
+					submitButtonTop.addClass('button-disabled');
+					submitButtonBottom.addClass('button-disabled');
+					self.setup_modal();
+
+					// start the process
+					self.process_step(1, data, self);
+				}
+
+
+			});
+		},
+
+		process_step: function (step, data, self) {
+
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					form: data,
+					action: 'dots_compi_do_builder_conversion',
+					step: step
+				},
+				dataType: "json",
+				success: function (response) {
+
+					if ('done' == response.step || response.error) {
+
+						var modal = $('.dots_compi_modal'),
+							modal_content = modal.find('.dots_compi_modal_content');
+
+						$('#posts-filter').find('.button-disabled').removeClass('button-disabled');
+
+						if (response.error) {
+
+							var error_message = response.message;
+							modal_content.html('<div class="dots_compi_error"><p>' + error_message + '</p></div>');
+
+						} else {
+
+							modal.remove();
+							window.location = response.url;
+
+						}
+
+					} else {
+						self.progress_bar.MaterialProgress.setProgress(response.percent);
+						self.process_step(parseInt(response.step), data, self);
+					}
+
+				}
+			}).fail(function (response) {
+				if (window.console && window.console.log) {
+					console.log(response);
+				}
+			});
+
+		},
+
+		modal_html: function () {
+			return '<div class="dots dots_compi_modal"><div class="dots_compi_modal_header">' +
+				'<div class="dots_compi_modal_close"></div><h1>Builder Conversion</h1>' +
+				'<p>Converting Elegant Builder layouts to the Divi Builder.</p></div>' +
+				'<div class="dots_compi_modal_content"><div id="dots_compi_progress" class="mdl-progress mdl-js-progress">' +
+				'</div></div></div><div class="dots_compi_overlay"></div>';
+		},
+
+		setup_modal: function () {
+			var self = this;
+			$(self.modal_html()).insertAfter($('#wpfooter'));
+			$('#dots_compi_progress').on('mdl-componentupgraded', function () {
+				self.progress_bar = $(this).MaterialProgress;
+				self.progress_bar.MaterialProgress.setProgress(1);
+			});
+			window.componentHandler.upgradeAllRegistered();
+		}
+
+	};
+
+	$(document).ready(function () {
+		Dots_Builder_Conversion.init();
+	});
+
+
 })(jQuery);

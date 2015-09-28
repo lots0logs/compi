@@ -282,13 +282,15 @@ class Dots_Compi_Public {
 
 	public function activate_module_enhancements() {
 
-		require $this->includes_dir . '/dots-compi-main-modules.php';
-		$modules = $this->get_modules();
+		if ( class_exists( 'ET_Builder_Module' ) ) {
+			require $this->includes_dir . '/dots-compi-main-modules.php';
+			$modules = $this->get_modules();
 
-		foreach ( $modules as $module ) {
-			$dots_module = 'Dots_ET_Builder_Module_' . $module;
-			new $dots_module( $this->features );
-			break;
+			foreach ( $modules as $module ) {
+				$dots_module = 'Dots_ET_Builder_Module_' . $module;
+				new $dots_module( $this->features );
+				break;
+			}
 		}
 
 	}
