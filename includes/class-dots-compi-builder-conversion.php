@@ -119,9 +119,9 @@ class Dots_Compi_Conversion_Util {
 		$successful = isset( $_REQUEST['success'] ) ? sanitize_text_field( $_REQUEST['success'] ) : '';
 		$failed     = isset( $_REQUEST['failed'] ) ? sanitize_text_field( $_REQUEST['failed'] ) : 'complete';
 
-		$ret = $this->process_step( $step, $queue, $successful, $failed );
+		$ret = $this->process_step( $queue, $successful, $failed );
 
-		$percentage = $this->get_percentage_complete( $step, $queue, $successful, $failed );
+		$percentage = $this->get_percentage_complete( $step, $ret['queue'], $ret['successful'], $ret['failed'] );
 
 		if ( $ret ) {
 
@@ -129,9 +129,9 @@ class Dots_Compi_Conversion_Util {
 			echo json_encode( array(
 				'step'       => $step,
 				'percentage' => $percentage,
-				'queue'      => $queue,
-				'successful' => $successful,
-				'failed'     => $failed,
+				'queue'      => $ret['queue'],
+				'successful' => $ret['successful'],
+				'failed'     => $ret['failed'],
 			) );
 			wp_die();
 
@@ -149,6 +149,71 @@ class Dots_Compi_Conversion_Util {
 			exit;
 
 		}
+	}
+
+	public function extract_shortcode_opening_tags( $layout ) {
+
+		preg_match( '@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@gm', $layout, $matches );
+
+		return $matches;
+	}
+
+	public function get_shortcode_attrs_from_opening_tag( $tag ) {
+
+		preg_match( '@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@gm', $tag, $matches );
+
+		return $matches;
+	}
+
+	private function process_step( $queue, $successful, $failed ) {
+
+		$total = count( $queue );
+
+		if ( $total > 0 ) {
+			$batch = $total >= 5 ? 10 : $total;
+
+			foreach ( range( 0, $batch ) as $i ) {
+				$src_post  = array_pop( $queue );
+				$converted = $this->convert_post( $src_post );
+				if ( false !== $converted ) {
+					array_push( $successful, $src_post );
+				} else {
+					array_push( $failed, $src_post );
+				}
+			}
+
+			return array(
+				'queue'      => $queue,
+				'successful' => $successful,
+				'failed'     => $failed,
+			);
+		}
+
+		return false;
+	}
+
+	private function get_percentage_complete( $step, $queue, $successful, $failed ) {
+
+		$total_posts = count( $queue ) + count( $successful ) + count( $failed );
+		$total_steps = $total_posts > 5 ? ceil( $total_posts % 5 ) : 1;
+		$percent     = $step / $total_steps;
+
+		return 1 === $total_steps ? 100 : number_format( $percent * 100, 2 );
+
+	}
+
+	private function convert_post( $src_post ) {
+
+		try {
+			$this->write_log( $src_post );
+			$result = true;
+		} catch ( Exception $err ) {
+			$this->write_log( $err->getMessage() );
+			$result = false;
+		}
+
+		return $result;
+
 	}
 
 	public function get_eb_to_divi_builder_mapping() {
@@ -225,19 +290,5 @@ class Dots_Compi_Conversion_Util {
 				),
 			),
 		);
-	}
-
-	public function extract_shortcode_opening_tags( $layout ) {
-
-		preg_match( '@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@gm', $layout, $matches );
-
-		return $matches;
-	}
-
-	public function get_shortcode_attrs_from_opening_tag( $tag ) {
-
-		preg_match( '@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@gm', $tag, $matches );
-
-		return $matches;
 	}
 }
