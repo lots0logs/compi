@@ -66,6 +66,7 @@ class Dots_Compi_Dashboard {
 	 * @param $options
 	 */
 	public function __construct( $plugin_name, $version, $options, $util ) {
+
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
 			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'dots_compi' ),
@@ -82,16 +83,16 @@ class Dots_Compi_Dashboard {
 		$this->css_stylesheet     = plugins_url( '/css/compi-dashboard.css', __FILE__ );
 		$this->css_mdl_stylesheet = plugins_url( '/css/material.prefixed.min.css', __FILE__ );
 		//$this->css_mdl_stylesheet = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css';
-		$this->css_mdl_icons    = '//fonts.googleapis.com/icon?family=Material+Icons';
-		$this->admin_mdl_script = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
-		$this->admin_script     = plugins_url( '/js/dashboard.js', __FILE__ );
+		$this->css_mdl_icons       = '//fonts.googleapis.com/icon?family=Material+Icons';
+		$this->admin_mdl_script    = '//storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js';
+		$this->admin_script        = plugins_url( '/js/dashboard.js', __FILE__ );
 		$this->post_actions_script = plugins_url( '/js/post-actions.js', __FILE__ );
-		$this->compi_options    = $options;
-		$this->protocol         = is_ssl() ? 'https' : 'http';
-		$this->dash_options_all = array();
-		$this->features = array();
-		$this->conversion_util = $util;
-		$this->post_column_script = false;
+		$this->compi_options       = $options;
+		$this->protocol            = is_ssl() ? 'https' : 'http';
+		$this->dash_options_all    = array();
+		$this->features            = array();
+		$this->conversion_util     = $util;
+		$this->post_column_script  = false;
 
 
 		$this->include_dash_options();
@@ -163,7 +164,7 @@ class Dots_Compi_Dashboard {
 
 		$options        = $this->compi_options;
 		$this->features = array(
-				'builder_conversion' => false,
+			'builder_conversion' => false,
 		);
 
 		if ( isset( $options['tools_builder_conversion'] ) && $options['tools_builder_conversion'] == 1 ) {
@@ -178,17 +179,17 @@ class Dots_Compi_Dashboard {
 	 *
 	 */
 	public function maybe_activate_features() {
+
 		$this->check_for_enabled_features();
 
 		if ( true === $this->features['builder_conversion'] ) {
-
-			add_action( 'wp_ajax_dots_compi_do_builder_conversion', array( $this->conversion_util, 'do_builder_conversion'));
-			add_filter( 'manage_post_posts_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
-			add_filter( 'manage_pages_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns' ) );
-			add_action( 'manage_post_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
-			add_action( 'manage_page_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status' ), 10, 2 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_post_column_styles_and_script' ) );
-
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+			add_action( 'wp_ajax_dots_compi_do_builder_conversion', array( $this->conversion_util, 'do_builder_conversion', ) );
+			add_filter( 'manage_post_posts_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns', ) );
+			add_filter( 'manage_pages_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns', ) );
+			add_action( 'manage_post_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status', ), 10, 2 );
+			add_action( 'manage_page_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status', ), 10, 2 );
 		}
 	}
 
@@ -213,21 +214,6 @@ class Dots_Compi_Dashboard {
 
 	}
 
-	/**
-	 * Register the stylesheets for post columns.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_post_column_styles_and_script( $hook ) {
-		if ( 'edit.php' === $hook ) {
-			wp_enqueue_style( 'compi-styles', $this->css_stylesheet, '', $this->version, 'all' );
-			if ( function_exists( 'et_pb_is_allowed' ) && ! $this->post_column_script && et_pb_is_allowed( 'divi_builder_control' ) ) {
-				wp_enqueue_script( 'compi-post-actions', $this->post_actions_script, array(), $this->version, false );
-				add_action( 'admin_action_compi_post_actions', array( $this->conversion_util, 'do_builder_conversion' ) );
-			}
-		}
-	}
-
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -249,12 +235,9 @@ class Dots_Compi_Dashboard {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( 'compi-mdl-js', $this->admin_mdl_script, array(), $this->version, false );
-		wp_enqueue_script( 'compi-dashboard', $this->admin_script, array(
-			'jquery',
-			'compi-mdl-js',
-		), $this->version, true );
+		$screen = get_current_screen();
 
+		wp_enqueue_script( 'compi-mdl-js', $this->admin_mdl_script, array(), $this->version, false );
 		wp_localize_script( 'compi-dashboard', 'compiSettings', array(
 			'compi_nonce'      => wp_create_nonce( 'dots_compi_nonce' ),
 			'ajaxurl'          => admin_url( 'admin-ajax.php', $this->protocol ),
@@ -262,6 +245,20 @@ class Dots_Compi_Dashboard {
 			'save_settings'    => wp_create_nonce( 'dots_compi_save_settings' ),
 			'generate_warning' => wp_create_nonce( 'dots_compi_generate_warning' ),
 		) );
+
+		if ( 'admin.php' === $screen->parent_file ) {
+			wp_enqueue_script( 'compi-dashboard', $this->admin_script, array( 'jquery', 'compi-mdl-js' ), $this->version, true );
+
+		} elseif ( function_exists( 'et_pb_is_allowed' ) && ! $this->post_column_script && et_pb_is_allowed( 'divi_builder_control' ) ) {
+			wp_enqueue_script( 'compi-post-actions', $this->post_actions_script, array(), $this->version, false );
+			add_action( 'admin_action_compi_post_actions', array( $this->conversion_util, 'do_builder_conversion', ) );
+
+			wp_localize_script( 'compi-post-actions', 'dots_compi', array(
+			'nonce'      => wp_create_nonce( 'dots_compi_do_builder_conversion-nonce' ),
+			'ajaxurl'          => admin_url( 'admin-ajax.php', $this->protocol ) ) );
+		} else {
+			$this->write_log( 'function doesnt exist' );
+		}
 
 	}
 
@@ -271,6 +268,7 @@ class Dots_Compi_Dashboard {
 	 * @since    1.0.0
 	 */
 	public function options_page() {
+
 		$this->include_dash_options();
 		$compi_options    = $this->compi_options;
 		$dash_options_all = $this->dash_options_all;

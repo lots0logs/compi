@@ -35,8 +35,19 @@
  * @author     wpdots <dev@wpdots.com>
  */
 class Dots_Compi_Conversion_Util {
+	private static $_this;
 
 	public function __construct() {
+
+		// Don't allow more than one instance of the class
+		if ( isset( self::$_this ) ) {
+			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'dots_compi' ),
+					get_class( $this ) )
+			);
+		}
+
+
+		self::$_this = $this;
 
 		$this->map              = $this->get_eb_to_divi_builder_mapping();
 		$this->eb_settings      = get_option( 'et_lb_main_settings' );
@@ -81,6 +92,7 @@ class Dots_Compi_Conversion_Util {
 			$divi_builder_disabled   = 'on' === $_et_builder_use_builder ? false : true;
 			$container_opened        = false;
 
+
 			if ( ! $layout_builder_disabled ) {
 				$layout_builder_meta = get_post_meta( $post_id, '_et_builder_settings', true );
 				if ( '' !== $layout_builder_meta && '' !== $layout_builder_meta['layout_shortcode'] ) {
@@ -103,7 +115,7 @@ class Dots_Compi_Conversion_Util {
 		if ( empty( $_REQUEST['action'] ) || 'dots_compi_do_builder_conversion' != $_REQUEST['action'] ) {
 			return;
 		}
-		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'dots_compi_do_builder_conversion-nonce' ) ) {
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'dots_compi_do_builder_conversion-nonce' ) ) {
 			return;
 		}
 
@@ -115,9 +127,9 @@ class Dots_Compi_Conversion_Util {
 		parse_str( $_POST['form'], $form );
 		$_REQUEST   = $form = (array) $form;
 		$step       = absint( $_POST['step'] );
-		$queue      = isset( $_REQUEST['post'] ) ? (array) sanitize_text_field( $_REQUEST['post'] ) : array();
-		$successful = isset( $_REQUEST['success'] ) ? sanitize_text_field( $_REQUEST['success'] ) : '';
-		$failed     = isset( $_REQUEST['failed'] ) ? sanitize_text_field( $_REQUEST['failed'] ) : 'complete';
+		$queue      = isset( $_REQUEST['posts'] ) ? (array) sanitize_text_field( $_REQUEST['posts'] ) : array();
+		$successful = isset( $_REQUEST['success'] ) ? (array) sanitize_text_field( $_REQUEST['success'] ) : array();
+		$failed     = isset( $_REQUEST['failed'] ) ? (array) sanitize_text_field( $_REQUEST['failed'] ) : array();
 
 		$ret = $this->process_step( $queue, $successful, $failed );
 
@@ -133,22 +145,14 @@ class Dots_Compi_Conversion_Util {
 				'successful' => $ret['successful'],
 				'failed'     => $ret['failed'],
 			) );
-			wp_die();
 
 		} else {
 
-			$args = array_merge( $_REQUEST, array(
-				'step'       => $step,
-				'nonce'      => wp_create_nonce( 'edd-batch-export' ),
-				'edd_action' => 'download_batch_export',
-			) );
-
-			$download_url = add_query_arg( $args, admin_url() );
-
-			echo json_encode( array( 'step' => 'done', 'url' => $download_url ) );
-			exit;
+			echo json_encode( array( 'step' => 'done' ) );
 
 		}
+
+		wp_die();
 	}
 
 	public function extract_shortcode_opening_tags( $layout ) {

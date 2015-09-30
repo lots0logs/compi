@@ -25,12 +25,11 @@
  */
 
 (function ($) {
-	/**
-	 * Export screen JS
-	 */
+
 	var Dots_Builder_Conversion = {
 
 		progress_bar: false,
+		option_selected: false,
 
 		init: function () {
 			this.add_action();
@@ -38,9 +37,16 @@
 		},
 
 		add_action: function () {
+			var self = this;
 			$('<option>').val('dots_builder_conversion')
 			.text('Convert to Divi Builder')
 			.appendTo("select[name='action'], select[name='action2']");
+
+			$("select[name='action'], select[name='action2']").change(function () {
+				var selected = $(this).val();
+				self.option_selected = 'dots_builder_conversion' === selected;
+				console.log(self.option_selected);
+			})
 		},
 
 		submit: function () {
@@ -55,13 +61,7 @@
 					data_obj = {},
 					dots_action = 'dots_builder_conversion';
 
-				$.each($(this).serializeArray(), function (i, obj) {
-					data[obj.name] = obj.value
-				});
-
-				var action = !!(dots_action === data_obj.action || dots_action === data_obj.action2);
-
-				if (action && !submitButtonTop.hasClass('button-disabled') && !submitButtonBottom.hasClass('button-disabled')) {
+				if (self.option_selected && !submitButtonTop.hasClass('button-disabled') && !submitButtonBottom.hasClass('button-disabled')) {
 					e.preventDefault();
 					submitButtonTop.addClass('button-disabled');
 					submitButtonBottom.addClass('button-disabled');
@@ -83,7 +83,8 @@
 				data: {
 					form: data,
 					action: 'dots_compi_do_builder_conversion',
-					step: step
+					step: step,
+					_wpnonce: dots_compi.nonce
 				},
 				dataType: "json",
 				success: function (response) {
@@ -102,8 +103,8 @@
 
 						} else {
 
-							modal.remove();
-							window.location = response.url;
+							//modal.remove();
+							//window.location = response.url;
 
 						}
 
@@ -122,18 +123,20 @@
 		},
 
 		modal_html: function () {
-			return '<div class="dots dots_compi_modal"><div class="dots_compi_modal_header">' +
-				'<div class="dots_compi_modal_close"></div><h1>Builder Conversion</h1>' +
+			return '<div class="dots dots_compi_modal"><div class="modal_header">' +
+				'<div class="modal_close icon_close"></div><h1>Builder Conversion</h1>' +
 				'<p>Converting Elegant Builder layouts to the Divi Builder.</p></div>' +
-				'<div class="dots_compi_modal_content"><div id="dots_compi_progress" class="mdl-progress mdl-js-progress">' +
+				'<div class="modal_content"><div id="dots_compi_progress" class="mdl-progress mdl-js-progress">' +
 				'</div></div></div><div class="dots_compi_overlay"></div>';
 		},
 
 		setup_modal: function () {
 			var self = this;
-			$(self.modal_html()).insertAfter($('#wpfooter'));
+			$(self.modal_html()).insertAfter($('#posts-filter'));
+			$('.dots_compi_overlay').prependTo($('body'));
 			$('#dots_compi_progress').on('mdl-componentupgraded', function () {
-				self.progress_bar = $(this).MaterialProgress;
+				self.progress_bar = document.getElementById('dots_compi_progress');
+				console.log(self.progress_bar);
 				self.progress_bar.MaterialProgress.setProgress(1);
 			});
 			window.componentHandler.upgradeAllRegistered();
