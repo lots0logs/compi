@@ -113,11 +113,16 @@ class Dots_Compi_Conversion_Util {
 	public function do_builder_conversion() {
 
 		if ( empty( $_REQUEST['action'] ) || 'dots_compi_do_builder_conversion' != $_REQUEST['action'] ) {
+			$this->write_log( 'request action empty' );
+
 			return;
 		}
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'dots_compi_do_builder_conversion-nonce' ) ) {
+			$this->write_log( 'couldnt verify nonce' );
+
 			return;
 		}
+		$this->write_log( 'do_builder_conversion fired!!' );
 
 		ignore_user_abort( true );
 		if ( ! ini_get( 'safe_mode' ) ) {
@@ -125,11 +130,17 @@ class Dots_Compi_Conversion_Util {
 		}
 
 		parse_str( $_POST['form'], $form );
-		$_REQUEST   = $form = (array) $form;
+		$form = (array) $form;
+		$this->write_log( $form );
 		$step       = absint( $_POST['step'] );
-		$queue      = isset( $_REQUEST['posts'] ) ? (array) sanitize_text_field( $_REQUEST['posts'] ) : array();
-		$successful = isset( $_REQUEST['success'] ) ? (array) sanitize_text_field( $_REQUEST['success'] ) : array();
-		$failed     = isset( $_REQUEST['failed'] ) ? (array) sanitize_text_field( $_REQUEST['failed'] ) : array();
+		$queue      = is_array( $form['post'] ) ? $form['post'] : array();
+		$successful = is_array( $form['successful'] ) ? $form['successful'] : array();
+		$failed     = is_array( $form['failed'] ) ?  $form['failed'] : array();
+		$this->write_log( array(
+							  'queue'      => $queue,
+							  'successful' => $successful,
+							  'failed'     => $failed,
+						  ) );
 
 		$ret = $this->process_step( $queue, $successful, $failed );
 
@@ -141,9 +152,10 @@ class Dots_Compi_Conversion_Util {
 			echo json_encode( array(
 								  'step'       => $step,
 								  'percentage' => $percentage,
-								  'queue'      => $ret['queue'],
+								  'post'      => $ret['queue'],
 								  'successful' => $ret['successful'],
 								  'failed'     => $ret['failed'],
+								  '_wpnonce'   => wp_create_nonce( 'dots_compi_do_builder_conversion-nonce' ),
 							  ) );
 
 		} else {
@@ -157,16 +169,27 @@ class Dots_Compi_Conversion_Util {
 
 	public function extract_shortcode_opening_tags( $layout ) {
 
-		preg_match( '@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@gm', $layout, $matches );
+		preg_match_all( '@\[(et_lb_[a-z1-4_]+)(([a-zA-Z0-9_=":/.\- ]+\])|\])@m', $layout, $matches );
 
 		return $matches;
 	}
 
 	public function get_shortcode_attrs_from_opening_tag( $tag ) {
 
-		preg_match( '@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@gm', $tag, $matches );
+		preg_match_all( '@( )([a-z0-9_]+)="([a-zA-Z0-9_:/.\- ]+)"@m', $tag, $matches );
 
 		return $matches;
+	}
+
+	public function extract_shortcodes( $layout ) {
+
+		$pattern = get_shortcode_regex();
+
+		if ( preg_match_all( '@' . $pattern . '@m', $layout, $matches ) ) {
+			return $matches;
+		}
+
+		return array();
 	}
 
 	private function process_step( $queue, $successful, $failed ) {
@@ -175,7 +198,7 @@ class Dots_Compi_Conversion_Util {
 		$done  = true;
 
 		if ( $total > 0 ) {
-			$batch = $total >= 5 ? 10 : $total;
+			$batch = $total >= 5 ? 5 : $total;
 			$done  = false;
 
 			foreach ( range( 0, $batch ) as $i ) {
@@ -209,12 +232,60 @@ class Dots_Compi_Conversion_Util {
 
 	private function convert_post( $src_post ) {
 
+		$result = false;
 		try {
 			$this->write_log( $src_post );
-			$result = true;
+			$builder_layout = get_post_meta( $src_post, '_et_builder_settings', true );
+			$layout         = is_array( $builder_layout ) && '' !== $builder_layout['layout_shortcode'] ? $builder_layout['layout_shortcode'] : false;
+			if ( false !== $layout ) {
+				$tags = $this->extract_shortcodes( $layout );
+
+				if ( is_array( $tags ) && ! empty( $tags ) ) {
+					$this->write_log( $tags );
+					$new_content = array();
+					foreach ( $tags as $tag ) {
+						$this->write_log( $tag );
+						$old_slug      = $tag[2];
+						$new_slug      = $this->map[ $old_slug ]['new_slug'];
+						$new_content[] = $new_slug;
+
+						$attrs     = $tag[3];
+						$new_attrs = array();
+
+						$this->write_log( array(
+											  'old_slug' => $old_slug,
+											  'new_slug' => $new_slug,
+											  'attrs'    => $attrs,
+										  ) );
+
+						if ( is_array( $attrs ) ) {
+							foreach ( $attrs as $attr => $value ) {
+								$old_attr               = $attr;
+								$new_attr               = $this->map[ $old_slug ]['attrs'][ $old_attr ];
+								$new_attrs[ $new_attr ] = $value;
+
+								$new_content[] = ' ' . $new_attr . '="' . $value . '"';
+
+							}
+							$this->write_log( $new_attrs );
+						}
+						$new_content[] = ']';
+					}
+
+					$this->write_log( $new_content );
+				}
+
+				if ( ! empty( $new_content ) ) {
+					$this_post = array(
+						'ID'           => $src_post,
+						'post_content' => implode( $new_content ),
+					);
+					wp_update_post( $this_post );
+					$result = true;
+				}
+			}
 		} catch ( Exception $err ) {
 			$this->write_log( $err->getMessage() );
-			$result = false;
 		}
 
 		return $result;

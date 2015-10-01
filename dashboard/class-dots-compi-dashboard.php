@@ -183,9 +183,9 @@ class Dots_Compi_Dashboard {
 		$this->check_for_enabled_features();
 
 		if ( true === $this->features['builder_conversion'] ) {
+			add_action( 'wp_ajax_dots_compi_do_builder_conversion', array( $this->conversion_util, 'do_builder_conversion', ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-			add_action( 'wp_ajax_dots_compi_do_builder_conversion', array( $this->conversion_util, 'do_builder_conversion', ) );
 			add_filter( 'manage_post_posts_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns', ) );
 			add_filter( 'manage_pages_columns', array( $this->conversion_util, 'add_conversion_utility_post_columns', ) );
 			add_action( 'manage_post_posts_custom_column', array( $this->conversion_util, 'maybe_display_et_builder_status', ), 10, 2 );

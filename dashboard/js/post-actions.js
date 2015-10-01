@@ -56,7 +56,7 @@
 
 				var submitButtonTop = $(this).find('#doaction[type="submit"]'),
 					submitButtonBottom = $(this).find('#doaction2[type="submit"]'),
-					data = $(this).serialize(),
+					data = $(this).serialize() + '&successful[]=&failed[]=',
 					data_obj = {},
 					dots_action = 'dots_builder_conversion';
 
@@ -126,7 +126,9 @@
 					} else {
 						console.log(response.percent);
 						self.progress_bar.MaterialProgress.setProgress(response.percent);
-						self.process_step(parseInt(response.step), data, self);
+						var next_data = 'post=' + response.post + '&successful=' + response.successful + '&failed=' + response.failed;
+						next_data = 'action=dots_compi_do_builder_conversion&' + next_data;
+						self.process_step(parseInt(response.step), next_data, self);
 					}
 
 				}
