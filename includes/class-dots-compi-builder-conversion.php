@@ -42,7 +42,7 @@ class Dots_Compi_Conversion_Util {
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
 			wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'dots_compi' ),
-					get_class( $this ) )
+							 get_class( $this ) )
 			);
 		}
 
@@ -135,16 +135,16 @@ class Dots_Compi_Conversion_Util {
 
 		$percentage = $this->get_percentage_complete( $step, $ret['queue'], $ret['successful'], $ret['failed'] );
 
-		if ( $ret ) {
+		if ( $ret && false === $ret['done'] ) {
 
 			$step += 1;
 			echo json_encode( array(
-				'step'       => $step,
-				'percentage' => $percentage,
-				'queue'      => $ret['queue'],
-				'successful' => $ret['successful'],
-				'failed'     => $ret['failed'],
-			) );
+								  'step'       => $step,
+								  'percentage' => $percentage,
+								  'queue'      => $ret['queue'],
+								  'successful' => $ret['successful'],
+								  'failed'     => $ret['failed'],
+							  ) );
 
 		} else {
 
@@ -172,9 +172,11 @@ class Dots_Compi_Conversion_Util {
 	private function process_step( $queue, $successful, $failed ) {
 
 		$total = count( $queue );
+		$done  = true;
 
 		if ( $total > 0 ) {
 			$batch = $total >= 5 ? 10 : $total;
+			$done  = false;
 
 			foreach ( range( 0, $batch ) as $i ) {
 				$src_post  = array_pop( $queue );
@@ -185,15 +187,14 @@ class Dots_Compi_Conversion_Util {
 					array_push( $failed, $src_post );
 				}
 			}
-
-			return array(
-				'queue'      => $queue,
-				'successful' => $successful,
-				'failed'     => $failed,
-			);
 		}
 
-		return false;
+		return array(
+			'queue'      => $queue,
+			'successful' => $successful,
+			'failed'     => $failed,
+			'done'       => $done,
+		);
 	}
 
 	private function get_percentage_complete( $step, $queue, $successful, $failed ) {

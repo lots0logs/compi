@@ -45,7 +45,6 @@
 			$("select[name='action'], select[name='action2']").change(function () {
 				var selected = $(this).val();
 				self.option_selected = 'dots_builder_conversion' === selected;
-				console.log(self.option_selected);
 			})
 		},
 
@@ -76,6 +75,8 @@
 		},
 
 		process_step: function (step, data, self) {
+			console.log(step, data, self);
+			var previous_step = step;
 
 			$.ajax({
 				type: 'POST',
@@ -90,6 +91,7 @@
 				success: function (response) {
 
 					if ('done' == response.step || response.error) {
+						console.log(response);
 
 						var modal = $('.dots_compi_modal'),
 							modal_content = modal.find('.dots_compi_modal_content');
@@ -103,12 +105,26 @@
 
 						} else {
 
-							//modal.remove();
-							//window.location = response.url;
+							if (1 === previous_step) {
+								var index = 0;
+								var pretend = setInterval(function () {
+									index = index + 33;
+									self.progress_bar.MaterialProgress.setProgress(index);
+									if (index >= 100) {
+										clearInterval(pretend);
+										modal.hide().remove();
+										$('.dots_compi_overlay').hide().remove();
+									}
+								}, 800);
+							} else {
+								modal.hide().remove();
+								$('.dots_compi_overlay').hide().remove();
+							}
 
 						}
 
 					} else {
+						console.log(response.percent);
 						self.progress_bar.MaterialProgress.setProgress(response.percent);
 						self.process_step(parseInt(response.step), data, self);
 					}
