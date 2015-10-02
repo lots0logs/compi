@@ -135,7 +135,7 @@ class Dots_Compi_Conversion_Util {
 		$step       = absint( $_POST['step'] );
 		$queue      = is_array( $form['post'] ) ? $form['post'] : array();
 		$successful = is_array( $form['successful'] ) ? $form['successful'] : array();
-		$failed     = is_array( $form['failed'] ) ?  $form['failed'] : array();
+		$failed     = is_array( $form['failed'] ) ? $form['failed'] : array();
 		$this->write_log( array(
 							  'queue'      => $queue,
 							  'successful' => $successful,
@@ -152,7 +152,7 @@ class Dots_Compi_Conversion_Util {
 			echo json_encode( array(
 								  'step'       => $step,
 								  'percentage' => $percentage,
-								  'post'      => $ret['queue'],
+								  'post'       => $ret['queue'],
 								  'successful' => $ret['successful'],
 								  'failed'     => $ret['failed'],
 								  '_wpnonce'   => wp_create_nonce( 'dots_compi_do_builder_conversion-nonce' ),
@@ -243,45 +243,20 @@ class Dots_Compi_Conversion_Util {
 				if ( is_array( $tags ) && ! empty( $tags ) ) {
 					$this->write_log( $tags );
 					$new_content = array();
-					foreach ( $tags as $tag ) {
+					$index       = 0;
+					foreach ( $tags[0] as $tag ) {
 						$this->write_log( $tag );
-						$old_slug      = $tag[2];
-						$new_slug      = $this->map[ $old_slug ]['new_slug'];
-						$new_content[] = $new_slug;
+						$new_content = $this->process_matches( $index, $tag, $new_content );
 
-						$attrs     = $tag[3];
-						$new_attrs = array();
-
-						$this->write_log( array(
-											  'old_slug' => $old_slug,
-											  'new_slug' => $new_slug,
-											  'attrs'    => $attrs,
-										  ) );
-
-						if ( is_array( $attrs ) ) {
-							foreach ( $attrs as $attr => $value ) {
-								$old_attr               = $attr;
-								$new_attr               = $this->map[ $old_slug ]['attrs'][ $old_attr ];
-								$new_attrs[ $new_attr ] = $value;
-
-								$new_content[] = ' ' . $new_attr . '="' . $value . '"';
-
+						if ( is_array( $tag[5][ $index ] ) && ! empty( $tag[5][ $index ] ) ) {
+							$nested_tags = $this->extract_shortcodes( $tag[5][ $index ] );
+							if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
+								$this->process_nested( $nested_tags, $new_content );
 							}
-							$this->write_log( $new_attrs );
+							$this->write_log( $new_content );
 						}
-						$new_content[] = ']';
+						$index += 1;
 					}
-
-					$this->write_log( $new_content );
-				}
-
-				if ( ! empty( $new_content ) ) {
-					$this_post = array(
-						'ID'           => $src_post,
-						'post_content' => implode( $new_content ),
-					);
-					wp_update_post( $this_post );
-					$result = true;
 				}
 			}
 		} catch ( Exception $err ) {
@@ -290,6 +265,62 @@ class Dots_Compi_Conversion_Util {
 
 		return $result;
 
+	}
+
+	public function process_matches( $index, $tag, $new_content ) {
+
+		$old_slug      = $tag[2][ $index ];
+		$new_slug      = isset( $this->map[ $old_slug ] ) ? $this->map[ $old_slug ]['new_slug'] : '';
+		$new_content[] = '' !== $new_slug ? $new_slug : $old_slug;
+
+		$attrs     = $tag[3][ $index ];
+		$new_attrs = array();
+
+		$this->write_log( array(
+							  'old_slug' => $old_slug,
+							  'new_slug' => $new_slug,
+							  'attrs'    => $attrs,
+						  ) );
+		if ( '' === $new_slug ) {
+			$new_content[] = $attrs;
+			$attrs         = '';
+		}
+
+		if ( '' !== $attrs ) {
+			$attrs = str_replace( array( ' ', '"' ), array( '&', '' ), $attrs );
+			$attrs = wp_parse_args( $attrs );
+			foreach ( $attrs as $attr => $value ) {
+				$old_attr               = $attr;
+				$new_attr               = $this->map[ $old_slug ]['attrs'][ $old_attr ];
+				$new_attrs[ $new_attr ] = $value;
+
+				$new_content[] = ' ' . $new_attr . '="' . $value . '"';
+
+			}
+			$this->write_log( $new_attrs );
+
+		}
+		$new_content[] = ']';
+
+		return $new_content;
+	}
+
+	public function process_nested( $nested_tags, $new_content ) {
+		$nested_index = 0;
+		foreach ( $nested_tags[0] as $nested_tag ) {
+			$this->write_log( $nested_tag );
+			$new_content = $this->process_matches( $nested_index, $nested_tag, $new_content );
+
+			if ( is_array( $nested_tag[5][ $nested_index ] ) && ! empty( $nested_tag[5][ $nested_index ] ) ) {
+				$more_nested_tags = $this->extract_shortcodes( $nested_tag[5][ $nested_index ] );
+				if ( is_array( $more_nested_tags ) && ! empty( $more_nested_tags ) ) {
+					$this->process_nested( $more_nested_tags, $new_content );
+				}
+			}
+		$nested_index += 1;
+		}
+
+		return $new_content;
 	}
 
 	public function get_eb_to_divi_builder_mapping() {
