@@ -317,10 +317,13 @@ class Dots_Compi_Conversion_Util {
 
 		$nested_index = 0;
 		$nested_total = count( $nested_tags );
+		$this->write_log( array(
+							  'function/operation' => 'process_nested( $nested_tags )',
+							  '$nested_tag'        => $nested_tags,
+						  ) );
 		foreach ( $nested_tags[0] as $nested_tag ) {
 			$this->write_log( array(
-								  'function/operation' => '$nested_tags[0] as $nested_tag',
-								  '$nested_tags[0]'    => $nested_tags[0],
+								  'function/operation' => 'foreach ($nested_tags[0] as $nested_tag)',
 								  '$nested_tag'        => $nested_tag,
 							  ) );
 			if ( preg_match( '/et_lb_\d_\d/', $nested_tag ) && preg_match( '/first_class=1/', $nested_tags[3][ $nested_index ] ) ) {
@@ -348,25 +351,25 @@ class Dots_Compi_Conversion_Util {
 	public function get_eb_to_divi_builder_mapping() {
 
 		return array(
-			'et_lb_logo'        => array(
+			'et_lb_logo'          => array(
 				'new_slug' => 'et_pb_image',
 				'attrs'    => array(
 					'align'   => 'align',
 					'content' => 'url',
 				),
 			),
-			'et_lb_paper'       => array(
+			'et_lb_paper'         => array(
 				'new_slug' => 'et_pb_text',
 				'attrs'    => array(),
 			),
-			'et_lb_video'       => array(
+			'et_lb_video'         => array(
 				'new_slug' => 'et_pb_video',
 				'attrs'    => array(
 					'video_url' => 'src',
 					'class'     => 'module_class',
 				),
 			),
-			'et_lb_testimonial' => array(
+			'et_lb_testimonial'   => array(
 				'new_slug' => 'et_pb_testimonial',
 				'attrs'    => array(
 					'image_url'       => 'portrait_url',
@@ -376,42 +379,90 @@ class Dots_Compi_Conversion_Util {
 					'content'         => 'content_new',
 				),
 			),
-			'et_lb_1_2'         => array(
+			'et_lb_slogan'        => array(
+				'new_slug' => 'et_pb_text',
+				'attrs'    => array(
+					'class' => 'module_class',
+				),
+			),
+			'et_lb_slider'        => array(
+				'new_slug' => 'et_pb_gallery',
+				'attrs'    => array(
+					'animation_duration' => 'auto_speed',
+					'auto_animation'     => 'auto',
+					'class'              => 'module_class',
+					'images'             => 'src',
+				),
+			),
+			'et_lb_button'        => array(),
+			'et_lb_bar'           => array(
+				'new_slug' => 'et_pb_divider',
+				'attrs'    => array(),
+			),
+			'et_lb_list'          => array(),
+			'et_lb_toggle'        => array(
+				'new_slug' => 'et_pb_toggle',
+				'attrs'    => array(),
+			),
+			'et_lb_simple_slider' => array(),
+			'et_lb_tabs'          => array(
+				'new_slug' => 'et_pb_tabs',
+			),
+			'et_lb_pricing_table' => array(
+				'new_slug' => 'et_pb_pricing',
+			),
+			'et_lb_box'           => array(
+				'new_slug' => 'et_pb_cta',
+				'attrs'    => array(),
+			),
+			'et_lb_text_block'    => array(
+				'new_slug' => 'et_pb_text',
+				'attrs'    => array(),
+			),
+			'et_lb_widget_area'   => array(
+				'new_slug' => 'et_pb_slider',
+				'attrs'    => array(),
+			),
+			'et_lb_image'         => array(
+				'new_slug' => 'et_pb_image',
+				'attrs'    => array(),
+			),
+			'et_lb_1_2'           => array(
 				'new_slug'  => 'et_pb_column',
 				'attrs'     => array(),
 				'attrs_new' => array(
 					'type' => '1_2',
 				),
 			),
-			'et_lb_1_3'         => array(
+			'et_lb_1_3'           => array(
 				'new_slug'  => 'et_pb_column',
 				'attrs'     => array(),
 				'attrs_new' => array(
 					'type' => '1_3',
 				),
 			),
-			'et_lb_1_4'         => array(
+			'et_lb_1_4'           => array(
 				'new_slug'  => 'et_pb_column',
 				'attrs'     => array(),
 				'attrs_new' => array(
 					'type' => '1_4',
 				),
 			),
-			'et_lb_2_3'         => array(
+			'et_lb_2_3'           => array(
 				'new_slug'  => 'et_pb_column',
 				'attrs'     => array(),
 				'attrs_new' => array(
 					'type' => '2_3',
 				),
 			),
-			'et_lb_3_4'         => array(
+			'et_lb_3_4'           => array(
 				'new_slug'  => 'et_pb_column',
 				'attrs'     => array(),
 				'attrs_new' => array(
 					'type' => '3_4',
 				),
 			),
-			'et_lb_resizable'   => array(
+			'et_lb_resizable'     => array(
 				'new_slug'  => 'et_pb_row',
 				'attrs'     => array(
 					'width' => 'custom_width_percent',
