@@ -57,6 +57,7 @@ class Dots_Compi_Conversion_Util {
 		$this->eb_posts_objects = array();
 		$this->new_content      = array();
 		$this->row_open         = false;
+		$this->rows             = array();
 	}
 
 	/**
@@ -207,6 +208,12 @@ class Dots_Compi_Conversion_Util {
 				$src_post  = array_pop( $queue );
 				$converted = $this->convert_post( $src_post );
 				if ( false !== $converted ) {
+					$this_post = array(
+						'ID' => $src_post,
+						'post_content' => implode($this->new_content)
+					);
+					wp_update_post( $this_post );
+					update_post_meta( $src_post, '_et_pb_use_builder', 'on' );
 					array_push( $successful, $src_post );
 				} else {
 					array_push( $failed, $src_post );
@@ -244,8 +251,25 @@ class Dots_Compi_Conversion_Util {
 
 				if ( is_array( $tags ) && ! empty( $tags ) ) {
 					$this->new_content = array();
-					$this->process_nested( $tags );
+					$this->sort_into_rows( $tags );
+					$row_index = 0;
+					$this->new_content[] = '[et_pb_section]';
+					foreach ( $this->rows as $row => $this_row ) {
+						$this->new_content[] = '[et_pb_row make_fullwidth="off" width_unit="off" use_custom_gutter="off"]';
+
+						foreach ( $this_row as $row_contents => $content ) {
+							$columns = count( $row_contents );
+							$nested_tags = $this->extract_shortcodes( $content );
+							if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
+								$this->process_nested( $nested_tags );
+							}
+						}
+						$this->new_content[] = '[/et_pb_row]';
+						$row_index += 1;
+					}
+					$this->new_content[] = '[/et_pb_section]';
 					$result = true;
+					$this->write_log(implode($this->new_content));
 				}
 			}
 		} catch ( Exception $err ) {
@@ -258,25 +282,14 @@ class Dots_Compi_Conversion_Util {
 
 	public function process_matches( $index, $tags, $tag ) {
 
-		$this->write_log( array(
-							  'function/operation' => 'process_matches($index, $tags, $tag)',
-							  '$index'             => $index,
-							  '$tag'               => $tag,
-							  '$this->new_content' => $this->new_content,
-						  ) );
 		$old_slug = $tags[2][ $index ];
-		$new_slug = isset( $this->map[ $old_slug ] ) ? $this->map[ $old_slug ]['new_slug'] : '';
+		$new_slug = isset( $this->map[ $old_slug ]['new_slug'] ) ? $this->map[ $old_slug ]['new_slug'] : '';
 
-		$this->new_content[] = '' !== $new_slug ? '[' . $new_slug : '[' . $old_slug;
+		$this->new_content[] = ( '' !== $new_slug ) ? '[' . $new_slug : '[' . $old_slug;
 
 		$attrs     = $tags[3][ $index ];
-		$new_attrs = isset( $this->map[ $old_slug ]['new_attrs'] ) ? $this->map[ $old_slug ]['new_attrs'] : '';
+		$new_attrs = isset( $this->map[ $old_slug ]['new_attrs'] ) ? $this->map[ $old_slug ]['new_attrs'] : array();
 
-		$this->write_log( array(
-							  'old_slug' => $old_slug,
-							  'new_slug' => $new_slug,
-							  'attrs'    => $attrs,
-						  ) );
 		if ( '' === $new_slug ) {
 			$this->new_content[] = $attrs;
 			$attrs               = '';
@@ -286,62 +299,64 @@ class Dots_Compi_Conversion_Util {
 			$attrs = str_replace( array( ' ', '"' ), array( '&', '' ), $attrs );
 			$attrs = wp_parse_args( $attrs );
 			foreach ( $attrs as $attr => $value ) {
-				$this->write_log( array(
-									  'function/operation' => 'foreach $attrs as $attr => $value',
-									  '$attrs'             => $attrs,
-									  '$attr'              => $attr,
-									  '$value'             => $value,
-								  ) );
 				$old_attr = $attr;
 				$new_attr = isset( $this->map[ $old_slug ]['attrs'][ $old_attr ] ) ? $this->map[ $old_slug ]['attrs'][ $old_attr ] : '';
-
 
 				if ( '' !== $new_attr ) {
 					$this->new_content[] = ' ' . $new_attr . '="' . $value . '"';
 				}
 
 			}
-			if ( ! empty( $new_attrs ) ) {
-				foreach ( $new_attrs as $new_attr => $value ) {
-					$this->new_content[] = ' ' . $new_attr . '="' . $value . '"';
-				}
+		}
+		if ( ! empty( $new_attrs ) ) {
+			foreach ( $new_attrs as $new_attr => $value ) {
+				$this->new_content[] = ' ' . $new_attr . '="' . $value . '"';
 			}
-
-
 		}
 		$this->new_content[] = ']';
 
+	}
+
+	public function sort_into_rows( $tags ) {
+
+		$this->rows = array();
+		$new_row    = array();
+		$index      = 0;
+
+		foreach ( $tags[3] as $attrs ) {
+			if ( false !== strpos( $attrs, 'first_class="1"' ) && 0 !== $index ) {
+				array_push( $this->rows, $new_row );
+				$new_row = array();
+			}
+			array_push( $new_row, $tags[0][ $index ] );
+			$index += 1;
+		}
+		array_push( $this->rows, $new_row );
 	}
 
 	public function process_nested( $nested_tags ) {
 
 		$nested_index = 0;
 		$nested_total = count( $nested_tags );
-		$this->write_log( array(
-							  'function/operation' => 'process_nested( $nested_tags )',
-							  '$nested_tag'        => $nested_tags,
-						  ) );
+		$column_open = false;
+
 		foreach ( $nested_tags[0] as $nested_tag ) {
-			$this->write_log( array(
-								  'function/operation' => 'foreach ($nested_tags[0] as $nested_tag)',
-								  '$nested_tag'        => $nested_tag,
-							  ) );
-			if ( preg_match( '/et_lb_\d_\d/', $nested_tag ) && preg_match( '/first_class=1/', $nested_tags[3][ $nested_index ] ) ) {
-				if ( true === $this->row_open ) {
-					$this->new_content[] = '[/et_pb_row]';
-					$this->row_open      = false;
-				}
-				$this->new_content[] = '[et_pb_row make_fullwidth="off" width_unit="off" use_custom_gutter="off"]';
-				$this->row_open      = true;
-			}
+
 			$this->process_matches( $nested_index, $nested_tags, $nested_tag );
 
-			if ( is_array( $nested_tags[5][ $nested_index ] ) && ! empty( $nested_tags[5][ $nested_index ] ) ) {
+			if ( is_array( $nested_tags[5] ) && '' !== $nested_tags[5][ $nested_index ] ) {
 				$more_nested_tags = $this->extract_shortcodes( $nested_tags[5][ $nested_index ] );
 				if ( is_array( $more_nested_tags ) && ! empty( $more_nested_tags ) ) {
 					$this->process_nested( $more_nested_tags );
 				}
+				$this->new_content[] = $nested_tags[5][ $nested_index ];
 			}
+
+			$old_slug = $nested_tags[2][ $nested_index ];
+			$new_slug = isset( $this->map[ $old_slug ]['new_slug'] ) ? $this->map[ $old_slug ]['new_slug'] : '';
+			$this->new_content[] = '[/';
+			$this->new_content[] = ( '' !== $new_slug ) ? $new_slug : $old_slug;
+			$this->new_content[] = ']';
 
 			$nested_index += 1;
 		}
@@ -360,12 +375,15 @@ class Dots_Compi_Conversion_Util {
 			),
 			'et_lb_paper'         => array(
 				'new_slug' => 'et_pb_text',
-				'attrs'    => array(),
+				'attrs'    => array(
+					'text'      => 'content_new',
+					'css_class' => 'module_class',
+				),
 			),
 			'et_lb_video'         => array(
-				'new_slug' => 'et_pb_video',
+				'new_slug' => 'et_pb_text',
 				'attrs'    => array(
-					'video_url' => 'src',
+					'video_url' => 'content_new',
 					'class'     => 'module_class',
 				),
 			),
@@ -382,31 +400,62 @@ class Dots_Compi_Conversion_Util {
 			'et_lb_slogan'        => array(
 				'new_slug' => 'et_pb_text',
 				'attrs'    => array(
-					'class' => 'module_class',
+					'class'   => 'module_class',
+					'content' => 'content_new',
 				),
 			),
 			'et_lb_slider'        => array(
-				'new_slug' => 'et_pb_gallery',
-				'attrs'    => array(
+				'new_slug'  => 'et_pb_gallery',
+				'attrs'     => array(
 					'animation_duration' => 'auto_speed',
 					'auto_animation'     => 'auto',
 					'class'              => 'module_class',
 					'images'             => 'src',
 				),
+				'attrs_new' => array(
+					'fullwidth' => 'no',
+				),
 			),
 			'et_lb_button'        => array(),
 			'et_lb_bar'           => array(
 				'new_slug' => 'et_pb_divider',
-				'attrs'    => array(),
+				'attrs'    => array(
+					'class' => 'module_class',
+				),
 			),
-			'et_lb_list'          => array(),
+			'et_lb_list'          => array(
+				'new_slug' => 'et_pb_text',
+				'attrs'    => array(
+					'class'   => 'module_class',
+					'content' => 'content_new',
+				),
+			),
 			'et_lb_toggle'        => array(
 				'new_slug' => 'et_pb_toggle',
-				'attrs'    => array(),
+				'attrs'    => array(
+					'heading' => 'title',
+					'state'   => 'open',
+					'class'   => 'module_class',
+					'content' => 'content_new',
+				),
 			),
-			'et_lb_simple_slider' => array(),
+			'et_lb_simple_slider' => array(
+				'new_slug' => 'et_pb_slider',
+				'attrs'    => array(
+					'class' => 'module_class',
+				),
+			),
+			'et_lb_simple_slide'  => array(
+				'new_slug' => 'et_pb_slide',
+				'attrs'    => array(
+					'class' => 'module_class',
+				),
+			),
 			'et_lb_tabs'          => array(
 				'new_slug' => 'et_pb_tabs',
+			),
+			'et_lb_tab'           => array(
+				'new_slug' => 'et_pb_tab',
 			),
 			'et_lb_pricing_table' => array(
 				'new_slug' => 'et_pb_pricing',
