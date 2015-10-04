@@ -78,6 +78,15 @@ class Dots_Compi_Conversion_Util {
 		}
 	}
 
+	/**
+	 * Filter admin post table columns for edit.php to add "Builder Status" column.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param $columns
+	 *
+	 * @return array
+	 */
 	public function add_conversion_utility_post_columns( $columns ) {
 
 		return array_merge( $columns, array(
@@ -87,6 +96,13 @@ class Dots_Compi_Conversion_Util {
 	}
 
 
+	/**
+	 * Display Builder Status for post on edit.php if feature is enabled in our settings.
+	 *
+	 * @since    1.0.0
+	 * @param $column
+	 * @param $post_id
+	 */
 	public function maybe_display_et_builder_status( $column, $post_id ) {
 
 		if ( 'dots_compi_builder_status' === $column ) {
@@ -113,6 +129,12 @@ class Dots_Compi_Conversion_Util {
 		}
 	}
 
+	/**
+	 * Process AJAX request made from edit.php to convert selected posts.
+	 *
+	 *  @since    1.0.0
+	 *
+	 */
 	public function do_builder_conversion() {
 
 		if ( empty( $_REQUEST['action'] ) || 'dots_compi_do_builder_conversion' != $_REQUEST['action'] ) {
@@ -135,18 +157,23 @@ class Dots_Compi_Conversion_Util {
 		parse_str( $_POST['form'], $form );
 		$form = (array) $form;
 		$this->write_log( $form );
+
+		// We break the task up into batches. The following variables are passed to/from the client with each batch.
 		$step       = absint( $_POST['step'] );
+		// List of post IDs to convert
 		$queue      = is_array( $form['post'] ) ? $form['post'] : array();
+		// List of post IDs that were converted successfully.
 		$successful = is_array( $form['successful'] ) ? $form['successful'] : array();
+		// List of post IDs for which conversion failed.
 		$failed     = is_array( $form['failed'] ) ? $form['failed'] : array();
 		$this->write_log( array(
 							  'queue'      => $queue,
 							  'successful' => $successful,
 							  'failed'     => $failed,
 						  ) );
-
+		// Start next batch
 		$ret = $this->process_step( $queue, $successful, $failed );
-
+		// Calculate the percentage complete so we can send it to te client.
 		$percentage = $this->get_percentage_complete( $step, $ret['queue'], $ret['successful'], $ret['failed'] );
 
 		if ( $ret && false === $ret['done'] ) {
@@ -184,6 +211,13 @@ class Dots_Compi_Conversion_Util {
 		return $matches;
 	}
 
+	/**
+	 * Uses get_shortcode_regex() to extract shortcodes from given string.
+	 *
+	 * @param $layout
+	 *
+	 * @return array
+	 */
 	public function extract_shortcodes( $layout ) {
 
 		$pattern = get_shortcode_regex();
@@ -195,32 +229,49 @@ class Dots_Compi_Conversion_Util {
 		return array();
 	}
 
+	/**
+	 * Process the next batch of posts.
+	 *
+	 * @param $queue
+	 * @param $successful
+	 * @param $failed
+	 *
+	 * @return array
+	 */
 	private function process_step( $queue, $successful, $failed ) {
 
 		$total = count( $queue );
 		$done  = true;
 
 		if ( $total > 0 ) {
+			// We convert up to 5 posts per step.
 			$batch = $total >= 5 ? 5 : $total;
 			$done  = false;
 
 			foreach ( range( 0, $batch ) as $i ) {
+				// Pop the next post ID from our queue.
 				$src_post  = array_pop( $queue );
+				// Begin conversion
 				$converted = $this->convert_post( $src_post );
+
 				if ( false !== $converted ) {
+					// Conversion was successful, save new_content to database as the post_content.
 					$this_post = array(
 						'ID' => $src_post,
 						'post_content' => implode($this->new_content)
 					);
 					wp_update_post( $this_post );
+					// Enable Divi Builder for the post.
 					update_post_meta( $src_post, '_et_pb_use_builder', 'on' );
+					// Add post id to our success array.
 					array_push( $successful, $src_post );
 				} else {
+					// Conversion failed. Add post id to the failed array.
 					array_push( $failed, $src_post );
 				}
 			}
 		}
-
+		// All posts in this batch have been processed.
 		return array(
 			'queue'      => $queue,
 			'successful' => $successful,
@@ -239,6 +290,13 @@ class Dots_Compi_Conversion_Util {
 
 	}
 
+	/**
+	 * Conversion handler function. Converts given post to Divi Builder
+	 *
+	 * @param $src_post
+	 *
+	 * @return bool
+	 */
 	private function convert_post( $src_post ) {
 
 		$result = false;
@@ -247,26 +305,34 @@ class Dots_Compi_Conversion_Util {
 			$builder_layout = get_post_meta( $src_post, '_et_builder_settings', true );
 			$layout         = is_array( $builder_layout ) && '' !== $builder_layout['layout_shortcode'] ? $builder_layout['layout_shortcode'] : false;
 			if ( false !== $layout ) {
+				// If the post has a elegant builder layout, extract the shortcodes.
 				$tags = $this->extract_shortcodes( $layout );
 
 				if ( is_array( $tags ) && ! empty( $tags ) ) {
+					// We use $this->new_content to store the new shortcodes as we process them
 					$this->new_content = array();
+					// Since EB doesn't support the concept of rows we sort the shortcodes into rows ourselves.
 					$this->sort_into_rows( $tags );
+
 					$row_index = 0;
+					// We'll put everything in a single section which I think makes the most sense but that may change.
 					$this->new_content[] = '[et_pb_section]';
 					foreach ( $this->rows as $row => $this_row ) {
+						// We are looping through each row.
 						$this->new_content[] = '[et_pb_row make_fullwidth="off" width_unit="off" use_custom_gutter="off"]';
-
 						foreach ( $this_row as $row_contents => $content ) {
-							$columns = count( $row_contents );
+							// Now we are looping through each shortcode within the row.
 							$nested_tags = $this->extract_shortcodes( $content );
 							if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
+								// If this is a valid shortcode we process it and its children.
 								$this->process_nested( $nested_tags );
 							}
 						}
+						// Close current row since we finished looping through its contents
 						$this->new_content[] = '[/et_pb_row]';
 						$row_index += 1;
 					}
+					// Finally close our section.
 					$this->new_content[] = '[/et_pb_section]';
 					$result = true;
 					$this->write_log(implode($this->new_content));
@@ -280,6 +346,13 @@ class Dots_Compi_Conversion_Util {
 
 	}
 
+	/**
+	 * Use our mapping array to replace shortcode slug and attributes with counterpart in Divi Builder.
+	 *
+	 * @param $index
+	 * @param $tags
+	 * @param $tag
+	 */
 	public function process_matches( $index, $tags, $tag ) {
 
 		$old_slug = $tags[2][ $index ];
@@ -291,6 +364,7 @@ class Dots_Compi_Conversion_Util {
 		$new_attrs = isset( $this->map[ $old_slug ]['new_attrs'] ) ? $this->map[ $old_slug ]['new_attrs'] : array();
 
 		if ( '' === $new_slug ) {
+			// This must be a shortcode from another plugin. We'll keep it as is.
 			$this->new_content[] = $attrs;
 			$attrs               = '';
 		}
@@ -317,6 +391,11 @@ class Dots_Compi_Conversion_Util {
 
 	}
 
+	/**
+	 * Sort the shortcodes into rows
+	 *
+	 * @param $tags
+	 */
 	public function sort_into_rows( $tags ) {
 
 		$this->rows = array();
@@ -324,6 +403,7 @@ class Dots_Compi_Conversion_Util {
 		$index      = 0;
 
 		foreach ( $tags[3] as $attrs ) {
+			// We check the attribute string for presence of "first_class" which indicates a new row should be started.
 			if ( false !== strpos( $attrs, 'first_class="1"' ) && 0 !== $index ) {
 				array_push( $this->rows, $new_row );
 				$new_row = array();
@@ -334,21 +414,27 @@ class Dots_Compi_Conversion_Util {
 		array_push( $this->rows, $new_row );
 	}
 
+	/**
+	 * Recursively process shortcodes
+	 *
+	 * @param $nested_tags
+	 */
 	public function process_nested( $nested_tags ) {
 
 		$nested_index = 0;
 		$nested_total = count( $nested_tags );
-		$column_open = false;
-
+		// Loop through each shortcode
 		foreach ( $nested_tags[0] as $nested_tag ) {
-
+			// Convert them to Divi Builder shortcodes.
 			$this->process_matches( $nested_index, $nested_tags, $nested_tag );
 
 			if ( is_array( $nested_tags[5] ) && '' !== $nested_tags[5][ $nested_index ] ) {
 				$more_nested_tags = $this->extract_shortcodes( $nested_tags[5][ $nested_index ] );
 				if ( is_array( $more_nested_tags ) && ! empty( $more_nested_tags ) ) {
+					// We have children shortcodes to process. We recurse down one level.
 					$this->process_nested( $more_nested_tags );
 				}
+				// We can recurse no further, this must be shortcode content (that appears between open and closing tag).
 				$this->new_content[] = $nested_tags[5][ $nested_index ];
 			}
 
