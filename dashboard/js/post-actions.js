@@ -30,6 +30,7 @@
 
 		progress_bar: false,
 		option_selected: false,
+		modal_shutdown: false,
 
 		init: function () {
 			this.add_action();
@@ -106,6 +107,8 @@
 						} else {
 
 							if (1 === previous_step) {
+								self.modal_shutdown = true;
+								$('.dots_compi_overlay').addClass('shutdown');
 								var index = 0;
 								var pretend = setInterval(function () {
 									index = index + 33;
@@ -117,8 +120,10 @@
 									}
 								}, 800);
 							} else {
-								modal.hide().remove();
-								$('.dots_compi_overlay').hide().remove();
+								if (false === self.modal_shutdown && ! $('.dots_compi_overlay').hasClass('shutdown')) {
+									modal.hide().remove();
+									$('.dots_compi_overlay').hide().remove();
+								}
 							}
 
 						}

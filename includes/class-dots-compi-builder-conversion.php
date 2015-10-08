@@ -49,7 +49,7 @@ class Dots_Compi_Conversion_Util {
 
 		self::$_this = $this;
 
-		$this->map              = $this->get_eb_to_divi_builder_mapping();
+		$this->map              = self::get_eb_to_divi_builder_mapping();
 		$this->eb_settings      = get_option( 'et_lb_main_settings' );
 		$this->eb_post_types    = isset( $this->eb_settings['post_types'] )
 			? (array) $this->eb_settings['post_types']
@@ -58,6 +58,8 @@ class Dots_Compi_Conversion_Util {
 		$this->new_content      = array();
 		$this->row_open         = false;
 		$this->rows             = array();
+		$this->column_widths    = array();
+		$this->section          = array();
 	}
 
 	/**
@@ -68,7 +70,7 @@ class Dots_Compi_Conversion_Util {
 	 * @param $log
 	 *
 	 */
-	public function write_log( $log ) {
+	public static function write_log( $log ) {
 
 
 		if ( is_array( $log ) || is_object( $log ) ) {
@@ -100,6 +102,7 @@ class Dots_Compi_Conversion_Util {
 	 * Display Builder Status for post on edit.php if feature is enabled in our settings.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @param $column
 	 * @param $post_id
 	 */
@@ -132,7 +135,7 @@ class Dots_Compi_Conversion_Util {
 	/**
 	 * Process AJAX request made from edit.php to convert selected posts.
 	 *
-	 *  @since    1.0.0
+	 * @since    1.0.0
 	 *
 	 */
 	public function do_builder_conversion() {
@@ -147,7 +150,6 @@ class Dots_Compi_Conversion_Util {
 
 			return;
 		}
-		$this->write_log( 'do_builder_conversion fired!!' );
 
 		ignore_user_abort( true );
 		if ( ! ini_get( 'safe_mode' ) ) {
@@ -156,16 +158,16 @@ class Dots_Compi_Conversion_Util {
 
 		parse_str( $_POST['form'], $form );
 		$form = (array) $form;
-		$this->write_log( $form );
 
 		// We break the task up into batches. The following variables are passed to/from the client with each batch.
-		$step       = absint( $_POST['step'] );
+		$step = absint( $_POST['step'] );
 		// List of post IDs to convert
-		$queue      = is_array( $form['post'] ) ? $form['post'] : array();
+		$queue = is_array( $form['post'] ) ? $form['post'] : array();
 		// List of post IDs that were converted successfully.
 		$successful = is_array( $form['successful'] ) ? $form['successful'] : array();
 		// List of post IDs for which conversion failed.
-		$failed     = is_array( $form['failed'] ) ? $form['failed'] : array();
+		$failed = is_array( $form['failed'] ) ? $form['failed'] : array();
+		$this->write_log( '[\^/\^/\^/^\^/^\^/] do_builder_conversion fired! (AJAX request received) [\^/\^/\^/^\^/^\^/]' );
 		$this->write_log( array(
 							  'queue'      => $queue,
 							  'successful' => $successful,
@@ -218,7 +220,7 @@ class Dots_Compi_Conversion_Util {
 	 *
 	 * @return array
 	 */
-	public function extract_shortcodes( $layout ) {
+	public static function extract_shortcodes( $layout ) {
 
 		$pattern = get_shortcode_regex();
 
@@ -242,7 +244,7 @@ class Dots_Compi_Conversion_Util {
 
 		$total = count( $queue );
 		$done  = true;
-
+		$this->write_log( '[\^/\^/^\^/^\^/\^/\^/^\^/^\^/] process_step fired! [\^/\^/^\^/^\^/\^/\^/^\^/^\^/]' );
 		if ( $total > 0 ) {
 			// We convert up to 5 posts per step.
 			$batch = $total >= 5 ? 5 : $total;
@@ -250,15 +252,15 @@ class Dots_Compi_Conversion_Util {
 
 			foreach ( range( 0, $batch ) as $i ) {
 				// Pop the next post ID from our queue.
-				$src_post  = array_pop( $queue );
+				$src_post = array_pop( $queue );
 				// Begin conversion
 				$converted = $this->convert_post( $src_post );
 
 				if ( false !== $converted ) {
 					// Conversion was successful, save new_content to database as the post_content.
 					$this_post = array(
-						'ID' => $src_post,
-						'post_content' => implode($this->new_content)
+						'ID'           => $src_post,
+						'post_content' => implode( $this->new_content ),
 					);
 					wp_update_post( $this_post );
 					// Enable Divi Builder for the post.
@@ -271,6 +273,7 @@ class Dots_Compi_Conversion_Util {
 				}
 			}
 		}
+
 		// All posts in this batch have been processed.
 		return array(
 			'queue'      => $queue,
@@ -301,41 +304,28 @@ class Dots_Compi_Conversion_Util {
 
 		$result = false;
 		try {
-			$this->write_log( 'convert_post() called with post_id: ' . $src_post );
+			$this->write_log( '[\^/\^/\^/^\^/^\^/] convert_post() called with post_id: ' . $src_post . '[\^/\^/\^/^\^/^\^/]' );
 			$builder_layout = get_post_meta( $src_post, '_et_builder_settings', true );
 			$layout         = is_array( $builder_layout ) && '' !== $builder_layout['layout_shortcode'] ? $builder_layout['layout_shortcode'] : false;
 			if ( false !== $layout ) {
 				// If the post has a elegant builder layout, extract the shortcodes.
 				$tags = $this->extract_shortcodes( $layout );
+				$this->write_log( '[\^/\^/\^/^\^/^\^/] extract_shortcodes complete (This is the top-most level call) [\^/\^/\^/^\^/^\^/]' );
+				$this->write_log( $tags );
 
 				if ( is_array( $tags ) && ! empty( $tags ) ) {
-					// We use $this->new_content to store the new shortcodes as we process them
-					$this->new_content = array();
 					// Since EB doesn't support the concept of rows we sort the shortcodes into rows ourselves.
 					$this->sort_into_rows( $tags );
 
-					$row_index = 0;
 					// We'll put everything in a single section which I think makes the most sense but that may change.
-					$this->new_content[] = '[et_pb_section]';
-					foreach ( $this->rows as $row => $this_row ) {
-						// We are looping through each row.
-						$this->new_content[] = '[et_pb_row make_fullwidth="off" width_unit="off" use_custom_gutter="off"]';
-						foreach ( $this_row as $row_contents => $content ) {
-							// Now we are looping through each shortcode within the row.
-							$nested_tags = $this->extract_shortcodes( $content );
-							if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
-								// If this is a valid shortcode we process it and its children.
-								$this->process_nested( $nested_tags );
-							}
-						}
-						// Close current row since we finished looping through its contents
-						$this->new_content[] = '[/et_pb_row]';
-						$row_index += 1;
+					$this->section = new Dots_Compi_EBuilder_Section();
+					foreach ( $this->rows as &$rows => &$row ) {
+						$this->section->add_child( $row );
 					}
-					// Finally close our section.
-					$this->new_content[] = '[/et_pb_section]';
-					$result = true;
-					$this->write_log(implode($this->new_content));
+
+					$this->new_content = $this->section->get_as_string();
+					$result            = true;
+					$this->write_log( $this->new_content );
 				}
 			}
 		} catch ( Exception $err ) {
@@ -346,50 +336,6 @@ class Dots_Compi_Conversion_Util {
 
 	}
 
-	/**
-	 * Use our mapping array to replace shortcode slug and attributes with counterpart in Divi Builder.
-	 *
-	 * @param $index
-	 * @param $tags
-	 * @param $tag
-	 */
-	public function process_matches( $index, $tags, $tag ) {
-
-		$old_slug = $tags[2][ $index ];
-		$new_slug = isset( $this->map[ $old_slug ]['new_slug'] ) ? $this->map[ $old_slug ]['new_slug'] : '';
-
-		$this->new_content[] = ( '' !== $new_slug ) ? '[' . $new_slug : '[' . $old_slug;
-
-		$attrs     = $tags[3][ $index ];
-		$new_attrs = isset( $this->map[ $old_slug ]['new_attrs'] ) ? $this->map[ $old_slug ]['new_attrs'] : array();
-
-		if ( '' === $new_slug ) {
-			// This must be a shortcode from another plugin. We'll keep it as is.
-			$this->new_content[] = $attrs;
-			$attrs               = '';
-		}
-
-		if ( '' !== $attrs ) {
-			$attrs = str_replace( array( ' ', '"' ), array( '&', '' ), $attrs );
-			$attrs = wp_parse_args( $attrs );
-			foreach ( $attrs as $attr => $value ) {
-				$old_attr = $attr;
-				$new_attr = isset( $this->map[ $old_slug ]['attrs'][ $old_attr ] ) ? $this->map[ $old_slug ]['attrs'][ $old_attr ] : '';
-
-				if ( '' !== $new_attr ) {
-					$this->new_content[] = ' ' . $new_attr . '="' . $value . '"';
-				}
-
-			}
-		}
-		if ( ! empty( $new_attrs ) ) {
-			foreach ( $new_attrs as $new_attr => $value ) {
-				$this->new_content[] = ' ' . $new_attr . '="' . $value . '"';
-			}
-		}
-		$this->new_content[] = ']';
-
-	}
 
 	/**
 	 * Sort the shortcodes into rows
@@ -398,58 +344,30 @@ class Dots_Compi_Conversion_Util {
 	 */
 	public function sort_into_rows( $tags ) {
 
-		$this->rows = array();
-		$new_row    = array();
-		$index      = 0;
+		$this->rows      = array();
+		$index           = 0;
+		$shortcode_index = 0;
+		$new_row         = new Dots_Compi_EBuilder_Row( $index );
 
-		foreach ( $tags[3] as $attrs ) {
-			// We check the attribute string for presence of "first_class" which indicates a new row should be started.
-			if ( false !== strpos( $attrs, 'first_class="1"' ) && 0 !== $index ) {
-				array_push( $this->rows, $new_row );
-				$new_row = array();
+		foreach ( $tags[2] as $tag => $slug ) {
+			$as_string    = isset( $tags[0][ $index ] ) ? $tags[0][ $index ] : '';
+			$attrs_string = isset( $tags[3][ $index ] ) ? $tags[3][ $index ] : '';
+			$contents     = isset( $tags[5][ $index ] ) ? $tags[5][ $index ] : '';
+
+			$shortcode = new Dots_Compi_EBuilder_Shortcode( $new_row, $shortcode_index, $as_string, $slug, $attrs_string, $contents );
+			if ( 0 !== $shortcode_index && true === $shortcode->is_first ) {
+				$this->rows[]    = &$new_row;
+				$new_row         = new Dots_Compi_EBuilder_Row( $index );
+				$shortcode_index = 0;
 			}
-			array_push( $new_row, $tags[0][ $index ] );
+			$new_row->add_child( $shortcode );
 			$index += 1;
+			$shortcode_index += 1;
 		}
-		array_push( $this->rows, $new_row );
+		$this->rows[] = &$new_row;
 	}
 
-	/**
-	 * Recursively process shortcodes
-	 *
-	 * @param $nested_tags
-	 */
-	public function process_nested( $nested_tags ) {
-
-		$nested_index = 0;
-		$nested_total = count( $nested_tags );
-		// Loop through each shortcode
-		foreach ( $nested_tags[0] as $nested_tag ) {
-			// Convert them to Divi Builder shortcodes.
-			$this->process_matches( $nested_index, $nested_tags, $nested_tag );
-
-			if ( is_array( $nested_tags[5] ) && '' !== $nested_tags[5][ $nested_index ] ) {
-				$more_nested_tags = $this->extract_shortcodes( $nested_tags[5][ $nested_index ] );
-				if ( is_array( $more_nested_tags ) && ! empty( $more_nested_tags ) ) {
-					// We have children shortcodes to process. We recurse down one level.
-					$this->process_nested( $more_nested_tags );
-				}
-				// We can recurse no further, this must be shortcode content (that appears between open and closing tag).
-				$this->new_content[] = $nested_tags[5][ $nested_index ];
-			}
-
-			$old_slug = $nested_tags[2][ $nested_index ];
-			$new_slug = isset( $this->map[ $old_slug ]['new_slug'] ) ? $this->map[ $old_slug ]['new_slug'] : '';
-			$this->new_content[] = '[/';
-			$this->new_content[] = ( '' !== $new_slug ) ? $new_slug : $old_slug;
-			$this->new_content[] = ']';
-
-			$nested_index += 1;
-		}
-
-	}
-
-	public function get_eb_to_divi_builder_mapping() {
+	public static function get_eb_to_divi_builder_mapping() {
 
 		return array(
 			'et_lb_logo'          => array(
@@ -502,7 +420,12 @@ class Dots_Compi_Conversion_Util {
 					'fullwidth' => 'no',
 				),
 			),
-			'et_lb_button'        => array(),
+			'et_lb_button'        => array(
+				'new_slug' => 'et_lb_button',
+				'attrs'    => array(
+					'class' => 'module_class',
+				),
+			),
 			'et_lb_bar'           => array(
 				'new_slug' => 'et_pb_divider',
 				'attrs'    => array(
@@ -542,9 +465,11 @@ class Dots_Compi_Conversion_Util {
 			),
 			'et_lb_tab'           => array(
 				'new_slug' => 'et_pb_tab',
+				'attrs'    => array(),
 			),
 			'et_lb_pricing_table' => array(
 				'new_slug' => 'et_pb_pricing',
+				'attrs'    => array(),
 			),
 			'et_lb_box'           => array(
 				'new_slug' => 'et_pb_cta',
@@ -611,4 +536,217 @@ class Dots_Compi_Conversion_Util {
 			),
 		);
 	}
+}
+
+
+class Dots_Compi_EBuilder_Element {
+
+	protected $_children = array();
+	protected $_attrs = array();
+
+	public function __construct() {
+
+		$this->is_row         = false;
+		$this->slug           = '';
+		$this->new_slug       = $this->slug;
+		$this->as_string      = '';
+		$this->contents       = '';
+		$this->column_wrapper = false;
+	}
+
+	public function get_len() {
+
+		return count( $this->_children );
+	}
+
+	public function add_child( &$child ) {
+
+		$this->_children[] = $child;
+	}
+
+	public function get_child( $index ) {
+
+		$child = '';
+		if ( isset( $this->_children[ $index ] ) ) {
+			$child = &$this->_children[ $index ];
+		}
+
+		return $child;
+	}
+
+	public function get_as_string() {
+
+		if ( '' === $this->as_string ) {
+
+			$self_string = '[' . $this->new_slug;
+
+			if ( ! empty( $this->_attrs ) ) {
+				foreach ( $this->_attrs as $attr => $value ) {
+					$self_string .= ' ' . $attr . '="' . $value . '"';
+				}
+			}
+			$self_string .= ']';
+			if ( ! empty( $this->_children ) ) {
+				foreach ( $this->_children as $child_index => $child ) {
+					$self_string .= $child->get_as_string();
+				}
+			} else {
+				$self_string .= $this->contents;
+			}
+
+			$self_string .= '[/' . $this->new_slug . ']';
+
+			if ( false !== $this->column_wrapper ) {
+				$self_string = '[et_pb_column_' . $this->column_wrapper . ']' . $self_string . '[/et_pb_column]';
+			}
+
+		} else {
+			$self_string = $this->as_string;
+		}
+
+		return $self_string;
+	}
+}
+
+class Dots_Compi_EBuilder_Section extends Dots_Compi_EBuilder_Element {
+
+	public function __construct() {
+
+		$this->slug   = 'et_pb_section';
+		$this->_attrs = array(
+			'make_fullwidth'    => "off",
+			'width_unit'        => "off",
+			'use_custom_gutter' => "off",
+		);
+	}
+}
+
+class Dots_Compi_EBuilder_Row extends Dots_Compi_EBuilder_Element {
+
+	public function __construct( $index ) {
+
+		$this->is_row = true;
+		$this->slug   = 'et_pb_row';
+		$this->index  = $index;
+	}
+}
+
+class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
+	public function __construct( &$parent, $index, $as_string, $slug, $attrs_string, $contents ) {
+
+		$this->slug           = $slug;
+		$this->index          = $index;
+		$this->parent         = &$parent;
+		$this->column_wrapper = false;
+		$this->map            = Dots_Compi_Conversion_Util::get_eb_to_divi_builder_mapping();
+		$this->new_slug       = isset( $this->map[ $slug ]['new_slug'] ) ? $this->map[ $slug ]['new_slug'] : '';
+		$this->is_column      = preg_match( '/(et_lb_\d_\d)|(resizable)/', $this->slug );
+		$this->contents       = $contents;
+		$this->old_attrs      = $this->parse_attributes( $attrs_string );
+		$this->is_first       = array_key_exists( 'first_class', $this->old_attrs );
+
+
+		$this->process_children();
+		$this->maybe_add_column_wrapper();
+	}
+
+	/**
+	 * Use our mapping array to replace shortcode attributes with counterpart in Divi Builder.
+	 *
+	 * @param $attrs_string
+	 *
+	 * @return array
+	 */
+	private function parse_attributes( $attrs_string ) {
+
+		$attrs = str_replace( array( ' ', '"' ), array( '&', '' ), $attrs_string );
+		$attrs = wp_parse_args( $attrs );
+		$res   = array();
+
+		foreach ( $attrs as $old_attr => $value ) {
+			$new_attrs = isset( $this->map[ $this->slug ]['attrs'][ $old_attr ] ) ? $this->map[ $this->slug ]['attrs'][ $old_attr ] : array();
+			if ( '' !== $old_attr && '' !== $value ) {
+				$res[ $old_attr ] = $value;
+			}
+
+			if ( ! empty( $new_attrs ) ) {
+				foreach ( $new_attrs as $new_attr => $new_value ) {
+					$this->_attrs[ $new_attr ] = $new_value;
+				}
+			}
+		}
+
+		$other_attrs = isset( $this->map[ $this->slug ]['new_attrs'] ) ? $this->map[ $this->slug ]['new_attrs'] : array();
+
+		if ( ! empty( $other_attrs ) ) {
+			foreach ( $other_attrs as $other_attr => $other_value ) {
+				$this->_attrs[ $other_attr ] = $other_value;
+			}
+		}
+
+		return $res;
+
+	}
+
+	private function process_children() {
+
+		$nested_tags = Dots_Compi_Conversion_Util::extract_shortcodes( $this->contents );
+		$index       = 0;
+		Dots_Compi_Conversion_Util::write_log( '[\^/\^/\^/^\^/^\^/] extract_shortcodes complete [\^/\^/\^/^\^/^\^/]' );
+		Dots_Compi_Conversion_Util::write_log( $nested_tags );
+		if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
+			foreach ( $nested_tags[2] as $nested_tag => $slug ) {
+				$as_string    = isset( $nested_tags[0][ $index ] ) ? $nested_tags[0][ $index ] : '';
+				$attrs_string = isset( $nested_tags[3][ $index ] ) ? $nested_tags[3][ $index ] : '';
+				$contents     = isset( $nested_tags[5][ $index ] ) ? $nested_tags[5][ $index ] : '';
+
+				$shortcode = new Dots_Compi_EBuilder_Shortcode( $this, $index, $as_string, $slug, $attrs_string, $contents );
+
+				$this->_children[] = &$shortcode;
+
+				$index += 1;
+
+			}
+		}
+	}
+
+	private function maybe_add_column_wrapper() {
+
+		if ( false === $this->is_column && true === $this->parent->is_row ) {
+			if ( 2 === $this->parent->get_len() && array_key_exists( $this->old_attrs, 'width' ) ) {
+				$width         = (int) $this->old_attrs['width'];
+				$sibling_index = ( 0 === $this->index ) ? 1 : 0;
+				$sibling       = $this->parent->get_child( $sibling_index );
+				$column_string = $sibling->column_wrapper;
+				if ( '1_4' === $column_string || $this->in_range( $width, 66, 100 ) ) {
+					$this->column_wrapper = '3_4';
+				} elseif ( '1_3' === $column_string || $this->in_range( $width, 56, 65 ) ) {
+					$this->column_wrapper = '2_3';
+				} elseif ( '1_2' === $column_string || $this->in_range( $width, 49, 55 ) ) {
+					$this->column_wrapper = '1_2';
+				} elseif ( '2_3' === $column_string || $this->in_range( $width, 26, 48 ) ) {
+					$this->column_wrapper = '1_3';
+				} elseif ( '3_4' === $column_string || $this->in_range( $width, 0, 25 ) ) {
+					$this->column_wrapper = '1_4';
+				}
+
+			} elseif ( 2 === $this->parent->get_len() ) {
+				$this->column_wrapper = '1_2';
+			} elseif ( 1 === $this->parent->get_len() ) {
+				$this->column_wrapper = '4_4';
+			} elseif ( 3 === $this->parent->get_len() ) {
+				$this->column_wrapper = '1_3';
+			} elseif ( 4 === $this->parent->get_len() ) {
+				$this->column_wrapper = '1_4';
+			}
+		}
+	}
+
+
+	private function in_range( $val, $min, $max ) {
+
+		return ( $val >= $min && $val <= $max );
+	}
+
+
 }
