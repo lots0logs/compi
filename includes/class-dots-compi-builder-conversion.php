@@ -260,7 +260,7 @@ class Dots_Compi_Conversion_Util {
 					// Conversion was successful, save new_content to database as the post_content.
 					$this_post = array(
 						'ID'           => $src_post,
-						'post_content' => implode( $this->new_content ),
+						'post_content' => $this->new_content,
 					);
 					wp_update_post( $this_post );
 					// Enable Divi Builder for the post.
@@ -319,7 +319,7 @@ class Dots_Compi_Conversion_Util {
 
 					// We'll put everything in a single section which I think makes the most sense but that may change.
 					$this->section = new Dots_Compi_EBuilder_Section();
-					foreach ( $this->rows as &$rows => &$row ) {
+					foreach ( $this->rows as $rows => &$row ) {
 						$this->section->add_child( $row );
 					}
 
@@ -355,8 +355,8 @@ class Dots_Compi_Conversion_Util {
 			$contents     = isset( $tags[5][ $index ] ) ? $tags[5][ $index ] : '';
 
 			$shortcode = new Dots_Compi_EBuilder_Shortcode( $new_row, $shortcode_index, $as_string, $slug, $attrs_string, $contents );
-			if ( 0 !== $shortcode_index && true === $shortcode->is_first ) {
-				$this->rows[]    = &$new_row;
+			if ( 0 !== $index && true === $shortcode->is_first ) {
+				$this->rows[]    = $new_row;
 				$new_row         = new Dots_Compi_EBuilder_Row( $index );
 				$shortcode_index = 0;
 			}
@@ -364,7 +364,7 @@ class Dots_Compi_Conversion_Util {
 			$index += 1;
 			$shortcode_index += 1;
 		}
-		$this->rows[] = &$new_row;
+		$this->rows[] = $new_row;
 	}
 
 	public static function get_eb_to_divi_builder_mapping() {
@@ -543,16 +543,12 @@ class Dots_Compi_EBuilder_Element {
 
 	protected $_children = array();
 	protected $_attrs = array();
-
-	public function __construct() {
-
-		$this->is_row         = false;
-		$this->slug           = '';
-		$this->new_slug       = $this->slug;
-		$this->as_string      = '';
-		$this->contents       = '';
-		$this->column_wrapper = false;
-	}
+	public $as_string = '';
+	public $contents = '';
+	public $column_wrapper = false;
+	public $is_row = false;
+	public $slug = '';
+	public $new_slug = '';
 
 	public function get_len() {
 
@@ -568,7 +564,7 @@ class Dots_Compi_EBuilder_Element {
 
 		$child = '';
 		if ( isset( $this->_children[ $index ] ) ) {
-			$child = &$this->_children[ $index ];
+			$child = $this->_children[ $index ];
 		}
 
 		return $child;
@@ -612,8 +608,9 @@ class Dots_Compi_EBuilder_Section extends Dots_Compi_EBuilder_Element {
 
 	public function __construct() {
 
-		$this->slug   = 'et_pb_section';
-		$this->_attrs = array(
+		$this->slug     = 'et_pb_section';
+		$this->new_slug = $this->slug;
+		$this->_attrs   = array(
 			'make_fullwidth'    => "off",
 			'width_unit'        => "off",
 			'use_custom_gutter' => "off",
@@ -627,6 +624,7 @@ class Dots_Compi_EBuilder_Row extends Dots_Compi_EBuilder_Element {
 
 		$this->is_row = true;
 		$this->slug   = 'et_pb_row';
+		$this->new_slug = $this->slug;
 		$this->index  = $index;
 	}
 }
@@ -664,21 +662,18 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 		$res   = array();
 
 		foreach ( $attrs as $old_attr => $value ) {
-			$new_attrs = isset( $this->map[ $this->slug ]['attrs'][ $old_attr ] ) ? $this->map[ $this->slug ]['attrs'][ $old_attr ] : array();
+			$new_attr = isset( $this->map[ $this->slug ]['attrs'][ $old_attr ] ) ? $this->map[ $this->slug ]['attrs'][ $old_attr ] : '';
 			if ( '' !== $old_attr && '' !== $value ) {
 				$res[ $old_attr ] = $value;
 			}
-
-			if ( ! empty( $new_attrs ) ) {
-				foreach ( $new_attrs as $new_attr => $new_value ) {
-					$this->_attrs[ $new_attr ] = $new_value;
-				}
+			if ( '' !== $new_attr ) {
+				$this->_attrs[ $new_attr ] = $value;
 			}
 		}
 
-		$other_attrs = isset( $this->map[ $this->slug ]['new_attrs'] ) ? $this->map[ $this->slug ]['new_attrs'] : array();
+		$other_attrs = isset( $this->map[ $this->slug ]['attrs_new'] ) ? $this->map[ $this->slug ]['attrs_new'] : array();
 
-		if ( ! empty( $other_attrs ) ) {
+		if ( is_array( $other_attrs ) && ! empty( $other_attrs ) ) {
 			foreach ( $other_attrs as $other_attr => $other_value ) {
 				$this->_attrs[ $other_attr ] = $other_value;
 			}
@@ -702,7 +697,7 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 
 				$shortcode = new Dots_Compi_EBuilder_Shortcode( $this, $index, $as_string, $slug, $attrs_string, $contents );
 
-				$this->_children[] = &$shortcode;
+				$this->_children[] = $shortcode;
 
 				$index += 1;
 
