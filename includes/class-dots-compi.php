@@ -86,7 +86,7 @@ class Dots_Compi {
 		$this->plugin_name = 'compi';
 
 		// Set plugin's version.
-		$this->version     = $version;
+		$this->version = $version;
 
 		$this->compi_options = static::get_options_array();
 
@@ -167,12 +167,13 @@ class Dots_Compi {
 	 * @access   private
 	 */
 	private function set_locale() {
+
 		$domain = 'dots_' . $this->plugin_name;
 
 		load_plugin_textdomain(
-			$domain,
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+				$domain,
+				false,
+				dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
 
 	}
@@ -208,7 +209,7 @@ class Dots_Compi {
 		add_action( 'wp_enqueue_scripts', array( $this->plugin_public, 'enqueue_scripts' ) );
 
 	}
-	
+
 	/**
 	 * Runs on plugin activation.
 	 */
@@ -220,7 +221,7 @@ class Dots_Compi {
 	 * Runs on plugin deactivation.
 	 */
 	public function deactivation_hook() {
-		
-	}
 
+
+	}
 }

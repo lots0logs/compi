@@ -523,16 +523,9 @@ class Dots_Compi_Conversion_Util {
 				),
 			),
 			'et_lb_resizable'     => array(
-				'new_slug'  => 'et_pb_row',
-				'attrs'     => array(
-					'width' => 'custom_width_percent',
-				),
-				'attrs_new' => array(
-					'make_fullwidth'    => 'off',
-					'use_custom_width'  => 'on',
-					'width_unit'        => 'off',
-					'use_custom_gutter' => 'off',
-				),
+				'new_slug'  => 'et_pb_column',
+				'attrs'     => array(),
+				'attrs_new' => array(),
 			),
 		);
 	}
@@ -593,7 +586,7 @@ class Dots_Compi_EBuilder_Element {
 			$self_string .= '[/' . $this->new_slug . ']';
 
 			if ( false !== $this->column_wrapper ) {
-				$self_string = '[et_pb_column_' . $this->column_wrapper . ']' . $self_string . '[/et_pb_column]';
+				$self_string = '[et_pb_column type="' . $this->column_wrapper . '"]' . $self_string . '[/et_pb_column]';
 			}
 
 		} else {
@@ -610,11 +603,6 @@ class Dots_Compi_EBuilder_Section extends Dots_Compi_EBuilder_Element {
 
 		$this->slug     = 'et_pb_section';
 		$this->new_slug = $this->slug;
-		$this->_attrs   = array(
-			'make_fullwidth'    => "off",
-			'width_unit'        => "off",
-			'use_custom_gutter' => "off",
-		);
 	}
 }
 
@@ -622,10 +610,15 @@ class Dots_Compi_EBuilder_Row extends Dots_Compi_EBuilder_Element {
 
 	public function __construct( $index ) {
 
-		$this->is_row = true;
-		$this->slug   = 'et_pb_row';
+		$this->is_row   = true;
+		$this->slug     = 'et_pb_row';
 		$this->new_slug = $this->slug;
-		$this->index  = $index;
+		$this->index    = $index;
+		$this->_attrs   = array(
+			'make_fullwidth'    => "off",
+			'width_unit'        => "off",
+			'use_custom_gutter' => "off",
+		);
 	}
 }
 
@@ -638,7 +631,8 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 		$this->column_wrapper = false;
 		$this->map            = Dots_Compi_Conversion_Util::get_eb_to_divi_builder_mapping();
 		$this->new_slug       = isset( $this->map[ $slug ]['new_slug'] ) ? $this->map[ $slug ]['new_slug'] : '';
-		$this->is_column      = preg_match( '/(et_lb_\d_\d)|(resizable)/', $this->slug );
+		$this->is_column      = preg_match( '/(et_lb_\d_\d)/', $this->slug );
+		$this->is_resizable   = preg_match( '/(resizable)/', $this->slug );
 		$this->contents       = $contents;
 		$this->old_attrs      = $this->parse_attributes( $attrs_string );
 		$this->is_first       = array_key_exists( 'first_class', $this->old_attrs );
@@ -687,7 +681,7 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 
 		$nested_tags = Dots_Compi_Conversion_Util::extract_shortcodes( $this->contents );
 		$index       = 0;
-		Dots_Compi_Conversion_Util::write_log( '[\^/\^/\^/^\^/^\^/] extract_shortcodes complete [\^/\^/\^/^\^/^\^/]' );
+		Dots_Compi_Conversion_Util::write_log( '[\^/\^/\^/^\^/^\^/] PROCESS CHILDREN: extract_shortcodes complete [\^/\^/\^/^\^/^\^/]' );
 		Dots_Compi_Conversion_Util::write_log( $nested_tags );
 		if ( is_array( $nested_tags ) && ! empty( $nested_tags ) ) {
 			foreach ( $nested_tags[2] as $nested_tag => $slug ) {
@@ -707,7 +701,7 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 
 	private function maybe_add_column_wrapper() {
 
-		if ( false === $this->is_column && true === $this->parent->is_row ) {
+		if ( true === $this->parent->is_row && ( false === $this->is_column || true === $this->is_resizable ) ) {
 			if ( 2 === $this->parent->get_len() && array_key_exists( $this->old_attrs, 'width' ) ) {
 				$width         = (int) $this->old_attrs['width'];
 				$sibling_index = ( 0 === $this->index ) ? 1 : 0;
@@ -733,6 +727,13 @@ class Dots_Compi_EBuilder_Shortcode extends Dots_Compi_EBuilder_Element {
 				$this->column_wrapper = '1_3';
 			} elseif ( 4 === $this->parent->get_len() ) {
 				$this->column_wrapper = '1_4';
+			} else {
+				Dots_Compi_Conversion_Util::write_log( array( 'COLUMN WRAPPER ERROR' => 'TRUE', '$this->column_wrapper' => $this->column_wrapper ) );
+			}
+
+			if ( true === $this->is_resizable ) {
+				$this->_attrs['type'] = $this->column_wrapper;
+				$this->column_wrapper = false;
 			}
 		}
 	}
