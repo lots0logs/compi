@@ -657,10 +657,18 @@ class Dots_Compi_EBuilder_Mapping {
 			),
 		),
 		'et_lb_button'        => array(
-			'new_slug' => 'et_lb_button',
+			'new_slug' => 'et_pb_text',
+			'dots_custom' => true,
 			'attrs'    => array(
-				'class' => 'module_class',
+				'color' => 'blue',
+				'size' => 'small',
+				'url' => '',
+				'window' => 'off',
+				'align' => 'left'
 			),
+			'attrs_new' => array(
+				'content_new' => '',
+			)
 		),
 		'et_lb_bar'           => array(
 			'new_slug' => 'et_pb_divider',

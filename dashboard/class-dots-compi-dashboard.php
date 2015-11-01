@@ -6,6 +6,11 @@
  *
  * This file is part of Compi.
  *
+ * Portions of the code in this file are based on code from
+ * other open source products. Where applicable, the following applies:
+ *
+ * Copyright © 2015 Elegant Themes
+ *
  * Compi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License,
@@ -256,8 +261,6 @@ class Dots_Compi_Dashboard {
 			wp_localize_script( 'compi-post-actions', 'dots_compi', array(
 			'nonce'      => wp_create_nonce( 'dots_compi_do_builder_conversion-nonce' ),
 			'ajaxurl'          => admin_url( 'admin-ajax.php', $this->protocol ) ) );
-		} else {
-			$this->write_log( 'function doesnt exist' );
 		}
 
 	}

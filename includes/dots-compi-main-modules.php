@@ -3,9 +3,13 @@
  * dots-compi-main-modules.php
  *
  * Copyright © 2015 wpdots
- * Copyright © 2015 Elegant Themes
  *
  * This file is part of Compi.
+ *
+ * Portions of the code in this file are based on code from
+ * other open source products. Where applicable, the following applies:
+ *
+ * Copyright © 2015 Elegant Themes
  *
  * Compi is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
